@@ -1,5 +1,5 @@
 
-# Xây dựng khóa học tích hợp  (machine learning) chatbot (business module) + web rtc + hệ thống code 
+# Xây website dựng khóa học tích hợp  (machine learning) chatbot (business module) + web rtc + hệ thống code 
 + 4000 5000 dòng dữ liệu
 + React ( front-end): giao diện clone pluralsight
 + Nodejs (back-end): webrtc
