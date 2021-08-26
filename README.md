@@ -3,7 +3,7 @@
 + 4000 5000 dòng dữ liệu
 + React ( front-end): giao diện clone pluralsight
 + Nodejs (back-end): webrtc
-+ Database: 
++ Database: MongoDB
 + Ui/ux: Huy ->
 + App: react-native
 Craw data
