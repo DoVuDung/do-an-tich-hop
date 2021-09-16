@@ -1,17 +1,41 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-// const { urlencoded } = require('express')
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-const app = express()
-const PORT = process.env.PORT || 5000
+const authRoutes = require('./routers/auth');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+const mongodbUri =
+  'mongodb+srv://tich-hop:guruacadamy@cluster0.9vllm.mongodb.net/guruAcademy?retryWrites=true&w=majority';
+
 //middleware
-app.use(cors())
-app.use(express.json())
-// app.use(express, urlencoded())
+app.use(cors());
+app.use(express.json()); //parse json from req's body
 
-app.get('/', (req, res) => {
-  res.send("Test")
-})
+//routers
+app.use('/api/v1/auth', authRoutes);
 
-app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`))
+//error response
+app.use((error, req, res, next) => {
+  console.log(error);
+
+  const status = error.statusCode || 500;
+  const errorMessage = error.message;
+
+  res.status(status).json({
+    ...error,
+    message: errorMessage,
+  });
+});
+
+//connect mongoDB
+mongoose
+  .connect(mongodbUri, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => {
+    console.log('Connected mongoDB');
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
