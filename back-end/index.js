@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const authRoutes = require('./routers/auth');
+const coursesRoutes = require('./routers/courses');
+const reportRoutes = require('./routers/report');
+const courseCategoryRoutes = require('./routers/courseCategories');
 
+//setup
 const app = express();
 const PORT = process.env.PORT || 5000;
 const mongodbUri =
@@ -13,8 +17,11 @@ const mongodbUri =
 app.use(cors());
 app.use(express.json()); //parse json from req's body
 
-//routers
+//v1 routers
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/report', reportRoutes);
+app.use('/api/v1', coursesRoutes);
+app.use('/api/v1/', courseCategoryRoutes);
 
 //error response
 app.use((error, req, res, next) => {

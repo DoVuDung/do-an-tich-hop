@@ -34,6 +34,10 @@ const courseDetailSchema = new Schema(
         ],
       },
     ],
+    isDone: {
+      type: Boolean,
+      default: false,
+    },
     certificate: {
       type: Boolean,
       default: false,

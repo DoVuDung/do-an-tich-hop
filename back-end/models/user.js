@@ -27,6 +27,35 @@ const userSchema = new Schema(
       type: Date,
       required: false,
     },
+    description: {
+      type: String,
+    },
+    imageUrl: {
+      type: String,
+      required: false,
+    },
+    socialLinks: {
+      facebook: {
+        type: String,
+        trim: true,
+      },
+      instagram: {
+        type: String,
+        trim: true,
+      },
+      linkedIn: {
+        type: String,
+        trim: true,
+      },
+      github: {
+        type: String,
+        trim: true,
+      },
+      twitter: {
+        type: String,
+        trim: true,
+      },
+    },
     address: {
       street: {
         type: String,
@@ -57,6 +86,18 @@ const userSchema = new Schema(
       required: true,
       default: 1,
     },
+    teachingCourses: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Course',
+      },
+    ],
+    learningCourse: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'CourseDetail',
+      },
+    ],
     notifications: [
       {
         type: Schema.Types.ObjectId,

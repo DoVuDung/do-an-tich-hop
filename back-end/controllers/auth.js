@@ -1,21 +1,14 @@
-const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const { validationError } = require('../util/helper');
 
 //Signup
 exports.signup = async (req, res, next) => {
   //check validation
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed!');
-    error.statusCode = 422;
-    error.data = errors.array();
-
-    //send error response
-    return next(error);
-  }
+  const error = validationError(req);
+  if (error) return next(error);
 
   //get req body
   const email = req.body.email;
@@ -62,14 +55,8 @@ exports.signup = async (req, res, next) => {
 //Login
 exports.login = async (req, res, next) => {
   //check validation
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed!');
-    error.statusCode = 422;
-    error.data = errors.array();
-
-    return next(error);
-  }
+  const error = validationError(req);
+  if (error) return next(error);
 
   //get req body
   const email = req.body.email;
@@ -101,6 +88,11 @@ exports.login = async (req, res, next) => {
       {
         email: user.email,
         userId: user._id.toString(),
+        status: user.status,
+        role: user.role,
+        // firstName: user.firstName,
+        // lastName: user.lastName,
+        // dateOfBirth: user.dateOfBirth,
       },
       'guruAcademySecretKey',
       {
@@ -122,3 +114,5 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
+
+// const user = await User.findOne({ email: email }).select('-password');

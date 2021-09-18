@@ -60,6 +60,7 @@ Router.post(
     body('lastName', 'Last name is required').trim().notEmpty(),
 
     body('dateOfBirth')
+      .if((value) => value !== undefined)
       .toDate()
       .isISO8601()
       .withMessage('Invalid type. Date of birth must be a Date')
@@ -67,10 +68,14 @@ Router.post(
       .withMessage('Invalid date of birth. It must before today'),
 
     body('address')
+      .if((value) => value !== undefined)
       .isObject()
       .withMessage('Invalid type. Address must be an Object'),
 
-    body('role').isObject().withMessage('Invalid type. Role must be an Object'),
+    body('role')
+      .notEmpty()
+      .isObject()
+      .withMessage('Invalid type. Role must be an Object'),
     body('role.id')
       .notEmpty()
       .withMessage("Role's id is required")
