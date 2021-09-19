@@ -2,6 +2,7 @@ import "./style.scss"
 import React from "react"
 import logo from "../../../../assets/images/logoGuru.png"
 import bgLogin from "../../../../assets/images/bgLogin.png"
+// eslint-disable-next-line
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik"
 

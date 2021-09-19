@@ -1,7 +1,7 @@
 import React from "react"
 import { Container, Row, Col, Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import error from "../../../../../assets/images/errorCourse.png"
+import error from "../../../assets/images/errorCourse.png"
 import "./style.scss"
 
 const KeepUpToDate = () => {

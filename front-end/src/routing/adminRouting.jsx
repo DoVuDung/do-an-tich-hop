@@ -10,7 +10,7 @@ export const AdminRoute = () => {
                 exact
                 render={({ match: url }) => (
                     <>
-                        <Route path="/dashboard" />
+                        <Route path='/admin/dashboard' />
                         <Route path="/users" />
                         <Route path="/courses" />
                         <Route path="/setting" />

@@ -1,6 +1,6 @@
 import "./style.scss"
 import React from "react"
-import teacher from "../../../../../assets/images/chienpro.png"
+import teacher from "../../../assets/images/chienpro.png"
 
 const teachersData = [
     {

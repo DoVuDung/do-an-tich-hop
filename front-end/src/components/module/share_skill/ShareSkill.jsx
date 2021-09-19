@@ -1,9 +1,9 @@
 import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import iconcmt1 from "../../../../../assets/images/iconcmt1.png"
-import iconcmt2 from "../../../../../assets/images/iconcmt2.png"
-import iconcmt3 from "../../../../../assets/images/iconcmt3.png"
+import iconcmt1 from "../../../assets/images/iconcmt1.png"
+import iconcmt2 from "../../../assets/images/iconcmt2.png"
+import iconcmt3 from "../../../assets/images/iconcmt3.png"
 import "./style.scss"
 
 const commentList = [
