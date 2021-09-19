@@ -1,0 +1,21 @@
+$main-text-color: #000;
+$secondary-text-color: #38B6FF;
+$gray-text-color: #8B8B8B;
+
+
+// border
+$light-gray-color: #ccc;
+
+// font size 
+$text--lg: 18px;
+$text--md: 16px;
+$text--sm: 14px;
+
+
+
+//  mixins 
+@mixin flex($justify: center, $align: center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}

@@ -1,0 +1,40 @@
+@import "../../../../../assets/css/varibles";
+.keep-up {
+    padding: 50px 0;
+    border-bottom: 1px solid $gray-text-color;
+    &__header {
+        font-size: 25px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 400;
+        text-align: left;
+    }
+    &__ads {
+        font-size: 33px;
+        font-weight: 600;
+        width: 40%;
+        line-height: 1.5;
+        text-align: left;
+    }
+    &__card{
+        border-radius: 10px;
+        transition:  box-shadow ease .4s;
+        &:hover{
+            box-shadow: 0 0 10px 5px #ccc;
+            img{
+                transform: scale(1.4);
+            }
+        }
+        &-img{
+            transition: transform .4s ease;
+        }
+        &-body{
+            padding: 0;
+            padding-top: 20px;
+        }
+        &-title{
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+    }
+}

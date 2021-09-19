@@ -1,0 +1,129 @@
+@import "../../../../../assets/css/varibles";
+
+.topTeacher {
+    padding: 30px 0;
+    border-bottom: 1px solid $gray-text-color;
+    &__header {
+        font-size: 35px;
+        line-height: 1.5;
+        margin: 0 auto 50px;
+        text-transform: uppercase;
+        position: relative;
+        width: fit-content;
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: $main-text-color;
+        }
+    }
+    &__box-wrap {
+        width: 100%;
+        margin-bottom: 70px;
+        position: relative;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    &__box {
+        width: 70%;
+        height: 230px;
+        @include flex(flex-end, center);
+        background: $secondary-text-color;
+        //  box
+        &-content {
+            width: 50%;
+            height: 110px;
+            @include flex(center, flex-end);
+            flex-direction: column;
+            &-title {
+                font-size: 22px;
+                font-weight: 500;
+                color: $main-text-color;
+                text-transform: capitalize;
+            }
+            &-des {
+                width: 100%;
+                font-size: 16px;
+                font-weight: normal;
+                line-height: 1.2;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                margin-bottom: 0;
+            }
+        }
+        &-img {
+            width: 150px;
+            height: 150px;
+            margin: 0 50px;
+        }
+        // end box
+        // labels
+        &-labels {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            @include flex(center, flex-start);
+            flex-direction: column;
+            .label {
+                background: #fff;
+                height: 40px;
+                line-height: 40px;
+                margin-bottom: 5px;
+            }
+        }
+        &-linkInfo{
+            transition: all ease .3s;
+            a{
+                display: inline-block;
+                height: 100%;
+            }
+            &:hover{
+                background: $main-text-color;
+                a{
+                    color: #fff;
+                }
+            }
+        }
+    }
+    &__box--right {
+        @include flex(flex-start, center);
+        .topTeacher__box {
+            border-top-right-radius: 10rem;
+            border-bottom-right-radius: 10rem;
+            &-content {
+                text-align: right;
+            }
+            &-labels .label {
+                border-top-right-radius: 10rem;
+                border-bottom-right-radius: 10rem;
+                padding: 0 25px 0 40px;
+            }
+        }
+    }
+    &__box--left {
+        @include flex(flex-end, center);
+        .topTeacher__box {
+            border-top-left-radius: 10rem;
+            border-bottom-left-radius: 10rem;
+            flex-direction: row-reverse;
+            &-content {
+                align-items: flex-start;
+                text-align: left;
+            }
+            &-labels {
+                align-items: flex-end;
+                .label {
+                    border-top-left-radius: 10rem;
+                    border-bottom-left-radius: 10rem;
+                    padding: 0 25px 0 40px;
+                }
+            }
+        }
+    }
+}

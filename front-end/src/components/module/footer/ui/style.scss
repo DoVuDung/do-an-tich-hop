@@ -1,0 +1,74 @@
+@import '../../../../assets/css/varibles';
+.footer{
+    background: black;
+    &-top{
+        .container{
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+    }
+    &__col{
+        text-align: left;
+        &-header{
+            font-size: 25px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 25px;
+            padding: 0;
+            text-transform: capitalize;
+        }
+        &-menu{
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            &-text{
+                color: #fff;
+                font-size: 16px;
+                font-weight: normal;
+                padding: 3px 0;
+                margin-bottom: 3px;
+                text-transform: capitalize;
+                transition: all ease .3s;
+                &:hover{
+                    color: $secondary-text-color;
+                }
+            }
+            &-img{
+                width: 180px;
+                height: 60px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &-bottom{
+        display: flex;
+        align-items: center;
+        &-link,
+        &-inc,
+        .social-link{
+            color: #fff!important;
+            margin: 20px 0;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        &-link:hover{
+            color: $secondary-text-color!important;
+        }
+        .social-link{
+            font-size: 20px;
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            margin-left: 5px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            color: #000!important;
+            text-align: center;
+            line-height: 35px ;
+            padding: 0;
+        }
+    }
+}
