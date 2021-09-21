@@ -17,4 +17,4 @@ const chatBotSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('ChatBot', chatBotSchema);
+module.exports = mongoose.model('ChatBot', chatBotSchema, 'chatBot');

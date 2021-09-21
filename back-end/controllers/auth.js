@@ -19,6 +19,9 @@ exports.signup = async (req, res, next) => {
   const address = req.body.address;
   const role = req.body.role;
 
+  // const description = req.body.description;
+  // const socialLinks = req.body.socialLinks;
+
   try {
     //hash password
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -32,6 +35,10 @@ exports.signup = async (req, res, next) => {
       dateOfBirth,
       address,
       role,
+      // description,
+      // socialLinks,
+      learningCourses: [],
+      teachingCourses: [],
       notifications: [],
     });
 

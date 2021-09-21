@@ -6,6 +6,8 @@ const authRoutes = require('./routers/auth');
 const coursesRoutes = require('./routers/courses');
 const reportRoutes = require('./routers/report');
 const courseCategoryRoutes = require('./routers/courseCategories');
+const chaptersRoutes = require('./routers/chapters');
+const notificationsRoutes = require('./routers/notifications');
 
 //setup
 const app = express();
@@ -21,7 +23,9 @@ app.use(express.json()); //parse json from req's body
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/report', reportRoutes);
 app.use('/api/v1', coursesRoutes);
-app.use('/api/v1/', courseCategoryRoutes);
+app.use('/api/v1', courseCategoryRoutes);
+app.use('/api/v1', chaptersRoutes);
+app.use('/api/v1', notificationsRoutes);
 
 //error response
 app.use((error, req, res, next) => {

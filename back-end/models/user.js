@@ -92,7 +92,7 @@ const userSchema = new Schema(
         ref: 'Course',
       },
     ],
-    learningCourse: [
+    learningCourses: [
       {
         type: Schema.Types.ObjectId,
         ref: 'CourseDetail',

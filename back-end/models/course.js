@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
+var slug = require('mongoose-slug-updater');
 
 const Schema = mongoose.Schema;
 
+mongoose.plugin(slug);
+
 const courseSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
@@ -12,25 +15,26 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      slug: 'title',
+      unique: true,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    detail: {
-      about: [
-        {
-          type: String,
-          required: true,
-        },
-      ],
-      tags: [
-        {
-          type: String,
-          trim: true,
-        },
-      ],
+    topic: {
+      type: Schema.Types.ObjectId,
+      required: true,
     },
+    tags: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
     price: {
       type: Number,
       default: 0,

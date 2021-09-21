@@ -14,6 +14,18 @@ const courseDetailSchema = new Schema(
       ref: 'Course',
       required: true,
     },
+    payment: {
+      price: {
+        type: Number,
+        required: true,
+      },
+      type: {
+        type: String,
+        required: true,
+        default: 'visa',
+      },
+      // id
+    },
     testResults: [
       {
         chapterId: {
@@ -36,7 +48,13 @@ const courseDetailSchema = new Schema(
     ],
     isDone: {
       type: Boolean,
+      require: true,
       default: false,
+    },
+    status: {
+      type: Number,
+      required: true,
+      default: 1,
     },
     certificate: {
       type: Boolean,
@@ -46,4 +64,8 @@ const courseDetailSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('CourseDetail', courseDetailSchema);
+module.exports = mongoose.model(
+  'CourseDetail',
+  courseDetailSchema,
+  'courseDetail'
+);

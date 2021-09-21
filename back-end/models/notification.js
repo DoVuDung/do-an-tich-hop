@@ -19,6 +19,11 @@ const notificationSchema = new Schema(
       required: true,
       trim: true,
     },
+    isSeen: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );

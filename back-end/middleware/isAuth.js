@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
   const token = authHeader && authHeader.split(' ')[1]; //header: {'Authorization': 'Bearer token'}
 
   if (!token) {
-    const error = new Error('Access token not found');
+    const error = new Error('Access token not found.');
 
     error.statusCode = 401;
     error.success = false;
@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
   }
 
   if (!decodedToken) {
-    const error = new Error('Not authenticated');
+    const error = new Error('Not authenticated.');
     error.statusCode = 403;
     error.success = false;
 
