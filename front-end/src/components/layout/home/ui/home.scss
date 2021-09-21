@@ -1,0 +1,111 @@
+@import "../../../../assets/css/varibles";
+
+.trending {
+    padding: 80px 0;
+    border-bottom: 1px solid $gray-text-color;
+    &__card {
+        @include flex(space-between, flex-start);
+        padding: 20px;
+        border: 2px solid $secondary-text-color;
+        border-radius: 25px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background-color: $secondary-text-color;
+            transform: scale(0);
+            transition: transform ease .7s;
+            border-radius: 50%
+        }
+        &:hover {
+            &::after {
+                transform: scale(2);
+            }
+            .trending__card-context {
+                h3,
+                p,
+                button {
+                    color: white;
+                }
+            }
+        }
+        &-context {
+            margin: 30px 10px 20px 25px;
+            text-align: left;
+            width: 50%;
+            h3 {
+                font-size: 25px;
+                font-weight: 600;
+                height: 30px;
+            }
+            p {
+                font-size: 16px;
+                font-weight: normal;
+                color: #ccc;
+                height: 24px;
+            }
+            p,h3{
+                overflow: hidden;
+                display: -webkit-box ;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+            }
+        }
+        &-img {
+            width: 70px;
+            height: 70px;
+        }
+    }
+    &__content {
+        text-align: left;
+        width: 100%;
+        h2 {
+            font-size: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        &-ads {
+            @include flex(space-between, center);
+            margin: 10px 0;
+            p {
+                font-size: 33px;
+                font-weight: 600;
+                width: 40%;
+                line-height: 1.5;
+            }
+            &-img {
+                width: 150px;
+                height: 150px;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+        }
+        &-des {
+            font-size: 16px;
+            font-weight: normal;
+            color: $gray-text-color;
+        }
+    }
+    &__link{
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        transition: all ease .3s;
+        &:hover {
+            background: $secondary-text-color;
+            border-color: transparent;
+            color: #fff;
+        }
+    }
+}
