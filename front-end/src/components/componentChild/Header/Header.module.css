@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+ul li {
+  list-style: none;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* position: fixed; */
+  line-height: 46px;
+  padding: 0 32px;
+  top: 0;
+  left: 0;
+  right: 0;
+
+
+}
+
+.header {
+  height: 80px;
+  width: 100%;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 -6px 6px 8px rgba(0, 0, 0, 0.26);
+
+}
+
+.header--logo>img {
+  width: 166px;
+  height: 76px;
+}
+
+.header__option .header__option-items {
+  display: inline-block;
+  padding: 0 32px;
+  text-transform: uppercase;
+}
+
+.header__search {
+  width: 368px;
+  position: relative;
+  line-height: 34px;
+  /* display: flex;
+  align-items: center; */
+  margin: auto;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+}
+
+.header__search>input {
+  vertical-align: middle;
+}
+
+input {
+  all: unset;
+}
+
+
+.header__search>img {
+  position: absolute;
+  left: 0;
+  padding: 8px;
+}
+
+.header__sharework {
+
+  width: 200px;
+  margin: 0 32px;
+  line-height: 32px;
+  margin: auto;
+
+}
+
+.header__info {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__info-items>img {
+  width: 24px;
+  height: 24px;
+  line-height: 86px;
+}
+
+
+.header--logo:hover {
+  cursor: pointer;
+}
+.header__option-items:hover,
+.header__sharework:hover,
+.header__info-items:hover,
+.header__info-items--avatar:hover {
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+  background: repeating-linear-gradient(
+			white 0%,
+			white 7.5px,
+			hotpink 7.5px,
+			hotpink 15px,
+			white 15px,
+			white 22.5px,
+			hotpink 22.5px,
+			hotpink 30px);
+	/* transform: translateX(-20%) translateY(-20%) rotate(-45deg); */
+	animation: animate 20s linear infinite;
+}
+
+
+
+@keyframes animate {
+  from {
+    background-position: 0;
+  }
+
+  to {
+    background-position: 0 450px;
+  }
+}
