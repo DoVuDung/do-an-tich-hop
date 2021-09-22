@@ -22,6 +22,29 @@ exports.signup = async (req, res, next) => {
   // const description = req.body.description;
   // const socialLinks = req.body.socialLinks;
 
+  let roleData;
+  if (role === 0) {
+    roleData = {
+      id: 0,
+      name: 'root',
+    };
+  } else if (role === 1) {
+    roleData = {
+      id: 1,
+      name: 'admin',
+    };
+  } else if (role === 2) {
+    roleData = {
+      id: 2,
+      name: 'learner',
+    };
+  } else if (role === 3) {
+    roleData = {
+      id: 3,
+      name: 'teacher',
+    };
+  }
+
   try {
     //hash password
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -34,7 +57,7 @@ exports.signup = async (req, res, next) => {
       lastName,
       dateOfBirth,
       address,
-      role,
+      role: roleData,
       // description,
       // socialLinks,
       learningCourses: [],
