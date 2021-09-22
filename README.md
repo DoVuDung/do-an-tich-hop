@@ -21,7 +21,7 @@ Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), qu
 
 > Use git for new branch:
 + git remote
-+ git fetch
++ git fetch origin master
 + git branch ```your branch```
 + git checkout ```your branch```
 + git branch //check branchs in repo
