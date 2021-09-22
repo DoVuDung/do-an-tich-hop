@@ -29,3 +29,4 @@ Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), qu
 + git add ```add your files```
 + git commit -a -m "mess"
 + git push origin ```your branch```
+link: https://www.atlassian.com/git/tutorials/syncing
