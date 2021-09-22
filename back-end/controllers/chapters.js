@@ -73,9 +73,12 @@ exports.postNewChapter = async (req, res, next) => {
     //send response
     res.status(201).json({
       message: 'Chapter created successfully!',
-      courseId: course._id.toString(),
-      newChapter: chapter,
-      courseChapters: course.chapters,
+      data: {
+        courseId: course._id.toString(),
+        newChapter: chapter,
+        courseChapters: course.chapters,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {

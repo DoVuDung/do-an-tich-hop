@@ -16,27 +16,12 @@ const courseCategorySchema = new Schema({
     type: String,
     slug: 'title',
     unique: true,
+    slugPaddingSize: 3,
   },
   topics: [
     {
-      title: {
-        type: String,
-        required: true,
-        index: true,
-      },
-      slug: {
-        type: String,
-        slug: 'title',
-        unique: true,
-        slugPaddingSize: 3,
-      },
-
-      courses: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Course',
-        },
-      ],
+      type: Schema.Types.ObjectId,
+      ref: 'Topic',
     },
   ],
   status: {
@@ -44,7 +29,7 @@ const courseCategorySchema = new Schema({
     required: true,
     default: 1,
   },
-  discount: {
+  discountPercent: {
     type: Number,
     default: 0,
   },

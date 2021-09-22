@@ -3,16 +3,22 @@ const mongoose = require('mongoose');
 const Course = require('../models/course');
 const User = require('../models/user');
 const Notification = require('../models/notification');
-
 const { validationError } = require('../util/helper');
 const CourseCategory = require('../models/courseCategory');
+const Topic = require('../models/topic');
 
 //pagination
 exports.getAllCourses = async (req, res, next) => {
   const currentPage = req.query.page || 1;
-  const COURSE_PER_PAGE = req.query.count || 10;
+  const coursePerPage = req.query.count || null;
 
   try {
+    if (currentPage <= 0 || coursePerPage <= 0) {
+      const error = new Error('Invalid queries value! Expected a Number > 0');
+      error.statusCode = 422;
+
+      throw error;
+    }
     //get courses's count
     const totalCourses = await Course.find().countDocuments();
 
@@ -25,11 +31,17 @@ exports.getAllCourses = async (req, res, next) => {
         'description',
         'socialLinks',
       ])
-      .populate('category', ['title', 'slug', 'discount'])
-      .populate('topic')
+      .populate({
+        path: 'topic',
+        select: '-courses',
+        populate: {
+          path: 'courseCategoryId',
+          select: '-topics',
+        },
+      })
       .sort({ createdAt: -1 })
-      .skip((currentPage - 1) * COURSE_PER_PAGE)
-      .limit(COURSE_PER_PAGE);
+      .skip((currentPage - 1) * coursePerPage)
+      .limit(coursePerPage);
 
     if (!courses) {
       const error = new Error('Courses not found!');
@@ -41,8 +53,11 @@ exports.getAllCourses = async (req, res, next) => {
     //send res
     res.status(200).json({
       message: 'Fetch courses successfully',
-      courses,
-      totalCourses,
+      data: {
+        courses,
+        totalCourses,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -60,9 +75,39 @@ exports.getCourse = async (req, res, next) => {
     //get course
     let course;
     if (mongoose.isValidObjectId(courseSlugOrId)) {
-      course = await findById(courseSlugOrId);
+      course = await Course.findById(courseSlugOrId)
+        .populate('author', [
+          'email',
+          'firstName',
+          'lastName',
+          'description',
+          'socialLinks',
+        ])
+        .populate({
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
+        });
     } else {
-      course = await findOne({ slug: courseSlugOrId });
+      course = await Course.findOne({ slug: courseSlugOrId })
+        .populate('author', [
+          'email',
+          'firstName',
+          'lastName',
+          'description',
+          'socialLinks',
+        ])
+        .populate({
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
+        });
     }
 
     //check course exists
@@ -72,6 +117,167 @@ exports.getCourse = async (req, res, next) => {
 
       throw error;
     }
+
+    //send res
+    res.status(200).json({
+      message: 'Fetch courses successfully',
+      data: {
+        course,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+exports.getCoursesByCategory = async (req, res, next) => {
+  const categorySlugOrId = req.params.categorySlugOrId;
+
+  try {
+    //get course category
+    let courseCategory;
+
+    if (mongoose.isValidObjectId(categorySlugOrId)) {
+      courseCategory = await CourseCategory.findById(categorySlugOrId).select(
+        '-topics'
+      );
+    } else {
+      courseCategory = await CourseCategory.findOne({
+        slug: categorySlugOrId,
+      }).select('-topics');
+    }
+
+    //check exists
+    if (!courseCategory) {
+      const error = new Error('Course category not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    const topics = await Topic.find({
+      courseCategoryId: courseCategory._id,
+    }).populate({
+      path: 'courses',
+      select: ['-learnersDetail'],
+      populate: [
+        {
+          path: 'author',
+          select: [
+            'firstName',
+            'lastName',
+            'description',
+            'socialLinks',
+            'teachingCourses',
+          ],
+        },
+        {
+          path: 'topic',
+          select: ['title', 'discountPercent', 'slug'],
+        },
+      ],
+    });
+
+    if (!topics) {
+      const error = new Error('Category has no course!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    const courses = [];
+    topics.forEach((topic) => courses.push(...topic.courses));
+
+    res.status(200).json({
+      message: 'Fetch courses by category successfully!',
+      data: {
+        courseCategory,
+        courses,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+exports.getCoursesByTopic = async (req, res, next) => {
+  const topicSlugOrId = req.params.topicSlugOrId;
+
+  try {
+    //get course topic
+    let topics;
+
+    if (mongoose.isValidObjectId(topicSlugOrId)) {
+      topics = await Topic.findById(topicSlugOrId).populate({
+        path: 'courses',
+        select: ['-learnersDetail'],
+        populate: [
+          {
+            path: 'author',
+            select: [
+              'firstName',
+              'lastName',
+              'description',
+              'socialLinks',
+              'teachingCourses',
+            ],
+          },
+          {
+            path: 'topic',
+            select: ['title', 'discountPercent', 'slug'],
+          },
+        ],
+      });
+    } else {
+      topics = await Topic.findOne({
+        slug: topicSlugOrId,
+      }).populate({
+        path: 'courses',
+        select: ['-learnersDetail'],
+        populate: [
+          {
+            path: 'author',
+            select: [
+              'firstName',
+              'lastName',
+              'description',
+              'socialLinks',
+              'teachingCourses',
+            ],
+          },
+          {
+            path: 'topic',
+            select: ['title', 'discountPercent', 'slug'],
+          },
+        ],
+      });
+    }
+
+    //check exists
+    if (!topics) {
+      const error = new Error('Topic not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    res.status(200).json({
+      message: 'Fetch courses by topic successfully!',
+      data: {
+        topics,
+      },
+      success: true,
+    });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
@@ -90,6 +296,8 @@ exports.postNewCourse = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const tags = req.body.tags;
+  const price = req.body.price;
+  const discount = req.body.discount;
   const categoryId = req.body.categoryId;
   const topicId = req.body.topicId;
 
@@ -112,10 +320,10 @@ exports.postNewCourse = async (req, res, next) => {
       throw error;
     }
 
-    //check detail.topic refs
-    const category = await CourseCategory.findById(categoryId);
+    //check category exists
+    const courseCategory = await CourseCategory.findById(categoryId);
 
-    if (!category) {
+    if (!courseCategory) {
       const error = new Error('Category not found!');
       error.statusCode = 404;
 
@@ -123,20 +331,28 @@ exports.postNewCourse = async (req, res, next) => {
     }
 
     //check topic exists
-    const topics = category.topics;
-    if (topics.length === 0) {
+    if (courseCategory.topics.length === 0) {
       const error = new Error(
-        'Selected category does not have any topic. Please choose another category!'
+        `Selected category "${courseCategory.title}" does not have any topic. Please choose another category!`
       );
       error.statusCode = 404;
 
       throw error;
     }
 
-    const topic = topics.find((topic) => topic._id.toString() === topicId);
+    const topic = await Topic.findById(topicId);
 
     if (!topic) {
       const error = new Error('Topic not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    if (topic.courseCategoryId.toString() !== categoryId) {
+      const error = new Error(
+        `Selected topic "${topic.title}" does not belong to "${courseCategory.title}" category. Please try again or choose another topic!`
+      );
       error.statusCode = 404;
 
       throw error;
@@ -146,10 +362,11 @@ exports.postNewCourse = async (req, res, next) => {
     const course = new Course({
       title,
       description,
-      category: categoryId,
       author: req.userId,
       topic: topicId,
       tags,
+      price,
+      discount,
       learnersDetail: [],
       streams: [],
       feedbacks: [],
@@ -158,7 +375,11 @@ exports.postNewCourse = async (req, res, next) => {
 
     await course.save();
 
-    //push id course to user (teacher)
+    //push courseId to to topic
+    topic.courses.push(course._id);
+    await topic.save();
+
+    //push courseId to user (teacher)
     user.teachingCourses.push(course._id);
     await user.save();
 
@@ -179,8 +400,11 @@ exports.postNewCourse = async (req, res, next) => {
     //send response
     res.status(201).json({
       message: 'Course created successfully!',
-      course,
-      notification,
+      data: {
+        course,
+        notification,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {

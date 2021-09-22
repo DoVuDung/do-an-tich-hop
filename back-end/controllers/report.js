@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 exports.topTeacher = async (req, res, next) => {
-  const count = +req.query.count || +req.params.count || 3;
+  const count = +req.query.count || +req.params.count || 10;
 
   try {
     const teachers = await User.aggregate([
@@ -44,7 +44,11 @@ exports.topTeacher = async (req, res, next) => {
     }
 
     res.status(200).json({
-      teachers,
+      message: 'Fetch top teachers successfully!',
+      data: {
+        teachers,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {

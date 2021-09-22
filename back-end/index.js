@@ -8,6 +8,8 @@ const reportRoutes = require('./routers/report');
 const courseCategoryRoutes = require('./routers/courseCategories');
 const chaptersRoutes = require('./routers/chapters');
 const notificationsRoutes = require('./routers/notifications');
+const topicsRoutes = require('./routers/topics');
+const usersRoutes = require('./routers/users');
 
 //setup
 const app = express();
@@ -26,6 +28,8 @@ app.use('/api/v1', coursesRoutes);
 app.use('/api/v1', courseCategoryRoutes);
 app.use('/api/v1', chaptersRoutes);
 app.use('/api/v1', notificationsRoutes);
+app.use('/api/v1', topicsRoutes);
+app.use('/api/v1', usersRoutes);
 
 //error response
 app.use((error, req, res, next) => {
@@ -33,10 +37,15 @@ app.use((error, req, res, next) => {
 
   const status = error.statusCode || 500;
   const errorMessage = error.message;
+  const errorData = error.data
+    ? error.data
+    : { ...error, success: undefined, statusCode: undefined };
 
   res.status(status).json({
-    ...error,
     message: errorMessage,
+    data: errorData,
+    success: false,
+    statusCode: status,
   });
 });
 

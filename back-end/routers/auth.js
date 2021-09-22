@@ -74,14 +74,9 @@ Router.post(
 
     body('role')
       .notEmpty()
-      .isObject()
-      .withMessage('Invalid type. Role must be an Object'),
-    body('role.id')
-      .notEmpty()
-      .withMessage("Role's id is required")
-      .isNumeric()
-      .withMessage('Invalid role Id, expect a Number'),
-    body('role.name').notEmpty().withMessage("Role's name is required"),
+      .withMessage('Role is required')
+      .isInt({ max: 3, min: 1 })
+      .withMessage('Invalid value. Expected 0 - 3'),
   ],
 
   //API handler

@@ -27,6 +27,7 @@ const courseSchema = new Schema(
     },
     topic: {
       type: Schema.Types.ObjectId,
+      ref: 'Topic',
       required: true,
     },
     tags: [
@@ -50,11 +51,7 @@ const courseSchema = new Schema(
       required: true,
       default: 20,
     },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: 'CourseCategory',
-      required: true,
-    },
+
     learnersDetail: [{ type: Schema.Types.ObjectId, ref: 'CourseDetail' }],
     streams: [{ type: Schema.Types.ObjectId, ref: 'Stream' }],
     feedbacks: [{ type: Schema.Types.ObjectId, ref: 'Feedback' }],

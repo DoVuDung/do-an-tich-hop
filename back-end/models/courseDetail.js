@@ -24,7 +24,6 @@ const courseDetailSchema = new Schema(
         required: true,
         default: 'visa',
       },
-      // id
     },
     testResults: [
       {

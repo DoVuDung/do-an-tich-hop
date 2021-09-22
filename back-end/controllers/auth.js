@@ -47,7 +47,10 @@ exports.signup = async (req, res, next) => {
     //send response
     res.status(201).json({
       message: 'User created successfully!',
-      userId: savedUser._id,
+      data: {
+        userId: savedUser._id,
+      },
+      success: true,
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -90,6 +93,15 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
+    if (user.status === 0 || user.status === 10) {
+      const error = new Error(
+        'Your account has been suspended. Please contact with us if it have any mistake!'
+      );
+      error.statusCode = 403;
+
+      throw error;
+    }
+
     //create jwt for new login
     const token = jwt.sign(
       {
@@ -110,8 +122,11 @@ exports.login = async (req, res, next) => {
     //send response
     res.status(200).json({
       message: 'Login successfully!',
-      token,
-      userId: user._id.toString(),
+      data: {
+        token,
+        userId: user._id.toString(),
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {

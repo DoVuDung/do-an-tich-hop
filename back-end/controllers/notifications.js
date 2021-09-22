@@ -24,8 +24,9 @@ exports.postNewNotification = async (req, res, next) => {
       throw error;
     }
 
-    //check role is admin or not
+    //check role is admin, root or teacher
     if (
+      userCreateNotification.role.id !== 0 &&
       userCreateNotification.role.id !== 1 &&
       userCreateNotification.role.id !== 3
     ) {
@@ -60,7 +61,10 @@ exports.postNewNotification = async (req, res, next) => {
 
     res.status(201).json({
       message: 'Notification created successfully!',
-      notification,
+      data: {
+        notification,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -71,6 +75,7 @@ exports.postNewNotification = async (req, res, next) => {
   }
 };
 
+//authentication
 exports.getNotifications = async (req, res, next) => {
   try {
     //check authentication
@@ -86,7 +91,11 @@ exports.getNotifications = async (req, res, next) => {
     }
 
     res.status(200).json({
-      user,
+      message: 'Fetch notifications successfully!',
+      data: {
+        user,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -128,7 +137,11 @@ exports.getNotification = async (req, res, next) => {
     }
 
     res.status(200).json({
-      notification,
+      message: 'Fetch notification successfully!',
+      data: {
+        notification,
+      },
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -177,6 +190,7 @@ exports.deleteNotification = async (req, res, next) => {
 
     res.status(200).json({
       message: 'Successfully deleted notification!',
+      success: true,
     });
   } catch (error) {
     if (!error.statusCode) {
