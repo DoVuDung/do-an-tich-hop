@@ -30,3 +30,9 @@ Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), qu
 + git commit -a -m "mess" -n //option: n for find your conflict
 + git push origin ```your branch```
 + link: https://www.atlassian.com/git/tutorials/syncing
+
+> Use for SSH key
++ On your termianl ```ssh keygen```
++ ```ssh-agent sh -c 'ssh-add; ssh-add -L'```
++ Go to github or gitlab, change directory to SSH : upload your ssh key
++ Done!!!
