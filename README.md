@@ -19,3 +19,13 @@ Phân quyền  (admin, teacher, student)
 Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), quản lí tài khoản, làm bài test, nhận chứng chỉ khóa học
 
 
+> Use git for new branch:
++ git remote
++ git fetch
++ git branch ```your branch```
++ git checkout ```your branch```
++ git branch //check branchs in repo
++ git switch ```your branch```
++ git add ```add your files```
++ git commit -a -m "mess"
++ git push origin ```your branch```
