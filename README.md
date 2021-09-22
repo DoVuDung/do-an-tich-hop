@@ -27,6 +27,6 @@ Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), qu
 + git branch //check branchs in repo
 + git switch ```your branch```
 + git add ```add your files```
-+ git commit -a -m "mess"
++ git commit -a -m "mess" -n //option: n for find your conflict
 + git push origin ```your branch```
 + link: https://www.atlassian.com/git/tutorials/syncing
