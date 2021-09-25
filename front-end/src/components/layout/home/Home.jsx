@@ -12,7 +12,8 @@ import Banner from '../../module/banner/Banner'
 import TopTeachers from '../../module/top_teacher/TopTeachers'
 import KeepUpToDate from '../../module/keep_up_to_date/KeepUpToDate'
 import ShareSkill from '../../module/share_skill/ShareSkill'
-import Header from "../../module/header/header"
+// import Header from "../../module/header/header"
+import ProtectedHeader from "../../module/header/protectedHeader"
 import Footer from '../../module/footer/Footer'
 
 const cartContext = [
@@ -41,7 +42,7 @@ const cartContext = [
 const Home = () => {
     return (
         <>
-            <Header />
+            <ProtectedHeader />
             <Banner />
             <div className="trending">
                 <Container>

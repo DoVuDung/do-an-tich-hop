@@ -27,7 +27,6 @@
         flex-direction: column;
         &-form {
             width: 100%;
-            margin-top: 30px;
             @include flex(center, flex-start);
             flex-direction: column;
         }

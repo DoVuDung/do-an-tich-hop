@@ -30,13 +30,15 @@ const SignIn = () => {
 
     const loginUser = async (form) => {
 		try {
-			const loginData = await login(form)
+			const {message, success} = await login(form)
 
-            console.log(loginData)
-            if(!loginData.success){
+            if(!success){
                 alert('incorrect username or password!')
             }
-		} catch (error) {
+            else {
+                alert(message)
+            }
+        } catch (error) {
 			console.log(error)
 		}
 	}
@@ -50,7 +52,7 @@ const SignIn = () => {
                 <div className="signIn__context">
                     <Formik
                         initialValues={{
-                            email: '' ,
+                            email: '', 
                             password: ''
                         }}
                         onSubmit={(values)=> {
@@ -58,7 +60,7 @@ const SignIn = () => {
                         }}
                     >
                         {({ errors, touched }) => (
-                            <Form className="signIn__context-form">
+                            <Form className="signIn__context-form" style={{marginTop: '30px'}}>
                                 <label
                                     htmlFor="email"
                                     className="signIn__context-label"

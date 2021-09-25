@@ -63,7 +63,18 @@ const UserContextProvider = ({children}) => {
         }
     }
 
-    const data = {login, authState}
+    const signUp = async (input) => {
+        try {
+            const res = await axios.post('http://localhost:5000/api/v1/auth/signup', input)
+
+            return res.data
+        } catch (error) {
+
+            return error.response.data.message
+        }
+    }
+
+    const data = {login, authState, signUp}
 
     return (
         <UserContext.Provider

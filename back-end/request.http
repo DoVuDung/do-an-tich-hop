@@ -3,6 +3,23 @@ POST http://localhost:5000/api/v1/auth/login
 content-type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "user1@gmail.com",
     "password": "123456"
+}
+###
+POST http://localhost:5000/api/v1/auth/signup
+content-type: application/json
+
+{
+    "email": "duong@gmail.com",
+    "password": "123456",
+    "firstName": "toni",
+    "lastName": "dev",
+    "dateOfBirth": "1/1/1980",
+    "address": {
+        "street": "le ngan",
+        "city": "da nang",
+        "country": "vietanm"
+    },
+    "role": 1
 }
