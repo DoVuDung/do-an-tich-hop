@@ -1,4 +1,4 @@
-@import "../../../../assets/css/varibles";
+@import "../../../assets/css/varibles";
 
 .signIn {
     width: 100%;
@@ -30,6 +30,18 @@
             margin-top: 30px;
             @include flex(center, flex-start);
             flex-direction: column;
+            .select-boxes{
+                width: 100%;
+                @include flex(space-between, center);
+                select{
+                    width: 30%;
+                    border: 1px solid #ccc ;
+                    border-radius: 5px;
+                    height: 40px;
+                    outline: none ;
+                    background: none ;
+                }
+            }
         }
         &-label {
             font-size: 20px;
