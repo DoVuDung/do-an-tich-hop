@@ -1,7 +1,7 @@
 import "./style.scss"
 import React from "react"
-import logo from "../../../../assets/images/logoGuru.png"
-import bgLogin from "../../../../assets/images/bgLogin.png"
+import logo from "../../../assets/images/logoGuru.png"
+import bgLogin from "../../../assets/images/bgLogin.png"
 // eslint-disable-next-line
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik"
@@ -100,8 +100,8 @@ const SignUp = () => {
                                     </select>
                                     <select name="year">
                                         {
-                                            Array.from({length: 30}).map((_, index) => (
-                                                <option value={index} label={index} key={index} />
+                                            Array.from({length: 50}).map((_, index) => (
+                                                <option value={index + 1972} label={index + 1972} key={index} />
                                             )) 
                                         }
                                     </select>

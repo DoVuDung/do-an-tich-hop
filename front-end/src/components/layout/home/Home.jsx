@@ -1,20 +1,19 @@
 import "./home.scss"
 import React from "react"
-import html from "../../../../assets/images/icons8-html-5.png"
-import javascript from "../../../../assets/images/icons8-javascript.png"
-import css from "../../../../assets/images/icons8-css3.png"
-import python from "../../../../assets/images/icons8-python.png"
-import trendingTopic from "../../../../assets/images/trendingTopic.png"
+import html from "../../../assets/images/icons8-html-5.png"
+import javascript from "../../../assets/images/icons8-javascript.png"
+import css from "../../../assets/images/icons8-css3.png"
+import python from "../../../assets/images/icons8-python.png"
+import trendingTopic from "../../../assets/images/trendingTopic.png"
 import { Container, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-import Header from "../../../module/header/ui/header"
-import Banner from '../../../../components/module/banner/Banner'
-import TopTeachers from '../../../../components/module/top_teacher/TopTeachers'
-import KeepUpToDate from '../../../../components/module/keep_up_to_date/KeepUpToDate'
-import ShareSkill from '../../../../components/module/share_skill/ShareSkill'
-
-import Footer from '../../../../components/module/footer/ui/Footer'
+import Banner from '../../module/banner/Banner'
+import TopTeachers from '../../module/top_teacher/TopTeachers'
+import KeepUpToDate from '../../module/keep_up_to_date/KeepUpToDate'
+import ShareSkill from '../../module/share_skill/ShareSkill'
+import Header from "../../module/header/header"
+import Footer from '../../module/footer/Footer'
 
 const cartContext = [
     {

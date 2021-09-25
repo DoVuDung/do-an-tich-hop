@@ -1,8 +1,8 @@
 import React from "react"
 import { Container, Row, Col, Nav } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import apple from "../../../../assets/images/apple.png"
-import ggplay from "../../../../assets/images/ggplay.png"
+import apple from "../../../assets/images/apple.png"
+import ggplay from "../../../assets/images/ggplay.png"
 import "./style.scss"
 import { AiOutlineFacebook , AiFillTwitterSquare, AiFillGithub } from "react-icons/ai"
 

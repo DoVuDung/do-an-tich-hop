@@ -1,11 +1,14 @@
 import "./style.scss"
-import React from "react"
-import logo from "../../../../assets/images/logoGuru.png"
-import bgLogin from "../../../../assets/images/bgLogin.png"
+import React, {useContext} from "react"
+import logo from "../../../assets/images/logoGuru.png"
+import bgLogin from "../../../assets/images/bgLogin.png"
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik"
+import { UserContext } from "../../../context/userContext"
 
 const SignIn = () => {
+
+    const { login } = useContext(UserContext)
 
     const validateEmail = (input) => {
         let error = ''
@@ -25,6 +28,19 @@ const SignIn = () => {
         return error
     }
 
+    const loginUser = async (form) => {
+		try {
+			const loginData = await login(form)
+
+            console.log(loginData)
+            if(!loginData.success){
+                alert('incorrect username or password!')
+            }
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
     return (
         <div className="signIn">
             <div className="signIn__content">
@@ -37,8 +53,8 @@ const SignIn = () => {
                             email: '' ,
                             password: ''
                         }}
-                        onSubmit={()=> {
-                            alert('simitted')
+                        onSubmit={(values)=> {
+                            loginUser({email: values.email, password: values.password})
                         }}
                     >
                         {({ errors, touched }) => (

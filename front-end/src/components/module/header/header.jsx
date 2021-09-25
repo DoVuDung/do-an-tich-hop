@@ -4,7 +4,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { Link } from "react-router-dom"
 import { BiSearch } from "react-icons/bi"
 import { GiHamburgerMenu } from "react-icons/gi";
-import logo from "../../../../assets/images/logoGuru.png"
+import logo from "../../../assets/images/logoGuru.png"
 import "./header.scss"
 
 const headerItems = [
