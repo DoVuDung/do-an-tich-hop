@@ -1,11 +1,14 @@
 import "./style.scss"
-import React from "react"
-import logo from "../../../../assets/images/logoGuru.png"
-import bgLogin from "../../../../assets/images/bgLogin.png"
+import React, {useContext} from "react"
+import logo from "../../../assets/images/logoGuru.png"
+import bgLogin from "../../../assets/images/bgLogin.png"
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik"
+import { UserContext } from "../../../context/userContext"
 
 const SignIn = () => {
+
+    const { login } = useContext(UserContext)
 
     const validateEmail = (input) => {
         let error = ''
@@ -25,6 +28,21 @@ const SignIn = () => {
         return error
     }
 
+    const loginUser = async (form) => {
+		try {
+			const {message, success} = await login(form)
+
+            if(!success){
+                alert('incorrect username or password!')
+            }
+            else {
+                alert(message)
+            }
+        } catch (error) {
+			console.log(error)
+		}
+	}
+
     return (
         <div className="signIn">
             <div className="signIn__content">
@@ -34,15 +52,15 @@ const SignIn = () => {
                 <div className="signIn__context">
                     <Formik
                         initialValues={{
-                            email: '' ,
+                            email: '', 
                             password: ''
                         }}
-                        onSubmit={()=> {
-                            alert('simitted')
+                        onSubmit={(values)=> {
+                            loginUser({email: values.email, password: values.password})
                         }}
                     >
                         {({ errors, touched }) => (
-                            <Form className="signIn__context-form">
+                            <Form className="signIn__context-form" style={{marginTop: '30px'}}>
                                 <label
                                     htmlFor="email"
                                     className="signIn__context-label"

@@ -5,6 +5,7 @@ const authController = require('../controllers/auth');
 const isAuth = require('../middleware/isAuth');
 const User = require('../models/user');
 const Router = express.Router();
+const isAuth = require('../middleware/isAuth');
 
 //POST: api/v1/auth/login
 Router.post(
@@ -84,6 +85,7 @@ Router.post(
   authController.signup
 );
 
+<<<<<<< HEAD
 //POST: api/v1/auth/check
 //check user's authentication by jwt token (in req's header)
 Router.get('/check', isAuth, (req, res, next) =>
@@ -93,6 +95,12 @@ Router.get('/check', isAuth, (req, res, next) =>
   })
 );
 
+=======
 //GET: api/v1/auth/
-Router.get('/', isAuth, authController.getUser);
+Router.get(
+  '/',
+  isAuth,
+  authController.getUser
+) 
+>>>>>>> 63ab832a74f28e72558522c874bca403c5538a48
 module.exports = Router;

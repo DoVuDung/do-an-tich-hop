@@ -163,5 +163,30 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
+//getUser '/'
+exports.getUser = async(req, res, next) => {
+  try{
+    const user = await User.findById(req.userId).select('-password')
+    if(!user){
+      const error = new Error(`not found current user!!`);
+      error.statusCode = 401;
 
+      throw error;
+    }
+
+    res.status(200).json({
+      message: 'load user successfully!',
+      data: {
+        user
+      },
+      success: true,
+    });
+  }catch(error){
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+}
 // const user = await User.findOne({ email: email }).select('-password');

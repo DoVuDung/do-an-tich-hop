@@ -19,3 +19,20 @@ Phân quyền  (admin, teacher, student)
 Thanh toán (thanh toán cho khóa học của học viên) (paypal+banking), quản lí tài khoản, làm bài test, nhận chứng chỉ khóa học
 
 
+> Use git for new branch:
++ git remote
++ git fetch origin master
++ git branch ```your branch```
++ git checkout ```your branch```
++ git branch //check branchs in repo
++ git switch ```your branch```
++ git add ```add your files```
++ git commit -a -m "mess" -n //option: n for find your conflict
++ git push origin ```your branch```
++ link: https://www.atlassian.com/git/tutorials/syncing
+
+> Use for SSH key
++ On your termianl ```ssh keygen```
++ ```ssh-agent sh -c 'ssh-add; ssh-add -L'```
++ Go to github or gitlab, change directory to SSH : upload your ssh key
++ Done!!!
