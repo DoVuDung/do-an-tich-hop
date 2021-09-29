@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 
 const authController = require('../controllers/auth');
+const isAuth = require('../middleware/isAuth');
 const User = require('../models/user');
 const Router = express.Router();
 
@@ -76,11 +77,20 @@ Router.post(
       .notEmpty()
       .withMessage('Role is required')
       .isInt({ max: 3, min: 1 })
-      .withMessage('Invalid value. Expected 0 - 3'),
+      .withMessage('Invalid value. Expected 1 - 3'),
   ],
 
   //API handler
   authController.signup
+);
+
+//POST: api/v1/auth/check
+//check user's authentication by jwt token (in req's header)
+Router.get('/check', isAuth, (req, res, next) =>
+  res.status(200).json({
+    message: 'User checked successfully!',
+    success: true,
+  })
 );
 
 module.exports = Router;

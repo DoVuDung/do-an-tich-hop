@@ -17,7 +17,7 @@ Router.get('/courses/all', coursesController.getAllCourses);
 Router.get('/courses/:courseSlugOrId', coursesController.getCourse);
 
 // GET: /api/v1/courses/categories/topic/:id
-//get course by category
+//get courses by category
 // public
 Router.get(
   '/courses/categories/:categorySlugOrId',
@@ -25,16 +25,16 @@ Router.get(
 );
 
 // GET: /api/v1/courses/categories/topic/:id
-//get course by topic
+//get courses by topic
 // public
 Router.get(
   '/courses/topics/:topicSlugOrId',
   coursesController.getCoursesByTopic
 );
 
-//GET: /api/v1/courses/register
-//authentication required.
-// Router.get;
+// GET: /api/v1/courses/register
+// authentication required.
+Router.post('/courses/register', isAuth, coursesController.registerCourse);
 
 //POST: /api/v1/courses
 //post new course

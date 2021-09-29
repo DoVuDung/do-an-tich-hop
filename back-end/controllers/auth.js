@@ -23,26 +23,29 @@ exports.signup = async (req, res, next) => {
   // const socialLinks = req.body.socialLinks;
 
   let roleData;
-  if (role === 0) {
-    roleData = {
-      id: 0,
-      name: 'root',
-    };
-  } else if (role === 1) {
+  let status;
+
+  if (role === 1) {
     roleData = {
       id: 1,
       name: 'admin',
     };
+
+    status = 2; //pending
   } else if (role === 2) {
     roleData = {
       id: 2,
       name: 'learner',
     };
+
+    status = 1; //active
   } else if (role === 3) {
     roleData = {
       id: 3,
       name: 'teacher',
     };
+
+    status = 2; //pending
   }
 
   try {
@@ -58,6 +61,7 @@ exports.signup = async (req, res, next) => {
       dateOfBirth,
       address,
       role: roleData,
+      status,
       // description,
       // socialLinks,
       learningCourses: [],
