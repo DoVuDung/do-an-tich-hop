@@ -7,13 +7,18 @@ const { validationError } = require('../util/helper');
 const CourseCategory = require('../models/courseCategory');
 const Topic = require('../models/topic');
 
+//COURSES
+//public
 //pagination
 exports.getAllCourses = async (req, res, next) => {
-  const currentPage = req.query.page || 1;
-  const coursePerPage = req.query.count || null;
+  const currentPage = +req.query.page || 1;
+  const coursePerPage = +req.query.count || null;
 
   try {
-    if (currentPage <= 0 || coursePerPage <= 0) {
+    if (
+      (currentPage && currentPage <= 0) ||
+      (coursePerPage && coursePerPage <= 0)
+    ) {
       const error = new Error('Invalid queries value! Expected a Number > 0');
       error.statusCode = 422;
 
@@ -68,47 +73,36 @@ exports.getAllCourses = async (req, res, next) => {
   }
 };
 
+//public
 exports.getCourse = async (req, res, next) => {
   const courseSlugOrId = req.params.courseSlugOrId;
 
   try {
     //get course
-    let course;
+    let courseFilterData;
     if (mongoose.isValidObjectId(courseSlugOrId)) {
-      course = await Course.findById(courseSlugOrId)
-        .populate('author', [
-          'email',
-          'firstName',
-          'lastName',
-          'description',
-          'socialLinks',
-        ])
-        .populate({
-          path: 'topic',
-          select: '-courses',
-          populate: {
-            path: 'courseCategoryId',
-            select: '-topics',
-          },
-        });
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
     } else {
-      course = await Course.findOne({ slug: courseSlugOrId })
-        .populate('author', [
-          'email',
-          'firstName',
-          'lastName',
-          'description',
-          'socialLinks',
-        ])
-        .populate({
-          path: 'topic',
-          select: '-courses',
-          populate: {
-            path: 'courseCategoryId',
-            select: '-topics',
-          },
-        });
+      courseFilterData = { slug: courseSlugOrId };
     }
+
+    const course = await Course.findOne(courseFilterData)
+      .populate('author', [
+        'email',
+        'firstName',
+        'lastName',
+        'description',
+        'socialLinks',
+      ])
+      .populate({
+        path: 'topic',
+        select: '-courses',
+        populate: {
+          path: 'courseCategoryId',
+          select: '-topics',
+        },
+      });
 
     //check course exists
     if (!course) {
@@ -135,6 +129,7 @@ exports.getCourse = async (req, res, next) => {
   }
 };
 
+//public
 exports.getCoursesByCategory = async (req, res, next) => {
   const categorySlugOrId = req.params.categorySlugOrId;
 
@@ -210,61 +205,44 @@ exports.getCoursesByCategory = async (req, res, next) => {
   }
 };
 
+//public
 exports.getCoursesByTopic = async (req, res, next) => {
   const topicSlugOrId = req.params.topicSlugOrId;
 
   try {
     //get course topic
-    let topics;
+    let topicFilterData;
 
     if (mongoose.isValidObjectId(topicSlugOrId)) {
-      topics = await Topic.findById(topicSlugOrId).populate({
-        path: 'courses',
-        select: ['-learnersDetail'],
-        populate: [
-          {
-            path: 'author',
-            select: [
-              'firstName',
-              'lastName',
-              'description',
-              'socialLinks',
-              'teachingCourses',
-            ],
-          },
-          {
-            path: 'topic',
-            select: ['title', 'discountPercent', 'slug'],
-          },
-        ],
-      });
+      const topicId = new mongoose.Types.ObjectId(courseSlugOrId);
+      topicFilterData = { _id: topicId };
     } else {
-      topics = await Topic.findOne({
-        slug: topicSlugOrId,
-      }).populate({
-        path: 'courses',
-        select: ['-learnersDetail'],
-        populate: [
-          {
-            path: 'author',
-            select: [
-              'firstName',
-              'lastName',
-              'description',
-              'socialLinks',
-              'teachingCourses',
-            ],
-          },
-          {
-            path: 'topic',
-            select: ['title', 'discountPercent', 'slug'],
-          },
-        ],
-      });
+      topicFilterData = { slug: topicSlugOrId };
     }
 
+    const topic = await Topic.findOne(topicFilterData).populate({
+      path: 'courses',
+      select: ['-learnersDetail'],
+      populate: [
+        {
+          path: 'author',
+          select: [
+            'firstName',
+            'lastName',
+            'description',
+            'socialLinks',
+            'teachingCourses',
+          ],
+        },
+        {
+          path: 'topic',
+          select: ['title', 'discountPercent', 'slug'],
+        },
+      ],
+    });
+
     //check exists
-    if (!topics) {
+    if (!topic) {
       const error = new Error('Topic not found!');
       error.statusCode = 404;
 
@@ -274,7 +252,7 @@ exports.getCoursesByTopic = async (req, res, next) => {
     res.status(200).json({
       message: 'Fetch courses by topic successfully!',
       data: {
-        topics,
+        topic,
       },
       success: true,
     });
@@ -287,6 +265,62 @@ exports.getCoursesByTopic = async (req, res, next) => {
   }
 };
 
+//authentication
+exports.registerCourse = async (req, res, next) => {
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
+  //get request's body
+  const title = req.body.title;
+  const description = req.body.description;
+
+  try {
+    //check authentication
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      const error = new Error('Authentication failed!');
+      error.statusCode = 401;
+
+      throw error;
+    }
+
+    //get course
+    let courseFilterData;
+    if (mongoose.isValidObjectId(courseSlugOrId)) {
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
+    } else {
+      courseFilterData = { slug: courseSlugOrId };
+    }
+
+    const course = await Course.findOne(courseFilterData);
+
+    if (!course) {
+      const error = new Error('Courses not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    //check if teacher try to buy their own course
+    if (user.role.id === 3) {
+      const error = new Error('You do not have permission to do this action!');
+      error.statusCode = 403;
+
+      throw error;
+    }
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+//teacher require
 exports.postNewCourse = async (req, res, next) => {
   //check validation
   const error = validationError(req);
@@ -415,6 +449,8 @@ exports.postNewCourse = async (req, res, next) => {
   }
 };
 
+//teacher required
 exports.updateCourse = async (req, res, next) => {};
 
+//admin, teacher required
 exports.deleteCourse = async (req, res, next) => {};

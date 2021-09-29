@@ -10,12 +10,16 @@ const Router = express.Router();
 //authentication require
 Router.get('/notifications', isAuth, notificationsController.getNotifications);
 
+//GET: /api/v1/notifications/:notificationId
+//authentication require
 Router.get(
   '/notifications/:notificationId',
   isAuth,
   notificationsController.getNotification
 );
 
+//DELETE: /api/v1/notifications/:notificationId
+//authentication require
 Router.delete(
   '/notifications/:notificationId',
   isAuth,
