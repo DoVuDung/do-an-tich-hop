@@ -100,31 +100,8 @@ input {
 .header__sharework:hover,
 .header__info-items:hover,
 .header__info-items--avatar:hover {
-  cursor: pointer;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 10px;
-  background: repeating-linear-gradient(
-			white 0%,
-			white 7.5px,
-			hotpink 7.5px,
-			hotpink 15px,
-			white 15px,
-			white 22.5px,
-			hotpink 22.5px,
-			hotpink 30px);
-	/* transform: translateX(-20%) translateY(-20%) rotate(-45deg); */
-	animation: animate 20s linear infinite;
+  cursor: pointer;  
 }
 
 
 
-@keyframes animate {
-  from {
-    background-position: 0;
-  }
-
-  to {
-    background-position: 0 450px;
-  }
-}

@@ -1,54 +1,114 @@
-.main{
+.main {
   display: flex;
   width: 100%;
   margin: 16px 0;
 }
-.teacher__info{
+
+.teacher__info {
   width: 30%;
 }
-.teacher__info--view{
+
+.teacher__info--view {
   height: 500px;
   background-color: #7BCCFC;
   margin: 16px 32px;
 }
-.teacher__info--base{
+
+.teacher__info--base {
   padding: 40px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.teacher--logo > img {
-  
-}
-.teacher--name{
+
+.teacher--logo>img {}
+
+.teacher--name {
   font-size: 32px;
   font-weight: bold;
 }
+
 .teacher__info--base__add {
   vertical-align: middle;
-  padding:0 46px;
+  padding: 0 46px;
 }
-.teacher__info--base__add-items{
+
+.teacher__info--base__add-items {
   display: block;
   text-align: left;
   font-size: 18px;
   line-height: 32px;
 }
-.teacher__social{
+
+.teacher__social {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0 32px;
 }
-.teacher__social--icon > img{
+
+.teacher__social--icon>img {
   width: 24px;
 }
+
 .teacher--name,
 .teacher__info--base__add-items,
-.teacher__social > h3,
-.teacher__member--dated__at{
+.teacher__social>h3,
+.teacher__member--dated__at {
   color: white;
-  
 }
 
+.teacher__manage {
+  margin-top: 20px;
+}
+.teacher__manage--nav__tools{
+  /* display: flex;
+  justify-content: space-around; */
+}
 
+.teacher__manage--nav__tool {
+  border-color: lawngreen;
+  background-color: lightcoral;
+  margin-inline: auto;
+  margin: 0 6px
+ 
+}
+
+.teacher__manage--nav__tool>img {
+  width: 20px;
+}
+
+.teacher__manage--course__createds {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  height: 400px;
+}
+
+.teacher__manage--course__created {
+  margin-top: 20px;
+  height: 250px;
+  width: 250px;
+  margin-inline: auto;
+}
+
+.teacher__manage--course__thumbnail {
+  border-radius: 30px;
+  height: 200px;
+}
+
+.course__created--name {
+  font-weight: bold;
+}
+.teacher__manage--create__new--course{
+  width: 400px;
+  height: 300px
+}
+.teacher__manage--create__new--course__add{
+  display: block;
+  text-align: center;
+  height: 240px;
+  padding: 16px
+}
+.teacher__manage--create__new--course--tilte{
+  width: 100%;
+}

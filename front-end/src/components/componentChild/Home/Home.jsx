@@ -15,7 +15,7 @@ import iconLinkedin from '../../../assets/image/icon/icons8-linkedin-50.png'
 import iconYoutube from '../../../assets/image/icon/icons8-youtube-play-button-50.png'
 
 
-import styles from './Home.module.css';
+import styles from './Home.module.css'; 
 
 function Home(props) {
   return (
@@ -56,7 +56,7 @@ function Home(props) {
           </div>
           <div className={styles['teacher__manage--course__createds']}>
             <div className={styles['teacher__manage--course__created']}>
-              <Card><img src={iconPython} alt="PythonCourse" /></Card>
+              <Card className={styles['teacher__manage--course__thumbnail']}><img src={iconPython} alt="PythonCourse" /></Card>
               <div className={styles['course__created--name']}>Understanding TypeScript - 2021 Edition</div>
               <div className={styles['course__created--info']}>
                 <p>Catogory: Web development
@@ -67,7 +67,7 @@ function Home(props) {
               </div>
             </div>
             <div className={styles['teacher__manage--course__created']}>
-              <Card><img src={iconJavascript} alt="JavascriptCourse" /></Card>
+              <Card className={styles['teacher__manage--course__thumbnail']}><img src={iconJavascript} alt="JavascriptCourse" /></Card>
               <div className={styles['course__created--name']}>Understanding TypeScript - 2021 Edition</div>
               <div className={styles['course__created--info']}>
                 <p>Catogory: Web development
@@ -78,7 +78,7 @@ function Home(props) {
               </div>
             </div>
             <div className={styles['teacher__manage--course__created']}>
-              <Card><img src={iconHTML} alt="HTMLCourse" /></Card>
+              <Card className={styles['teacher__manage--course__thumbnail']}><img src={iconHTML} alt="HTMLCourse" /></Card>
               <div className={styles['course__created--name']}>Understanding TypeScript - 2021 Edition</div>
               <div className={styles['course__created--info']}>
                 <p>Catogory: Web development
@@ -89,10 +89,10 @@ function Home(props) {
               </div>
             </div>
           </div>
-          <div className={styles['teacher__manage--create__new-course']}>
-            <Card>
+          <div className={styles['teacher__manage--create__new--course']}>
+            <Card className={styles['teacher__manage--create__new--course__add']} >
               <Button><img src={iconAddCourse} alt="add new Course" /></Button>
-              <Button>Create a Course</Button>
+              <Button className={styles['teacher__manage--create__new--course--tilte']}>Create a Course</Button>
               <span>Get feedback, views, and appreciations. Public projects
                 can be featured by our curators.</span>
             </Card>
