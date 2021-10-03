@@ -1,0 +1,139 @@
+
+@import "../../../assets/css/varibles";
+.learner{
+    width: 100%;
+    height: 100%;
+    margin-top: 7%;  //có header
+ 
+    .profile{
+        // border: 1px solid black;
+        width: 30%;
+        // position:absolute ;
+        height: 100%;
+        .content{
+            height: 70%;  
+            width: 72%;
+            margin: 0 14%; 
+            margin-top: 15%;
+            border-radius: 25px;
+            background-color: $secondary-text-color;
+            .avatar{
+                width: 100%;
+                float: left;
+                img{
+                    width: 36%;
+                    border-radius: 50%;
+                    float: left;
+                    margin:7% 4% 7% 7%;
+                    overflow: hidden;
+                }
+                .fullName{
+                    float: left;
+                    width: 50%;
+                    text-overflow: ellipsis;
+                    font-weight: bold;
+                    font-size: 25px;
+                    height: 100px;
+                    margin: 11% 0;
+                    word-wrap: break-word;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    &:hover{
+                        overflow: visible;
+                         
+                    }
+                }
+            }
+            .info{
+                float: left;
+                width: 80%;
+                text-align: left;
+                margin: 0 10%;
+                li{
+                    margin: 20px 0;
+                    font-size: 18px;
+                } 
+            }
+            .btnEditInfo{
+                width: 70%  !important;
+                background-color: white;
+                color: black;
+                border-radius: 20px;
+                height: 9%;
+                margin: 10% 0 15% 0;
+                .iconPen{
+                    margin: 5% 5%;
+                    float: left;
+                }   
+                p{
+                    margin: 3% 10%;
+                    float: left;
+                    font-weight: bold;
+                }
+                &:hover{
+                    background-color: rgb(219, 86, 53);
+                    color: white;
+                }
+            }
+        }
+    }
+    .course{
+ 
+        .enroll{
+            // height: 100px;
+            margin-top: 6%;
+            // border: 1px solid rgb(51, 255, 11);
+            .title{
+                text-align: left;
+                font-size: 25px;
+                font-weight: bold;
+                padding-left: 10px;
+            }
+            .content{
+                border: 1px solid rgba(0, 0, 0, 0.342);
+                border-radius: 20px;
+                width: 100%;
+                height: 90px;
+                margin: 20px 0;
+                text-align: left;
+                padding: 20px 30px;
+                .nameTitle{
+                    // padding:0px 10px;
+                    margin-bottom: 0px;
+                }
+                .nameCourse{
+                    font-weight: bold;
+                    font-size: 18px;
+                }
+            }
+            .btnShow{
+                float: right;
+                font-size: 18px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+        }
+        .certificate{
+            .content{
+                .iconCertifi{
+                    width: 10%;
+                    float: left;
+                    font-size: 25px;
+                    margin: 10px 0px;
+                }
+                .contentCertifi{
+                    width: 70%;
+                    float: left;
+                }
+                .btnCertifi{
+                    background-color: transparent;
+                    border: none;
+                    margin: 12px 0;
+                    float: left;
+                    width: 10%;
+                }
+            }
+        }
+    }
+}
