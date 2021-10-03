@@ -1,0 +1,98 @@
+@import '../../../assets/css/varibles';
+.course{
+    margin-top: 108px;
+    &__top{
+        text-align: left;
+        padding: 20px 0;
+        border-bottom: 1px solid #ccc;
+        position: relative ;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 30%;
+            height: 3px;
+            bottom: -2px;
+            left: 0;
+            background-color: #FFDE59;
+        }
+        p{
+            margin-bottom: 10px;
+        }
+    }
+    &__content{
+        &-menu{
+            padding: 20px 30px;
+            &-item{
+                padding: 20px 0 20px 30px;
+                background: $secondary-text-color;
+                border-radius: 20px;
+                color: #fff;
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 10px;
+                text-align: left;
+                cursor: pointer;
+                user-select: none;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+.title-page{
+    font-size: 34px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 40px;
+}
+.newCourse{
+    text-align: left;
+    padding: 20px 30px;
+    .input-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        label{
+            text-transform: capitalize;
+        }
+        .input{
+            width: 70%;
+            outline: none;
+            padding: 5px 10px;
+            &::-webkit-inner-spin-button{
+                -webkit-appearance: none;
+                appearance: none;
+            }
+        }
+        .input-select{
+            width: 50%;
+            text-transform: capitalize;
+            padding: 5px 10px;
+            cursor: pointer;
+            outline: none;
+            display: block;
+        }
+    }
+    .controls{
+        text-align: right;
+        .button{
+            padding: 10px 35px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-transform: capitalize;
+            &--save{
+                background-color: $secondary-text-color;
+                color: white;
+                margin-right: 20px;
+            }
+            &--next{
+                border: 1px solid #ccc;
+                font-weight: 500;
+            }
+        }
+    }
+}
+.chapterCreate{
+    text-align: left;
+    padding: 20px 30px;
+}
