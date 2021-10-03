@@ -23,3 +23,20 @@ content-type: application/json
     },
     "role": 1
 }
+###
+POST http://localhost:5000/api/v1/courses
+content-type: application/json
+
+{
+    "title": "",
+    "description": "",
+    "author": "61475af8301f7ba3e1c67a6b",
+    "topic": "6148239e9d4e31a30142c0b4",
+    "tags": "tags",
+    "price": "1000",
+    "discount": "10",
+    "learnersDetail": [],
+    "streams": [],
+    "feedbacks": [],
+    "chapters": []
+}
