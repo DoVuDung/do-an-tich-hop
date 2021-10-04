@@ -7,17 +7,20 @@ import Home from '../components/layout/home/Home'
 import ProtectedRoute from './ProtectedRoute'
 import AuthRoute from './AuthRoute'
 import CourseEnrolled from '../components/module/learner/CourseEnrolled'
+import VideoWatching from '../components/module/learner/VideoWatching'
 
 const Routes = () => {
     return (
         <>
-            {/* <Route path='/teacher/course/create' component={CourseCreate} exact/>
+            <Route path='/teacher/course/create' component={CourseCreate} exact/>
             <ProtectedRoute path='/' component={Home} exact/>
             <AuthRoute path='/signin' component={SignIn} exact/>
-            <AuthRoute path='/signup' component={SignUp} exact/> */}
-            <Route path='/' component={CourseEnrolled} exact/>
+            <AuthRoute path='/signup' component={SignUp} exact/>
+
+            {/* <Route path='/' component={CourseEnrolled} exact/> */}
+            {/* <Route path='/' component={VideoWatching} exact/>
             <Route path='/signin' component={SignIn} exact/>
-            <Route path='/signup' component={SignUp} exact/>
+            <Route path='/signup' component={SignUp} exact/> */}
         </>
     )
 }
