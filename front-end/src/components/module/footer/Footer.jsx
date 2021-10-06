@@ -12,7 +12,7 @@ const Footer = () => {
             <div className="footer-top">
                 <Container className='border-md-0'>
                     <Row className="g-4">
-                        <Col sm={6} lg={3}>
+                        <Col sm={6} md={3} lg={3}>
                             <div className="footer__col">
                                 <h2 className="footer__col-header">
                                     GuguAcademy
@@ -45,7 +45,7 @@ const Footer = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col sm={6} lg={3}>
+                        <Col sm={6} md={3} lg={3}>
                             <div className="footer__col">
                                 <h2 className="footer__col-header">
                                     Community
@@ -78,7 +78,7 @@ const Footer = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col sm={6} lg={3}>
+                        <Col sm={6} md={3} lg={3}>
                             <div className="footer__col">
                                 <h2 className="footer__col-header">Teaching</h2>
                                 <div className="footer__col-menu">
@@ -97,7 +97,7 @@ const Footer = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col sm={6} lg={3}>
+                        <Col sm={6} md={3} lg={3}>
                             <div className="footer__col">
                                 <h2 className="footer__col-header">Teaching</h2>
                                 <div className="footer__col-menu">

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { AUTH_LOCAL_TOKEN_NAME } from '../constants/index'
 import setAuthToken from '../untils/setAuthToken' 
 import { authReducer } from '../reducer/authReducer'
+import { getUser, signIn } from '../api/auth_api'
 
 
 export const UserContext = createContext()
@@ -20,13 +21,13 @@ const UserContextProvider = ({children}) => {
             setAuthToken(localStorage[AUTH_LOCAL_TOKEN_NAME])
         }
         try {
-            const res = await axios.get(`http://localhost:5000/api/v1/auth/`)
-            if(res.data.success){
+            const res = await getUser()
+            if(res.success){
                 dispatch({
                     type: 'SET_AUTH',
                     payload: {
                         isAuthenticated: true,
-                        user: res.data.data.user
+                        user: res.data.user
                     }
                 })
             }
@@ -47,34 +48,23 @@ const UserContextProvider = ({children}) => {
 
     const login = async (input) => {
         try {
-            const res = await axios.post('http://localhost:5000/api/v1/auth/login', input) 
-            if(res.data.success){
+            const res = await signIn(input)
+            if(res.success){
                 localStorage.setItem(
                     AUTH_LOCAL_TOKEN_NAME,
-                    res.data.data.token,
+                    res.data.token,
                 )
             }
             await loadUser()
 
-            return res.data
+            return res
         } catch (error) {
 
             return error.response.data.message
         }
     }
 
-    const signUp = async (input) => {
-        try {
-            const res = await axios.post('http://localhost:5000/api/v1/auth/signup', input)
-
-            return res.data
-        } catch (error) {
-
-            return error.response.data.message
-        }
-    }
-
-    const data = {login, authState, signUp}
+    const data = {login, authState}
 
     return (
         <UserContext.Provider

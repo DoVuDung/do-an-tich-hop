@@ -43,7 +43,7 @@ const ShareSkill = () => {
                                             <img src={item.icon} alt="" />
                                         </div>
                                         <div className="d-flex flex-column justify-content-center align-items-flex-start">
-                                            <Link to="/profile">
+                                            <Link to="/profile" style={{fontWeight: '500'}}>
                                                 {item.title}
                                             </Link>
                                             <p>{item.name}</p>

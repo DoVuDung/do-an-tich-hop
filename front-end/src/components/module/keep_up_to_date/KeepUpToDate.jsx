@@ -9,18 +9,20 @@ const KeepUpToDate = () => {
         <div className="keep-up">
             <Container>
                 <h2 className="keep-up__header">keep up to date</h2>
-                <p className="keep-up__ads">Discover more about GuruAcademy</p>
+                <p className="keep-up__ads">Discover more about<br/>GuruAcademy</p>
                 <div>
                     <Row className="g-5">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <Col  sm={6} lg={3}>
                                 <Card className="keep-up__card py-3">
                                     <div className="position-relative overflow-hidden" style={{borderRadius: '10px'}}>
-                                        <Card.Img src={error} className='keep-up__card-img'/>
+                                        <Link to=''>
+                                            <Card.Img src={error} className='keep-up__card-img'/>
+                                        </Link>
                                     </div>
-                                    <Card.Body className="keep-up__card-body">
+                                    <Card.Body className="keep-up__card-body px-3">
                                         <Card.Title as={Link} to='/course' className="keep-up__card-title">
-                                            Card title
+                                        Clound every thing around me
                                         </Card.Title>
                                         <Card.Text className="keep-up__card-text">
                                             This is a longer card with

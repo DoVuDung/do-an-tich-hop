@@ -1,4 +1,3 @@
-import "./style.scss"
 import React, {useContext} from "react"
 import logo from "../../../assets/images/logoGuru.png"
 import bgLogin from "../../../assets/images/bgLogin.png"

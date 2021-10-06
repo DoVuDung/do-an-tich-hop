@@ -29,7 +29,7 @@ const protectedHeader = () => {
               live stream
             </Link>
           </Nav.Item>
-          <form action="" className="header__menu-form" >
+          <form action="" className="header__menu-form nav-item" >
             <input type="text"/>
             <div className='button header__menu-form-button'>
               <BiSearch />
@@ -41,25 +41,25 @@ const protectedHeader = () => {
               borderRadius: '25px',
             }}
           >
-            <Link to="/" className="nav-link">
+            <Link to="/" className="nav-link py-1 px-3">
               share your work
             </Link>
           </Nav.Item>
         </Nav>
 
         <div className="header__search d-none d-lg-flex">
-        <button className="button header__search-button">
+        <button className="button header__search-button ms-1">
             <FiMail />
           </button>
 
-          <button className="button header__search-button">
+          <button className="button header__search-button ms-1">
             <BsBell />
           </button>
           <div
             className="d-flex align-items-center px-2"
             style={{ height: "50px" }}
           >
-            <div className="header__avatar me-3" style={{ cursor: "pointer" }}>
+            <div className="header__avatar" style={{ cursor: "pointer" }}>
               <img src={avatar} alt="" />
             </div>
           </div>
