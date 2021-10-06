@@ -1,0 +1,47 @@
+.container {
+  .header {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      outline: none;
+      padding-bottom: 0.3rem;
+      width: 80%;
+
+      &:active,
+      &:focus {
+        border-bottom: 1px solid #aaa;
+        transition: all 0.3s linear;
+      }
+    }
+
+    svg {
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    padding: 2rem 2.5rem 0;
+  }
+
+  .footer {
+    padding: 2rem 2.5rem;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .btn {
+      margin-left: var(--margin-left-btn);
+    }
+  }
+}
