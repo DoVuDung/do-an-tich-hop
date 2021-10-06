@@ -1,18 +1,26 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import SignIn from '../components/module/signin/SignIn'
-import SignUp from '../components/module/signup/SignUp'
+import CourseCreate from '../components/layout/course/ui/CourseCreate'
 import Home from '../components/layout/home/Home'
-import ProtectedRoute from './ProtectedRoute'
+import { ProtectedRoute } from './ProtectedRoute'
+import { TeacherRoute } from './TeacherRoute'
 import AuthRoute from './AuthRoute'
 
 
 const Routes = () => {
     return (
         <>
-            <ProtectedRoute path='/' component={Home} exact/>
-            <AuthRoute path='/signin' component={SignIn} exact/>
-            <AuthRoute path='/signup' component={SignUp} exact/>
+            <Route path='/' component={Home} exact/>
+            <Route exact path='/teacher/course/create'
+				render={({url}) => <TeacherRoute path={url} component={CourseCreate} exact/>}
+			/>
+            <Route exact path='/signin'
+				render={props => <AuthRoute {...props} authRoute='signin' />}
+			/>
+            <Route exact path='/signup'
+				render={props => <AuthRoute {...props} authRoute='signup' />}
+			/>
+            
         </>
     )
 }

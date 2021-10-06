@@ -12,8 +12,8 @@ import Banner from '../../module/banner/Banner';
 import TopTeachers from '../../module/top_teacher/TopTeachers';
 import KeepUpToDate from '../../module/keep_up_to_date/KeepUpToDate';
 import ShareSkill from '../../module/share_skill/ShareSkill';
-// import Header from "../../module/header/header"
-import ProtectedHeader from '../../module/header/protectedHeader';
+import Header from '../../module/header/header';
+// import ProtectedHeader from "../../module/header/protectedHeader"
 import Footer from '../../module/footer/Footer';
 import Chatbot from '../../module/chatbot/Chatbot';
 
@@ -43,7 +43,7 @@ const cartContext = [
 const Home = () => {
   return (
     <>
-      <ProtectedHeader />
+      <Header />
       <Banner />
       <div className="trending">
         <Container>
@@ -106,7 +106,6 @@ const Home = () => {
       <TopTeachers />
       <KeepUpToDate />
       <ShareSkill />
-      {/* chatbot */}
       <Chatbot />
       <Footer />
     </>

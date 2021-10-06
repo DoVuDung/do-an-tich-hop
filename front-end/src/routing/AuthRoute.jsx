@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../context/userContext'
 import { Redirect, Route } from 'react-router-dom'
-
-const AuthRoute = ({component: Component, ...rest}) => {
+import SignUp from '../components/module/signup/SignUp';
+import SignIn from '../components/module/signin/SignIn'
+const AuthRoute = ({authRoute}) => {
     
     const {
         authState: { loading, isAuthenticated }
@@ -13,17 +14,12 @@ const AuthRoute = ({component: Component, ...rest}) => {
             loading...
         </div>
     )
-
+    else if (isAuthenticated) return <Redirect to='/'/>
     return (
-        <Route 
-            {...rest}
-            render={props => (
-                !isAuthenticated ? (
-                <Component {...props}/>
-            ) : (
-                <Redirect to='/'/>
-            )
-        )} />
+        <>
+            {authRoute === 'signin' && <SignIn />}
+            {authRoute === 'signup' && <SignUp />}
+        </>
     )
 }
 

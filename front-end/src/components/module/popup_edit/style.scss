@@ -1,0 +1,63 @@
+@import "../../../assets//css/varibles";
+.popup {
+  position: relative;
+  width: fit-content;
+  &__icon {
+    @include flex();
+    height: 25px;
+    width: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+  }
+  &__options {
+    background: #fff;
+    z-index: 999;
+    position: absolute;
+    border: 1px solid #ccc;
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    top: 40px;
+    right: -300px;
+    box-shadow: 0 0 10px 0px #ccc;
+    transition: 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+    &.active {
+      right: 0;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &__option {
+    padding: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+    user-select: none;
+    span {
+      display: inline-block;
+      padding: 3px 7px;
+      border: 1px solid;
+      border-radius: 3px;
+      margin-right: 10px;
+    }
+    label{
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: #333;
+      color: #fff;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

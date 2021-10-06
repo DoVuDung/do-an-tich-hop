@@ -35,7 +35,7 @@ $image: url(../../../assets//images/banner.png);
         text-align: left;
     }
     &__header {
-        font-size: 85px;
+        font-size: 60px;
         font-weight: 600;
         color: #000;
         letter-spacing: 3px;
@@ -46,22 +46,25 @@ $image: url(../../../assets//images/banner.png);
     &__button {
         padding: 15px 30px;
         border-radius: 3px;
-        background-color: #000;
+        background: #000;
         color: #fff;
+        border: 1px solid ;
+        transform: ease .4s;
         text-transform: uppercase;
         &:hover {
-            color: #fff;
+            color: #333;
+            background: #fff;
         }
     }
     &__intro {
         margin-top: 75px;
-        font-size: 40px;
+        font-size: 25px;
         font-weight: 500;
         text-transform: uppercase;
         color: #000;
         letter-spacing: 2px;
         & p {
-            font-size: 25px;
+            font-size: 16px;
         }
     }
 }

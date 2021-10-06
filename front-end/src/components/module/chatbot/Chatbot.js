@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 //import img
 import chatbotImg from '../../../assets/images/icon-chatbot.png';

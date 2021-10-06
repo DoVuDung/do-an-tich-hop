@@ -13,6 +13,8 @@ exports.postNewChapter = async (req, res, next) => {
   const number = req.body.number;
   const title = req.body.title;
   const description = req.body.description;
+  const tests = req.body.tests;
+  const videos = req.body.videos;
 
   try {
     //check authentication

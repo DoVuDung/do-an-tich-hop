@@ -24,7 +24,7 @@ exports.getAllCourses = async (req, res, next) => {
 
       throw error;
     }
-    //get courses's count
+    //get courses's count          
     const totalCourses = await Course.find().countDocuments();
 
     //get courses

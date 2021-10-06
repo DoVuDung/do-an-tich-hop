@@ -11,7 +11,7 @@ POST http://localhost:5000/api/v1/auth/signup
 content-type: application/json
 
 {
-    "email": "duong@gmail.com",
+    "email": "teacher@gmail.com",
     "password": "123456",
     "firstName": "toni",
     "lastName": "dev",
@@ -21,5 +21,28 @@ content-type: application/json
         "city": "da nang",
         "country": "vietanm"
     },
-    "role": 1
+    "role": 3
 }
+###
+POST http://localhost:5000/api/v1/courses
+content-type: application/json
+
+{
+    "title": "hoc lap trinh js",
+    "description": "hoc lap trinh js tai GuruAccademy",
+    "author": "61475af8301f7ba3e1c67a6b",
+    "topic": "6148239e9d4e31a30142c0b4",
+    "tags": "tags",
+    "price": "1000",
+    "discount": "10",
+    "learnersDetail": [],
+    "streams": [],
+    "feedbacks": [],
+    "chapters": []
+}
+###
+GET http://localhost:5000/api/v1/course-categories
+###
+GET http://localhost:5000/api/v1/course-categories/:categorySlugOrId
+###
+GET http://localhost:5000/api/v1/courses/all

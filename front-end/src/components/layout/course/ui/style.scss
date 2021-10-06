@@ -1,0 +1,403 @@
+@import "../../../../assets/css/varibles";
+.course {
+  margin-top: 108px;
+  &__top {
+    text-align: left;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 30%;
+      height: 3px;
+      bottom: -2px;
+      left: 0;
+      background-color: #ffde59;
+    }
+    h2 {
+      font-size: 25px;
+    }
+  }
+  &__content {
+    &-menu {
+      padding: 20px 30px;
+      &-item {
+        text-align: center;
+        padding: 20px 0;
+        border-radius: 20px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        user-select: none;
+        text-transform: capitalize;
+        border: 1px solid #ccc;
+        color: #a3a3a3;
+        &.active {
+          background: $secondary-text-color;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+.controls {
+  text-align: right;
+  .button {
+    padding: 10px 35px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-transform: capitalize;
+    &--save {
+      background-color: $secondary-text-color;
+      color: white;
+      margin-right: 20px;
+    }
+    &--next {
+      border: 1px solid #ccc;
+      font-weight: 500;
+    }
+  }
+}
+.title-page {
+  font-size: 28px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.newCourse {
+  text-align: left;
+  padding: 20px 30px;
+  .input-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    label {
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+    .input {
+      width: 70%;
+      outline: none;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        appearance: none;
+      }
+    }
+    .input-select {
+      width: 50%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      text-transform: capitalize;
+      padding: 5px 10px;
+      cursor: pointer;
+      outline: none;
+      display: block;
+    }
+  }
+  .radio-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 20px;
+    margin-bottom: 30px;
+    .radio {
+      span {
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        text-align: center;
+        padding: 15px 0;
+        cursor: pointer;
+        user-select: none;
+      }
+      input {
+        display: none;
+      }
+      input:checked ~ span {
+        background: $secondary-text-color;
+        color: #fff;
+      }
+    }
+  }
+  .big-label {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+}
+.chapterCreate {
+  text-align: left;
+  padding: 20px 30px;
+  .chapter {
+    &__header {
+      h4 {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+    }
+    &__body {
+      margin-left: 20px;
+      transition: ease 3s;
+      overflow: hidden;
+      height: fit-content;
+      &.hidden{
+        height: 0px;
+      }
+      &-item {
+        .item__header {
+          @include flex(space-between, center);
+          margin-bottom: 15px;
+          h5 {
+            font-size: 15px;
+            text-transform: capitalize;
+          }
+        }
+        .item__body {
+          margin: 0 0 20px 50px;
+          &-box {
+            p {
+              user-select: none;
+              border: 1px solid #ccc;
+              padding: 10px 40px;
+              border-radius: 10px;
+              margin: 0;
+              text-align: center;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .lesson {
+        &-item {
+          margin-bottom: 20px;
+          > p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+          }
+          &-video {
+            width: 300px;
+            height: 200px;
+          }
+        }
+      }
+      .test .item__body,
+      .attachment .item__body {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 20px;
+      }
+      .description {
+        textarea {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px 10px;
+        }
+      }
+    }
+    &__footer{
+      text-align: right;
+      button{
+        border: none;
+      outline: none ;
+      user-select: none;
+      text-align: center;
+      padding: 10px 0;
+      width: 100px;
+      border-radius: 5px;
+      background-color: $secondary-text-color;
+      color: #fff;
+      margin: 0;
+      cursor: pointer;
+      }
+    }
+    &__popup{
+      width: fit-content;
+      .popup__option{
+        padding: 10px;
+        border: 1px solid;
+        &:hover{
+          background-color: $secondary-text-color;
+        }
+      }
+    }
+  }
+}
+.formWrap{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #1e1d1dc4;
+  @include flex();
+  &__body{
+    padding: 20px;
+    height: fit-content;
+    background-color: #fff;
+    label{
+      text-transform: capitalize;
+      span{
+        font-size: 12px;
+        color: red;
+        margin-left: 10px;
+      }
+    }
+    input{
+      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 0 5px;
+      height: 30px;
+      margin-bottom: 20px;
+    }
+  }
+  &__title{
+    font-size:20px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+  }
+  .submit-btn{
+    margin-top: 20px;
+    @include flex(flex-end);
+    button{
+      border: none;
+      outline: none ;
+      user-select: none;
+      text-align: center;
+      padding: 10px 0;
+      width: 100px;
+      border-radius: 5px;
+      background-color: $secondary-text-color;
+      color: #fff;
+      margin: 0;
+      cursor: pointer;
+    }
+  }
+}
+.lessonForm{
+  width: 500px;
+  display: flex;
+  flex-direction: column; 
+}
+.testForm{
+  width: 1000px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  &-items{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    p{
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+  }
+  &-item, .answer{
+    display: flex;
+    flex-direction: column;
+  }
+  &-item{
+    margin-bottom: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+  }
+  .correct-answer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    input{
+      display: none;
+      &:checked ~ span{
+        background-color: $secondary-text-color;
+        color: #fff;
+        border: 1px solid $secondary-text-color;
+      }
+    }
+    span{
+      user-select: none;
+      display: block;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      text-align: center;
+      cursor: pointer;
+      color: #333;
+    }
+  }
+  &-addBtn{
+    margin-top: 40px;
+    height: 50px;
+    border: 1px solid #333;
+    @include flex();
+    font-size: 30px;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: all ease .3s;
+    &:hover{
+      color: #fff;
+      background-color: #333;
+    }
+  }
+}
+.reviewCourse{
+  padding: 20px 30px;
+  text-align: left;
+  &__course{
+    .badges{
+      user-select: none;
+      @include flex(flex-start, center);
+      margin-bottom: 20px;
+      span{
+        display: inline-block;
+        line-height: 40px;
+        font-size: 20px;
+        margin: 0 20px;font-weight: 600;
+      }
+      p {
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 5px;
+        line-height: 40px;
+        margin: 0;
+        font-weight: 500;
+        color: #fff;
+      }
+      &_cate{
+        background: #16cd78;
+      }
+      &_topic{
+        background: #a408a7;
+      }
+    }
+    .title{
+      font-size: 20px;
+      font-weight: 500;
+      label{
+        color: #6e6d6d;
+        font-size: 14px;
+      }
+    }
+    .price{
+      font-weight: 600;
+      font-size: 18px;
+      &-old{
+        margin-left: 20px;
+        text-decoration: line-through;
+        font-size: 12px;
+        font-weight: normal;
+      }
+      &-new{
+        font-weight: 500;
+        font-size: 14px;
+      }
+    }
+  }
+}
