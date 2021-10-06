@@ -19,6 +19,7 @@ const courseSchema = new Schema(
       type: String,
       slug: 'title',
       unique: true,
+      slugPaddingSize: 3,
     },
     author: {
       type: Schema.Types.ObjectId,

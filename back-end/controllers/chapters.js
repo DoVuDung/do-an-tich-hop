@@ -8,6 +8,8 @@ exports.postNewChapter = async (req, res, next) => {
   const error = validationError(req);
   if (error) return next(error);
 
+  console.log(req.body);
+
   //get request's body
   const courseId = req.body.courseId;
   const number = req.body.number;
@@ -61,9 +63,9 @@ exports.postNewChapter = async (req, res, next) => {
       number,
       title,
       description,
-      tests: [],
+      tests,
       attachments: [],
-      videos: [],
+      videos,
     });
 
     await chapter.save();

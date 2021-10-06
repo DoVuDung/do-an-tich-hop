@@ -24,8 +24,11 @@ Router.post(
       .withMessage("Chapter's number is required.")
       .isNumeric()
       .withMessage('Invalid type. Expected an Number')
-      .custom((value) => {
-        return Chapter.findOne({ number: value }).then((chapterDoc) => {
+      .custom((value, { req }) => {
+        return Chapter.findOne({
+          courseId: req.body.courseId,
+          number: value,
+        }).then((chapterDoc) => {
           if (chapterDoc) {
             return Promise.reject(`Chapter number ${value} is exists`);
           }
