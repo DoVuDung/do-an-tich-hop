@@ -28,7 +28,8 @@ const headerItems = [
 const Header = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false)
 
-  const { authState: isAuthenticated } = useContext(UserContext)
+  const { authState: {isAuthenticated} } = useContext(UserContext)
+  console.log(isAuthenticated)
 
   const body = () => {
     if (!isAuthenticated)
@@ -39,7 +40,7 @@ const Header = () => {
           </Link>
         </button>
       )
-    return (
+    else return (
       <>
         <button className="button header__search-button">
           <BsBell />
@@ -48,10 +49,9 @@ const Header = () => {
           className="d-flex align-items-center px-2"
           style={{ height: "50px" }}
         >
-          <div className="header__avatar me-3" style={{cursor: 'pointer'}}>
+          <div className="header__avatar" style={{cursor: 'pointer'}}>
             <img src={avatar} alt="" />
           </div>
-          <BsCaretDownFill className="d-none d-lg-block" />
         </div>
       </>
     )
@@ -65,7 +65,7 @@ const Header = () => {
             <img src={logo} alt="logo Guru Academy" />
           </Link>
         </div>
-        <Nav className="header__menu d-none d-lg-flex">
+        <Nav className="header__menu d-none d-lg-flex ">
           {headerItems.map((item, index) => (
             <Nav.Item key={index}>
               <Link to={`${item.path}`} className="nav-link translate-hover">

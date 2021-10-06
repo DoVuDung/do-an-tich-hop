@@ -3,7 +3,6 @@
 .share-skill{
     padding: 40px 0;
     &__title{
-        font-size: 16px;
         font-weight: normal;
         margin-bottom: 10px;
         text-transform: uppercase;
@@ -30,7 +29,7 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            font-size: 16px;
+            font-size: 14px;
             height: 70px;
             text-align: justify;
         }

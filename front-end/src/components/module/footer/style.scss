@@ -11,7 +11,7 @@
     &__col{
         text-align: left;
         &-header{
-            font-size: 25px;
+            font-size: 18px;
             font-weight: 500;
             color: #fff;
             margin-bottom: 25px;
@@ -25,7 +25,6 @@
             flex-direction: column;
             &-text{
                 color: #fff;
-                font-size: 16px;
                 font-weight: normal;
                 padding: 3px 0;
                 margin-bottom: 3px;
@@ -36,8 +35,8 @@
                 }
             }
             &-img{
-                width: 180px;
-                height: 60px;
+                width: 150px;
+                height: 45px;
                 margin-bottom: 10px;
             }
         }
@@ -49,8 +48,7 @@
         &-inc,
         .social-link{
             color: #fff!important;
-            margin: 20px 0;
-            font-size: 16px;
+            margin: 10px 0;
             font-weight: normal;
         }
         &-link:hover{
@@ -59,15 +57,15 @@
         .social-link{
             font-size: 20px;
             display: inline-block;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             margin-left: 5px;
             border-radius: 50%;
             overflow: hidden;
             background: #fff;
             color: #000!important;
             text-align: center;
-            line-height: 35px ;
+            line-height: 30px;
             padding: 0;
         }
     }

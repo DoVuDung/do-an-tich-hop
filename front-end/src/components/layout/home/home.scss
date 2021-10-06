@@ -41,12 +41,11 @@
             text-align: left;
             width: 50%;
             h3 {
-                font-size: 25px;
+                font-size: 18px;
                 font-weight: 600;
                 height: 30px;
             }
             p {
-                font-size: 16px;
                 font-weight: normal;
                 color: #ccc;
                 height: 24px;
@@ -62,12 +61,15 @@
             width: 70px;
             height: 70px;
         }
+        &-button{
+            text-decoration: underline;
+        }
     }
     &__content {
         text-align: left;
         width: 100%;
         h2 {
-            font-size: 25px;
+            font-size: 18px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 400;
@@ -77,7 +79,7 @@
             @include flex(space-between, center);
             margin: 10px 0;
             p {
-                font-size: 33px;
+                font-size: 25px;
                 font-weight: 600;
                 width: 40%;
                 line-height: 1.5;
@@ -90,7 +92,6 @@
             }
         }
         &-des {
-            font-size: 16px;
             font-weight: normal;
             color: $gray-text-color;
         }

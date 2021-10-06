@@ -36,21 +36,21 @@
                     width: 30%;
                     border: 1px solid #ccc ;
                     border-radius: 5px;
-                    height: 40px;
+                    height: 30px;
                     outline: none ;
                     background: none ;
                 }
             }
         }
         &-label {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: 400;
             color: #000;
             text-transform: capitalize;
             span {
                 margin-left:10px;
                 display: inline-block;
-                font-size: 14px;
+                font-size: 12px;
                 font-weight: 400;
                 color: red;
                 list-style: 20px;
@@ -58,7 +58,7 @@
         }
         &-input {
             width: 100%;
-            height: 40px;
+            height: 30px;
             margin-bottom: 10px;
             border: 1px solid #000;
             outline: none;
@@ -74,14 +74,12 @@
             color: white;
             background: $secondary-text-color;
             border-radius: 10px;
-            font-size: 20px;
             font-weight: 500;
             text-transform: capitalize;
         }
     }
     &__option {
         display: block;
-        font-size: 20px;
     }
     .forgotPassword {
         margin-bottom: 10px;
@@ -99,14 +97,13 @@
         color: white;
         background: $secondary-text-color;
         border-radius: 10px;
-        font-size: 20px;
     }
     &__copyright {
         padding: 10px;
         border-top: 1px solid #ccc;
         p {
             color: $gray-text-color;
-            font-size: 16px;
+            font-size: 12px;
             font-weight: normal;
             margin: 0;
         }

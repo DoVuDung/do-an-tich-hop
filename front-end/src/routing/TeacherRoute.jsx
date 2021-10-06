@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import { UserContext } from '../context/userContext'
 import { Redirect } from 'react-router-dom'
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
+export const TeacherRoute = ({ component: Component, ...rest }) => {
 
     const{
-        authState: { loading, isAuthenticated }
+        authState: { loading, isAuthenticated, user }
     } = useContext(UserContext)
 
     if(loading)
@@ -14,6 +14,6 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
                 loading....
             </div>
         )
-    if(isAuthenticated) return <Component {...rest}/>
-    return <Redirect to='/signin'/>
+    if(isAuthenticated && user.role.id === 3) return <Component {...rest}/>
+    return <Redirect to='/home'/>
 }
