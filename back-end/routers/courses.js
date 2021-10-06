@@ -24,6 +24,13 @@ Router.get(
   coursesController.getCoursesByCategory
 );
 
+//*** */
+// GET: /api/v1/courses/categories/topic/:id
+//Get courses of student
+
+//*** */
+//Get courses of teacher
+
 // GET: /api/v1/courses/categories/topic/:id
 //get courses by topic
 // public
