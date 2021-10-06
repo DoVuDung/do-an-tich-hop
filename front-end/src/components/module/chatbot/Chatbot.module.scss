@@ -1,0 +1,42 @@
+.container {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.65rem;
+
+  .chatbot-icon {
+    width: 8rem;
+    cursor: pointer;
+  }
+
+  .unreadIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: rgb(253, 112, 112);
+    position: fixed;
+    bottom: 2.2rem;
+    right: 2.5rem;
+
+    p {
+      color: white;
+      line-height: 1.9;
+      font-size: 0.8rem;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+
+  .chat-window {
+    position: fixed;
+    bottom: 2.2rem;
+    right: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    img {
+      width: 5rem;
+    }
+  }
+}
