@@ -68,15 +68,15 @@ export default function Chatbot(props) {
 
       const chatbotMsg = response.data.msg;
 
-      //get tag answer ex: Ok, here [html] => html;
-      const link = chatbotMsg.split(' ').reverse()[0];
+      //get tag(link) answer. ex: Ok, here [html] => [html];
+      const tag = chatbotMsg.split(' ').reverse()[0];
 
       let type, content, answer;
 
       //check type and content
-      if (link[0] === '[') {
+      if (tag[0] === '[') {
         type = 'topic';
-        content = link.split('').slice(1, -1).join('');
+        content = tag.split('').slice(1, -1).join(''); //[topic] => topic
 
         answer = (
           <>
@@ -86,9 +86,9 @@ export default function Chatbot(props) {
             )}
           </>
         );
-      } else if (link[0] === '{') {
+      } else if (tag[0] === '{') {
         type = 'category';
-        content = link.split('').slice(1, -1).join('');
+        content = tag.split('').slice(1, -1).join(''); //{category} => category
 
         answer = (
           <>
@@ -98,7 +98,7 @@ export default function Chatbot(props) {
             )}
           </>
         );
-      } else if (link[0] !== '{' || link[0] !== '[') {
+      } else if (tag[0] !== '{' || tag[0] !== '[') {
         answer = <p>{chatbotMsg}</p>;
       }
 
