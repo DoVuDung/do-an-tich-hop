@@ -7,9 +7,11 @@ import { TeacherRoute } from './TeacherRoute'
 import AuthRoute from './AuthRoute'
 
 
+
 const Routes = () => {
     return (
         <>
+
             <Route path='/' component={Home} exact/>
             <Route exact path='/teacher/course/create'
 				render={({url}) => <TeacherRoute path={url} component={CourseCreate} exact/>}
