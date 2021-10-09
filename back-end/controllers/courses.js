@@ -14,19 +14,14 @@ const Feedback = require('../models/feedback');
 //public
 //pagination
 exports.getAllCourses = async (req, res, next) => {
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
   const currentPage = +req.query.page || 1;
   const coursePerPage = +req.query.count || null;
 
   try {
-    if (
-      (currentPage && currentPage <= 0) ||
-      (coursePerPage && coursePerPage <= 0)
-    ) {
-      const error = new Error('Invalid queries value! Expected a Number > 0');
-      error.statusCode = 422;
-
-      throw error;
-    }
     //get courses's count
     const totalCourses = await Course.find().countDocuments();
 
@@ -39,14 +34,28 @@ exports.getAllCourses = async (req, res, next) => {
         'description',
         'socialLinks',
       ])
-      .populate({
-        path: 'topic',
-        select: '-courses',
-        populate: {
-          path: 'courseCategoryId',
-          select: '-topics',
+      .populate([
+        {
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
         },
-      })
+        // {
+        //   path: 'chapters',
+        //   select: ['-courseId'],
+        // },
+        // {
+        //   path: 'streams',
+        //   select: ['-courseId'],
+        // },
+        // {
+        //   path: 'feedbacks',
+        //   select: ['-courseId'],
+        // },
+      ])
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * coursePerPage)
       .limit(coursePerPage);
@@ -64,6 +73,182 @@ exports.getAllCourses = async (req, res, next) => {
       data: {
         courses,
         totalCourses,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+//public
+//pagination
+exports.getCoursesByCategory = async (req, res, next) => {
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
+  const categorySlugOrId = req.params.categorySlugOrId;
+
+  const currentPage = +req.query.page || 1;
+  let coursePerPage = +req.query.count;
+
+  try {
+    //get course category
+    let courseCategory;
+
+    if (mongoose.isValidObjectId(categorySlugOrId)) {
+      courseCategory = await CourseCategory.findById(categorySlugOrId).select(
+        '-topics'
+      );
+    } else {
+      courseCategory = await CourseCategory.findOne({
+        slug: categorySlugOrId,
+      }).select('-topics');
+    }
+
+    //check exists
+    if (!courseCategory) {
+      const error = new Error('Course category not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    const topics = await Topic.find({
+      courseCategoryId: courseCategory._id,
+    }).populate({
+      path: 'courses',
+      select: ['-learnersDetail'],
+      populate: [
+        {
+          path: 'author',
+          select: ['firstName', 'lastName', 'description', 'socialLinks'],
+        },
+        {
+          path: 'topic',
+          select: ['title', 'discountPercent', 'slug'],
+        },
+        // {
+        //   path: 'chapters',
+        //   select: ['-courseId'],
+        // },
+        // {
+        //   path: 'streams',
+        //   select: ['-courseId'],
+        // },
+        // {
+        //   path: 'feedbacks',
+        //   select: ['-courseId'],
+        // },
+      ],
+    });
+
+    if (!topics) {
+      const error = new Error('Category has no course!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    const courses = [];
+    topics.forEach((topic) => courses.push(...topic.courses));
+
+    if (!coursePerPage) {
+      coursePerPage = courses.length;
+    }
+
+    res.status(200).json({
+      message: 'Fetch courses by category successfully!',
+      data: {
+        courseCategory,
+        //pagination here
+        courses: courses
+          .reverse()
+          .slice(
+            (currentPage - 1) * coursePerPage,
+            (currentPage - 1) * coursePerPage + coursePerPage
+          ),
+        totalCourses: courses.length,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+//public
+//pagination
+exports.getCoursesByTopic = async (req, res, next) => {
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
+  const topicSlugOrId = req.params.topicSlugOrId;
+
+  const currentPage = +req.query.page || 1;
+  let coursePerPage = +req.query.count;
+
+  try {
+    //get course topic
+    let topicFilterData;
+
+    if (mongoose.isValidObjectId(topicSlugOrId)) {
+      const topicId = new mongoose.Types.ObjectId(courseSlugOrId);
+      topicFilterData = { _id: topicId };
+    } else {
+      topicFilterData = { slug: topicSlugOrId };
+    }
+
+    const topic = await Topic.findOne(topicFilterData).populate({
+      path: 'courses',
+      select: ['-learnersDetail'],
+      populate: [
+        {
+          path: 'author',
+          select: ['firstName', 'lastName', 'description', 'socialLinks'],
+        },
+        {
+          path: 'topic',
+          select: ['title', 'discountPercent', 'slug'],
+        },
+      ],
+    });
+    //check exists
+    if (!topic) {
+      const error = new Error('Topic not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    if (!coursePerPage) {
+      coursePerPage = topic.courses.length;
+    }
+
+    res.status(200).json({
+      message: 'Fetch courses by topic successfully!',
+      data: {
+        topic: {
+          ...topic._doc,
+          //pagination here
+          courses: topic.courses
+            .reverse()
+            .slice(
+              (currentPage - 1) * coursePerPage,
+              (currentPage - 1) * coursePerPage + coursePerPage
+            ),
+          totalCourses: topic.courses.length,
+        },
       },
       success: true,
     });
@@ -98,14 +283,33 @@ exports.getCourse = async (req, res, next) => {
         'description',
         'socialLinks',
       ])
-      .populate({
-        path: 'topic',
-        select: '-courses',
-        populate: {
-          path: 'courseCategoryId',
-          select: '-topics',
+      .populate([
+        {
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
         },
-      });
+        {
+          path: 'chapters',
+          select: [
+            '-courseId',
+            '-tests.questions',
+            '-videos.url',
+            '-attachments.url',
+          ],
+        },
+        {
+          path: 'streams',
+          select: ['-courseId'],
+        },
+        {
+          path: 'feedbacks',
+          select: ['-courseId'],
+        },
+      ]);
 
     //check course exists
     if (!course) {
@@ -132,70 +336,73 @@ exports.getCourse = async (req, res, next) => {
   }
 };
 
-//public
-exports.getCoursesByCategory = async (req, res, next) => {
-  const categorySlugOrId = req.params.categorySlugOrId;
+//authorization: learnerDetails, teacher, admin, root
+exports.getCourseChapters = async (req, res, next) => {
+  const courseSlugOrId = req.params.courseSlugOrId;
 
   try {
-    //get course category
-    let courseCategory;
+    //check authentication
+    const user = await User.findById(req.userId);
 
-    if (mongoose.isValidObjectId(categorySlugOrId)) {
-      courseCategory = await CourseCategory.findById(categorySlugOrId).select(
-        '-topics'
-      );
-    } else {
-      courseCategory = await CourseCategory.findOne({
-        slug: categorySlugOrId,
-      }).select('-topics');
-    }
-
-    //check exists
-    if (!courseCategory) {
-      const error = new Error('Course category not found!');
-      error.statusCode = 404;
+    if (!user) {
+      const error = new Error('Authentication failed!');
+      error.statusCode = 401;
 
       throw error;
     }
 
-    const topics = await Topic.find({
-      courseCategoryId: courseCategory._id,
-    }).populate({
-      path: 'courses',
-      select: ['-learnersDetail'],
-      populate: [
+    //get course
+    let courseFilterData;
+    if (mongoose.isValidObjectId(courseSlugOrId)) {
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
+    } else {
+      courseFilterData = { slug: courseSlugOrId };
+    }
+
+    const course = await Course.findOne(courseFilterData)
+      .select(['-learnersDetail', '-streams', '-feedbacks'])
+      .populate([
         {
           path: 'author',
           select: [
+            'email',
             'firstName',
             'lastName',
             'description',
             'socialLinks',
-            'teachingCourses',
           ],
         },
         {
           path: 'topic',
-          select: ['title', 'discountPercent', 'slug'],
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
         },
-      ],
-    });
+        {
+          path: 'chapters',
+          select: ['-courseId'],
+        },
+      ]);
 
-    if (!topics) {
-      const error = new Error('Category has no course!');
+    //check course exists
+    if (!course) {
+      const error = new Error('Course not found!');
       error.statusCode = 404;
 
       throw error;
     }
 
-    const courses = [];
-    topics.forEach((topic) => courses.push(...topic.courses));
+    //*** */
+    //check auth who can see this main content course
 
+    //send res
     res.status(200).json({
-      message: 'Fetch courses by category successfully!',
+      message: 'Fetch courses successfully',
       data: {
-        courseCategory,
-        courses,
+        course,
       },
       success: true,
     });
@@ -208,66 +415,7 @@ exports.getCoursesByCategory = async (req, res, next) => {
   }
 };
 
-//public
-exports.getCoursesByTopic = async (req, res, next) => {
-  const topicSlugOrId = req.params.topicSlugOrId;
-
-  try {
-    //get course topic
-    let topicFilterData;
-
-    if (mongoose.isValidObjectId(topicSlugOrId)) {
-      const topicId = new mongoose.Types.ObjectId(courseSlugOrId);
-      topicFilterData = { _id: topicId };
-    } else {
-      topicFilterData = { slug: topicSlugOrId };
-    }
-
-    const topic = await Topic.findOne(topicFilterData).populate({
-      path: 'courses',
-      select: ['-learnersDetail'],
-      populate: [
-        {
-          path: 'author',
-          select: [
-            'firstName',
-            'lastName',
-            'description',
-            'socialLinks',
-            'teachingCourses',
-          ],
-        },
-        {
-          path: 'topic',
-          select: ['title', 'discountPercent', 'slug'],
-        },
-      ],
-    });
-
-    //check exists
-    if (!topic) {
-      const error = new Error('Topic not found!');
-      error.statusCode = 404;
-
-      throw error;
-    }
-
-    res.status(200).json({
-      message: 'Fetch courses by topic successfully!',
-      data: {
-        topic,
-      },
-      success: true,
-    });
-  } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
-
-    next(error);
-  }
-};
-
+//not finish
 //authentication
 exports.registerCourse = async (req, res, next) => {
   //check validation
@@ -606,7 +754,6 @@ exports.updateCourse = async (req, res, next) => {
   }
 };
 
-//delete course
 //admin, teacher required
 exports.deleteCourse = async (req, res, next) => {
   //check validation
@@ -701,6 +848,8 @@ exports.deleteCourse = async (req, res, next) => {
     await user.save();
 
     //remove many doc of streams, feedbacks, chapters belong to this course
+    //CASCADE
+    //consider keep some data about courseDetail in the future here
     await Stream.deleteMany({ _id: { $in: streamsId } });
     await Feedback.deleteMany({ _id: { $in: feedbacksId } });
     await Chapter.deleteMany({ _id: { $in: chaptersId } });

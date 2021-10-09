@@ -15,14 +15,36 @@ const courseDetailSchema = new Schema(
       required: true,
     },
     payment: {
+      //0: failed, 1: success, 2: pending
+      status: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
       price: {
         type: Number,
         required: true,
       },
-      type: {
+      //visa, momo, Techcombank,...
+      brand: {
         type: String,
         required: true,
         default: 'visa',
+      },
+      //card: 1,...
+      methodId: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
+      invoiceId: {
+        type: String,
+        required: true,
+      },
+      discount: {
+        type: Number,
+        required: true,
+        default: 0,
       },
     },
     testResults: [

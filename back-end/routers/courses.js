@@ -1,5 +1,5 @@
 const express = require('express');
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const coursesController = require('../controllers/courses');
 const isAuth = require('../middleware/isAuth');
@@ -9,27 +9,72 @@ const Router = express.Router();
 //GET: /api/v1/courses/all (query: count, page)
 //get all courses
 //public //pagination
-Router.get('/courses/all', coursesController.getAllCourses);
+Router.get(
+  '/courses/all',
+  [
+    query('page')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+
+    query('count')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+  ],
+  coursesController.getAllCourses
+);
+
+// GET: /api/v1/courses/categories/:categorySlugOrId (query: count, page)
+//get courses by category
+// public
+Router.get(
+  '/courses/categories/:categorySlugOrId',
+  [
+    query('page')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+
+    query('count')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+  ],
+  coursesController.getCoursesByCategory
+);
+
+// GET: /api/v1/courses/topics/:topicSlugOrId (query: count, page)
+//get courses by topic
+// public
+Router.get(
+  '/courses/topics/:topicSlugOrId',
+  [
+    query('page')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+
+    query('count')
+      .if((value) => value !== undefined)
+      .isInt({ min: 1 })
+      .withMessage('Invalid value! Expected a Number > 0'),
+  ],
+  coursesController.getCoursesByTopic
+);
 
 // GET: /api/v1/courses/:courseSlugOrId
 //get course
 // public
 Router.get('/courses/:courseSlugOrId', coursesController.getCourse);
 
-// GET: /api/v1/courses/categories/:categorySlugOrId
-//get courses by category
-// public
+//GET: api/v1/courses/:courseSlugOrId/chapters
+//get main content of course, only learner who registered can access, use case: for learning room.
+//authorization: learnerDetails, teacher, admin, root
 Router.get(
-  '/courses/categories/:categorySlugOrId',
-  coursesController.getCoursesByCategory
-);
-
-// GET: /api/v1/courses/topics/:id
-//get courses by topic
-// public
-Router.get(
-  '/courses/topics/:topicSlugOrId',
-  coursesController.getCoursesByTopic
+  '/courses/:courseSlugOrId/chapters',
+  isAuth,
+  coursesController.getCourseChapters
 );
 
 // ****
@@ -166,7 +211,7 @@ Router.put(
 );
 
 //DELETE: /api/v1/courses
-//update course
+//delete course
 //teacher, admin required
 Router.delete(
   '/courses',
