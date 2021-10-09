@@ -1,8 +1,91 @@
+const mongoose = require('mongoose');
+
 const { validationError } = require('../util/helper');
 const User = require('../models/user');
 const Course = require('../models/course');
 const Chapter = require('../models/chapter');
-const mongoose = require('mongoose');
+const CourseDetail = require('../models/courseDetail');
+
+exports.getChapter = async (req, res, next) => {
+  const chapterSlugOrId = req.params.chapterSlugOrId;
+
+  try {
+    //check authentication
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      const error = new Error('Authentication failed!');
+      error.statusCode = 401;
+
+      throw error;
+    }
+
+    //get chapter
+    let chapterFilterData;
+    if (mongoose.isValidObjectId(chapterSlugOrId)) {
+      const chapterId = new mongoose.Types.ObjectId(chapterSlugOrId);
+      chapterFilterData = { _id: chapterId };
+    } else {
+      chapterFilterData = { slug: chapterSlugOrId };
+    }
+
+    const chapter = await Chapter.findOne(chapterFilterData).populate({
+      path: 'courseId',
+      select: ['title', 'description', 'author'],
+      populate: {
+        path: 'author',
+        select: [
+          'email',
+          'firstName',
+          'lastName',
+          'description',
+          'socialLinks',
+        ],
+      },
+    });
+
+    //check chapter exists
+    if (!chapter) {
+      const error = new Error('Chapter not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    //check auth who can see this chapter content
+    const courseDetail = await CourseDetail.findOne({
+      userId: user.id,
+      courseId: chapter.courseId._id,
+    });
+
+    if (
+      !courseDetail && //learners check
+      user.role.id !== 1 && //admin
+      user.role.id !== 0 && //ROOT
+      user._id.toString() !== chapter.courseId.author._id.toString() //teacher
+    ) {
+      const error = new Error('You do not have permission to do this action!');
+      error.statusCode = 403;
+
+      throw error;
+    }
+
+    //send res
+    res.status(200).json({
+      message: 'Fetch chapter successfully',
+      data: {
+        chapter,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
 
 //teacher required
 exports.postNewChapter = async (req, res, next) => {
@@ -122,8 +205,6 @@ exports.updateChapter = async (req, res, next) => {
       throw error;
     }
 
-    console.log(user._doc);
-
     //check role is teacher or not
     if (user.role.id !== 3) {
       const error = new Error('You do not have permission to do this action!');
@@ -221,8 +302,6 @@ exports.deleteChapter = async (req, res, next) => {
 
       throw error;
     }
-
-    console.log(user._doc);
 
     //check role is teacher or not
     if (user.role.id !== 3) {

@@ -18,15 +18,15 @@ Router.get(
   notificationsController.getNotification
 );
 
-//DELETE: /api/v1/notifications/:notificationId
+//DELETE: /api/v1/notifications
 //authentication require
 Router.delete(
-  '/notifications/:notificationId',
+  '/notifications',
   isAuth,
   [
-    param('notificationId')
+    body('id')
       .notEmpty()
-      .withMessage('Missing params: /:notificationId')
+      .withMessage('CourseId is required.')
       .isMongoId()
       .withMessage('Invalid type. Expected an ObjectId.'),
   ],

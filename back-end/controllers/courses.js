@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 
+const { validationError } = require('../util/helper');
+
 const Course = require('../models/course');
 const User = require('../models/user');
 const Notification = require('../models/notification');
-const { validationError } = require('../util/helper');
 const CourseCategory = require('../models/courseCategory');
 const Topic = require('../models/topic');
 const Chapter = require('../models/chapter');
 const Stream = require('../models/stream');
 const Feedback = require('../models/feedback');
+const CourseDetail = require('../models/courseDetail');
 
 //COURSES
 //public
@@ -275,41 +277,43 @@ exports.getCourse = async (req, res, next) => {
       courseFilterData = { slug: courseSlugOrId };
     }
 
-    const course = await Course.findOne(courseFilterData)
-      .populate('author', [
-        'email',
-        'firstName',
-        'lastName',
-        'description',
-        'socialLinks',
-      ])
-      .populate([
-        {
-          path: 'topic',
-          select: '-courses',
-          populate: {
-            path: 'courseCategoryId',
-            select: '-topics',
-          },
+    const course = await Course.findOne(courseFilterData).populate([
+      {
+        path: 'author',
+        select: [
+          'email',
+          'firstName',
+          'lastName',
+          'description',
+          'socialLinks',
+        ],
+      },
+      {
+        path: 'topic',
+        select: '-courses',
+        populate: {
+          path: 'courseCategoryId',
+          select: '-topics',
         },
-        {
-          path: 'chapters',
-          select: [
-            '-courseId',
-            '-tests.questions',
-            '-videos.url',
-            '-attachments.url',
-          ],
-        },
-        {
-          path: 'streams',
-          select: ['-courseId'],
-        },
-        {
-          path: 'feedbacks',
-          select: ['-courseId'],
-        },
-      ]);
+      },
+      {
+        path: 'chapters',
+        select: [
+          '-courseId',
+          '-tests.questions',
+          '-videos.url',
+          '-attachments.url',
+        ],
+      },
+      {
+        path: 'streams',
+        select: ['-courseId'],
+      },
+      {
+        path: 'feedbacks',
+        select: ['-courseId'],
+      },
+    ]);
 
     //check course exists
     if (!course) {
@@ -321,7 +325,7 @@ exports.getCourse = async (req, res, next) => {
 
     //send res
     res.status(200).json({
-      message: 'Fetch courses successfully',
+      message: 'Fetch course successfully',
       data: {
         course,
       },
@@ -395,12 +399,27 @@ exports.getCourseChapters = async (req, res, next) => {
       throw error;
     }
 
-    //*** */
     //check auth who can see this main content course
+    const courseDetail = await CourseDetail.findOne({
+      userId: user.id,
+      courseId: course._id,
+    });
+
+    if (
+      !courseDetail && //learners check
+      user.role.id !== 1 && //admin
+      user.role.id !== 0 && //ROOT
+      user._id.toString() !== course.author._id.toString() //teacher
+    ) {
+      const error = new Error('You do not have permission to do this action!');
+      error.statusCode = 403;
+
+      throw error;
+    }
 
     //send res
     res.status(200).json({
-      message: 'Fetch courses successfully',
+      message: 'Fetch course chapters successfully',
       data: {
         course,
       },
@@ -423,8 +442,18 @@ exports.registerCourse = async (req, res, next) => {
   if (error) return next(error);
 
   //get request's body
-  const title = req.body.title;
-  const description = req.body.description;
+  const courseId = req.body.courseId;
+
+  //expected: payment: { price: Number, brandId: Number, methodId: Number, invoiceId: String, discount: Number}
+  // const payment = req.body.payment;
+
+  //price: total payment
+  const price = req.body.price;
+  const brandId = req.body.brand;
+  const methodId = req.body.method;
+  const invoiceId = req.body.invoiceId;
+  // discount: only pass discountPercent value from Category and Topic, because this discount belong to GuruAcademy, so it need to record.
+  const discount = req.body.discount;
 
   try {
     //check authentication
@@ -438,15 +467,7 @@ exports.registerCourse = async (req, res, next) => {
     }
 
     //get course
-    let courseFilterData;
-    if (mongoose.isValidObjectId(courseSlugOrId)) {
-      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
-      courseFilterData = { _id: courseId };
-    } else {
-      courseFilterData = { slug: courseSlugOrId };
-    }
-
-    const course = await Course.findOne(courseFilterData);
+    const course = await Course.findById(courseId);
 
     if (!course) {
       const error = new Error('Courses not found!');
@@ -456,12 +477,82 @@ exports.registerCourse = async (req, res, next) => {
     }
 
     //check if teacher try to buy their own course
-    if (user.role.id === 3) {
-      const error = new Error('You do not have permission to do this action!');
+    if (user._id.toString() === course.author.toString()) {
+      const error = new Error('You can not register your own course!');
       error.statusCode = 403;
 
       throw error;
     }
+
+    //get teacher
+    const teacher = await User.findById(course.author);
+
+    if (!teacher) {
+      const error = new Error('Teacher not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    //*** */
+    //check payment method here
+
+    //assume payment succeed
+    const courseDetail = new CourseDetail({
+      userId: user._id,
+      courseId: course.id,
+      //payment,
+      payment: {
+        price,
+        brandId,
+        methodId,
+        invoiceId,
+        discount,
+      },
+    });
+
+    await courseDetail.save();
+
+    //push courseDetail to user, course
+    user.learningCourses.push(course._id);
+    await user.save();
+
+    course.learnersDetail.push(user._id);
+    await course.save();
+
+    //create new notification for learner
+    const notificationLearner = new Notification({
+      userId: req.userId,
+      title: `Your new course "${course.title}" is ready!`,
+      content:
+        "Thank you for register and learning with us. Let's start your first lesson now!",
+    });
+
+    await notificationLearner.save();
+
+    //push id notification to user
+    user.notifications.push(notificationLearner._id);
+    await user.save();
+
+    //create new notification for teacher
+    const notificationTeacher = new Notification({
+      userId: req.userId,
+      title: `"${course.title}": New Learner registered!`,
+      content: `"${user.firstName} ${user.lastName}" has been registered your course!`,
+    });
+
+    await notificationTeacher.save();
+
+    //push id notification to user
+    teacher.notifications.push(notificationTeacher._id);
+    await teacher.save();
+
+    //send response
+    res.status(200).json({
+      message: 'Register course successfully!',
+      data: courseDetail,
+      success: true,
+    });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

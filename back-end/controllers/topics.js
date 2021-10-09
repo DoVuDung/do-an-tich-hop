@@ -197,7 +197,7 @@ exports.postNewTopic = async (req, res, next) => {
 };
 
 exports.updateTopic = async (req, res, next) => {
-  const topicSlugOrId = req.params.topicSlugOrId;
+  const topicId = req.body.id;
 
   //check validation
   const error = validationError(req);
@@ -229,19 +229,10 @@ exports.updateTopic = async (req, res, next) => {
     }
 
     //check topic exists
-    let updatedTopic;
-
-    if (mongoose.isValidObjectId(topicSlugOrId)) {
-      updatedTopic = await Topic.findById(topicSlugOrId).populate(
-        'courseCategoryId',
-        '-topics'
-      );
-    } else {
-      updatedTopic = await Topic.findOne({ slug: topicSlugOrId }).populate(
-        'courseCategoryId',
-        '-topics'
-      );
-    }
+    const updatedTopic = await Topic.findById(topicId).populate(
+      'courseCategoryId',
+      '-topics'
+    );
 
     if (!updatedTopic) {
       const error = new Error('Topic not found!');
@@ -276,7 +267,11 @@ exports.updateTopic = async (req, res, next) => {
 };
 
 exports.deleteTopic = async (req, res, next) => {
-  const topicSlugOrId = req.params.topicSlugOrId;
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
+  const topicId = req.body.id;
 
   try {
     //check authentication
@@ -298,13 +293,8 @@ exports.deleteTopic = async (req, res, next) => {
     }
 
     //check topic exists
-    let topic;
 
-    if (mongoose.isValidObjectId(topicSlugOrId)) {
-      topic = await Topic.findById(topicSlugOrId);
-    } else {
-      topic = await Topic.findOne({ slug: topicSlugOrId });
-    }
+    const topic = await Topic.findById(topicId);
 
     if (!topic) {
       const error = new Error('Topic not found!');
