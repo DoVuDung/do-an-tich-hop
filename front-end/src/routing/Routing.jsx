@@ -17,10 +17,7 @@ const Routes = () => {
             <AuthRoute path='/signin' component={SignIn} exact/>
             <AuthRoute path='/signup' component={SignUp} exact/>
 
-            {/* <Route path='/' component={CourseEnrolled} exact/> */}
-            {/* <Route path='/' component={VideoWatching} exact/>
-            <Route path='/signin' component={SignIn} exact/>
-            <Route path='/signup' component={SignUp} exact/> */}
+             
         </>
     )
 }
