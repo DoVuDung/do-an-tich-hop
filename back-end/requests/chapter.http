@@ -1,0 +1,120 @@
+//POST: /api/v1/chapters/:chap
+//get 
+//teacher, learners of this course, admin, root
+###
+GET 
+
+//POST: /api/v1/chapters
+//teacher required
+###
+POST http://localhost:5000/api/v1/chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY5MTMwLCJleHAiOjE2MzM3NzYzMzB9.-C2sK0sY2jErUc_XyN5N3mW11L-Xqvyp8bam28T7258
+
+{
+  "courseId": "6160522b0be2f6e199cf231e",
+  "number": 5,
+  "title": "Props in React",
+  "descripton": "Props in React",
+  "videos": [
+    {
+      "index": 0,
+      "title": "Lession 1",
+      "url": "https://www.youtube.com/embed/_99Lp9tgiv4"
+    },
+    {
+      "index": 1,
+      "title": "Lession 2",
+      "url": "https://www.youtube.com/embed/A_GjXILBkp0"
+    }
+  ],
+  "tests": [
+    {
+      "index": 0,
+      "title": "Test 1",
+      "questions": [
+        {   
+            "question": "what is React?",
+            "a": "haha",
+            "b": "hehe",
+            "c": "hoho",
+            "d": "huhu",
+            "answer": "a"
+        },
+        {
+            "question": "what is React 2?",
+            "a": "haha",
+            "b": "hehe",
+            "c": "hoho",
+            "d": "huhu",
+            "answer": "b"
+        }
+      ] 
+    } 
+  ],
+  "attachments": []
+}
+
+//PUT: /api/v1/chapters
+//teacher required
+###
+PUT http://localhost:5000/api/v1/chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY5MTMwLCJleHAiOjE2MzM3NzYzMzB9.-C2sK0sY2jErUc_XyN5N3mW11L-Xqvyp8bam28T7258
+
+{
+  "id": "61615cd87e402fe2edbe09df",
+  "number": 5,
+  "title": "Hook - React",
+  "descripton": "Hook in React",
+  "status": 1,
+  "slug": "props-state-in-react",
+  "videos": [
+    {
+      "index": 0,
+      "title": "Lession 1",
+      "url": "https://www.youtube.com/embed/_99Lp9tgiv4"
+    },
+    {
+      "index": 1,
+      "title": "Lession 1 - 2",
+      "url": "https://www.youtube.com/embed/A_GjXILBkp0"
+    }
+  ],
+  "tests": [
+    {
+      "index": 0,
+      "title": "Test 1",
+      "questions": [
+        {   
+            "question": "what is state?",
+            "a": "haha",
+            "b": "hehee",
+            "c": "hoho",
+            "d": "huhu",
+            "answer": "a"
+        },
+        {
+            "question": "what are props 2?",
+            "a": "haha",
+            "b": "hehe",
+            "c": "hoho",
+            "d": "huhuu",
+            "answer": "c"
+        }
+      ] 
+    }
+  ],
+  "attachments": [] 
+}
+
+//DELETE: /api/v1/chapters
+//teacher required
+###
+DELETE http://localhost:5000/api/v1/chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY5MTMwLCJleHAiOjE2MzM3NzYzMzB9.-C2sK0sY2jErUc_XyN5N3mW11L-Xqvyp8bam28T7258
+
+{
+  "id": "61615cd87e402fe2edbe09df"
+}

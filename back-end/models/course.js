@@ -47,6 +47,7 @@ const courseSchema = new Schema(
       required: true,
       default: 0,
     },
+    //0: inactive, 1: active, 20: draft
     status: {
       type: Number,
       required: true,

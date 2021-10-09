@@ -24,6 +24,7 @@ const courseCategorySchema = new Schema({
       ref: 'Topic',
     },
   ],
+  //0: inactive, 1: active
   status: {
     type: Number,
     required: true,

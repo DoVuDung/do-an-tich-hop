@@ -125,7 +125,7 @@ Router.put(
       .withMessage('Status is required.')
       .isNumeric()
       .withMessage('Invalid type. Expected an Number.')
-      .isIn([0, 1])
+      .isInt({ max: 1, min: 0 })
       .withMessage('Status only excepts value: 0 & 1'),
 
     body('slug')

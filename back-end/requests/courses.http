@@ -1,0 +1,89 @@
+//*** GET: /api/v1/courses/all (query: count, page)
+//Function: get all courses
+//Auth: public 
+//More: pagination
+###
+GET http://localhost:5000/api/v1/courses/all
+###
+GET http://localhost:5000/api/v1/courses/all?page=2&count=3
+
+//*** GET: /api/v1/courses/categories/:categorySlugOrId (query: count, page)
+//get courses by category
+//public
+//pagination
+###
+GET http://localhost:5000/api/v1/courses/categories/web-development
+
+//*** GET: /api/v1/courses/topics/:topicSlugOrId (query: count, page)
+//get courses by topic
+//public
+//pagination
+###
+GET http://localhost:5000/api/v1/courses/topics/javascript?count=2
+
+//*** GET: /api/v1/courses/:courseSlugOrId
+//Function: get course detail
+//Auth: public
+###
+GET http://localhost:5000/api/v1/courses/react-native-002
+
+//*** GET: api/v1/courses/:courseSlugOrId/chapters
+//get main content of course, only learner who registered can access, use case: for learning room.
+//authorization: learnerDetails, teacher, admin, root
+###
+GET http://localhost:5000/api/v1/courses/react-advanced-2022/chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY2MTU5LCJleHAiOjE2MzM3NzMzNTl9._kqWGVshdSelgSUREkmk7t247a139i3U2jxDqZx__30
+
+
+//*** POST: /api/v1/courses
+//post new course
+//teacher required
+###
+POST http://localhost:5000/api/v1/courses
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNjk5MjE4LCJleHAiOjE2MzM3MDY0MTh9.ZwwR-2W_eU0RfB4wmLkGrR0DS6uON_I4STCF5T65rJg
+
+{
+    "title": "React advanced 2022.",
+    "description": "Hoc lap trinh React tai GuruAcademy",
+    "categoryId": "61495f8559f077f9cc0cb75b",
+    "topicId": "61495f8559f077f9cc0cb760",
+    "tags": ["React", "learning", "online", "js"],
+    "price": 25,
+    "discount": 5
+}
+
+//*** PUT: /api/v1/courses
+//update new course
+//teacher, admin required
+###
+PUT http://localhost:5000/api/v1/courses
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNjk5MjE4LCJleHAiOjE2MzM3MDY0MTh9.ZwwR-2W_eU0RfB4wmLkGrR0DS6uON_I4STCF5T65rJg
+
+{
+    "id": "616050240be2f6e199cf2313",
+    "title": "Swift advanced 2022.",
+    "description": "Hoc lap trinh Swift tai GuruAcademy",
+    "categoryId": "616017d3834f3059b134126d",
+    "topicId": "616017d3834f3059b1341272",
+    "tags": ["Swift", "learning", "online", "ios"],
+    "price": 35,
+    "discount": 15,
+    "status": 0
+}
+
+//DELETE: /api/v1/courses
+//delete course
+//teacher, admin required
+###
+DELETE http://localhost:5000/api/v1/courses
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNjk5MjE4LCJleHAiOjE2MzM3MDY0MTh9.ZwwR-2W_eU0RfB4wmLkGrR0DS6uON_I4STCF5T65rJg
+
+{
+  "id": "61605bcd48be450272c567f5"
+}
+
+

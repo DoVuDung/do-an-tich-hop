@@ -328,19 +328,14 @@ exports.deleteTopic = async (req, res, next) => {
       topic.courseCategoryId
     ).populate('topics');
 
-    if (!courseCategory) {
-      const error = new Error('Category not found!');
-      error.statusCode = 404;
-
-      throw error;
-    }
-
     //delete topic
-    courseCategory.topics.pull(topic._id);
-
-    await courseCategory.save();
-
     await Topic.findByIdAndDelete(topic._id);
+
+    //remove topic form course category
+    if (courseCategory) {
+      courseCategory.topics.pull(topic._id);
+      await courseCategory.save();
+    }
 
     //send res
     res.status(200).json({
