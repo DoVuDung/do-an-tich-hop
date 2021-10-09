@@ -70,47 +70,38 @@ Router.post(
   courseCategoriesController.postCourseCategory
 );
 
-//PUT: /api/v1/course-categories/:categorySlugOrId
+//PUT: /api/v1/course-categories
 //admin required
 //Update category info
 Router.put(
-  '/course-categories/:categorySlugOrId',
+  '/course-categories',
   isAuth,
   [
+    body('id')
+      .notEmpty()
+      .withMessage('CourseId is required.')
+      .isMongoId()
+      .withMessage('Invalid type. Expected an ObjectId.'),
+
     body('title')
       .notEmpty()
       .withMessage('Title is required.')
       .trim()
       .custom((value, { req }) => {
-        if (mongoose.isValidObjectId(req.params.categorySlugOrId)) {
-          const categoryId = new mongoose.Types.ObjectId(
-            req.params.categorySlugOrId
-          );
+        const categoryId = new mongoose.Types.ObjectId(req.body.id);
 
-          return CourseCategory.findOne({
-            title: value,
-            _id: {
-              $ne: categoryId,
-            },
-          })
-            .collation({ locale: 'en', strength: 2 })
-            .then((courseCategoryDoc) => {
-              if (courseCategoryDoc) {
-                return Promise.reject(`Category "${value}" is already exists`);
-              }
-            });
-        } else {
-          return CourseCategory.findOne({
-            title: value,
-            slug: { $ne: req.params.categorySlugOrId },
-          })
-            .collation({ locale: 'en', strength: 2 })
-            .then((courseCategoryDoc) => {
-              if (courseCategoryDoc) {
-                return Promise.reject(`Category "${value}" is already exists`);
-              }
-            });
-        }
+        return CourseCategory.findOne({
+          title: value,
+          _id: {
+            $ne: categoryId,
+          },
+        })
+          .collation({ locale: 'en', strength: 2 })
+          .then((courseCategoryDoc) => {
+            if (courseCategoryDoc) {
+              return Promise.reject(`Category "${value}" is already exists`);
+            }
+          });
       }),
 
     body('discountPercent')
@@ -132,16 +123,35 @@ Router.put(
       .notEmpty()
       .withMessage('Slug is required.')
       .matches('^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$')
-      .withMessage("Invalid slug's type."),
+      .withMessage("Invalid slug's type.")
+      .custom((value, { req }) => {
+        return CourseCategory.findOne({
+          _id: {
+            $ne: new mongoose.Types.ObjectId(req.body.id),
+          },
+          slug: value,
+        }).then((categoryDoc) => {
+          if (categoryDoc) {
+            return Promise.reject(`Slug "${value}" is exists!`);
+          }
+        });
+      }),
   ],
   courseCategoriesController.updateCourseCategory
 );
 
-//DELETE: /api/v1/course-categories/:categorySlugOrId
+//DELETE: /api/v1/course-categories
 //admin required
 Router.delete(
-  '/course-categories/:categorySlugOrId',
+  '/course-categories',
   isAuth,
+  [
+    body('id')
+      .notEmpty()
+      .withMessage('CourseId is required.')
+      .isMongoId()
+      .withMessage('Invalid type. Expected an ObjectId.'),
+  ],
   courseCategoriesController.deleteCourseCategory
 );
 

@@ -77,15 +77,65 @@ Router.get(
   coursesController.getCourseChapters
 );
 
+//GET: api/v1/courses/:courseSlugOrId/learners
+//get members who registered the course
+//authorization: teacher, admin, root
+
+//GET: api/v1/courses/:courseSlugOrId/feedbacks
+//get courses feedback
+//public
+
+//GET: api/v1/courses/:courseSlugOrId/streams
+//get streams of course, only learner who registered can access, use case: for learning room.
+//authorization: learnerDetails, teacher, admin, root
+
 // ****
 //Get courses of users
 //Already have in users router
 // GET: /api/v1/users/teaching-courses
 //GET: /api/v1/users/learning-courses
 
-// GET: /api/v1/courses/register
+// POST: /api/v1/courses/register
 // authentication required.
-Router.post('/courses/register', isAuth, coursesController.registerCourse);
+Router.post(
+  '/courses/register',
+  isAuth,
+  [
+    body('courseId')
+      .notEmpty()
+      .withMessage('Course ID is required!')
+      .isMongoId()
+      .withMessage('Invalid type. Expected an ObjectId'),
+
+    body('price')
+      .notEmpty()
+      .withMessage('Price is required!')
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
+
+    body('brandId')
+      .notEmpty()
+      .withMessage('Brand Id is required!')
+      .isInt({ min: 1 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
+
+    body('methodId')
+      .notEmpty()
+      .withMessage('Method Id is required!')
+      .isInt({ min: 1 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
+
+    body('invoiceId').notEmpty().withMessage('Invoice Id is required!'),
+
+    body('discount')
+      .if((value) => value !== undefined)
+      .notEmpty()
+      .withMessage('Price is required!')
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
+  ],
+  coursesController.registerCourse
+);
 
 //POST: /api/v1/courses
 //post new course
@@ -117,17 +167,13 @@ Router.post(
 
     body('price')
       .if((value) => value !== undefined)
-      .isNumeric()
-      .withMessage('Invalid type. Expected a number')
-      .isInt({ min: 0 })
-      .withMessage('Invalid value. Min = 0'),
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
 
     body('discount')
       .if((value) => value !== undefined)
-      .isNumeric()
-      .withMessage('Invalid type. Expected a number')
-      .isInt({ min: 0 })
-      .withMessage('Invalid value. Min = 0'),
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
   ],
   coursesController.postNewCourse
 );
@@ -186,17 +232,17 @@ Router.put(
 
     body('price')
       .if((value) => value !== undefined)
-      .isNumeric()
-      .withMessage('Invalid type. Expected a number')
-      .isInt({ min: 0 })
-      .withMessage('Invalid value. Min = 0'),
+      .notEmpty()
+      .withMessage('Price is required!')
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
 
     body('discount')
       .if((value) => value !== undefined)
-      .isNumeric()
-      .withMessage('Invalid type. Expected a number')
-      .isInt({ min: 0 })
-      .withMessage('Invalid value. Min = 0'),
+      .notEmpty()
+      .withMessage('Price is required!')
+      .isFloat({ min: 0 })
+      .withMessage('Invalid type. Expected a number with min = 0'),
 
     body('status')
       .if((value) => value !== undefined)

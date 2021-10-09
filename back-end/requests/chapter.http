@@ -1,20 +1,21 @@
-//POST: /api/v1/chapters/:chap
-//get 
+//POST: /api/v1/chapters/:chapters
+//get chapter detail
 //teacher, learners of this course, admin, root
 ###
-GET 
+GET http://localhost:5000/api/v1/chapters/props-and-state-in-react-002
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE1YzlkY2ZhMDk0NzY1OGU2M2JlMWZiIiwic3RhdHVzIjoyLCJyb2xlIjp7ImlkIjozLCJuYW1lIjoidGVhY2hlciJ9LCJpYXQiOjE2MzM3OTE5MDQsImV4cCI6MTYzMzc5OTEwNH0.3tTzxPb2Dn2k6IRfvnNL5X8-__3hk9pQ7woQ-cgrABI
 
 //POST: /api/v1/chapters
 //teacher required
 ###
 POST http://localhost:5000/api/v1/chapters
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY5MTMwLCJleHAiOjE2MzM3NzYzMzB9.-C2sK0sY2jErUc_XyN5N3mW11L-Xqvyp8bam28T7258
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE1YzlkY2ZhMDk0NzY1OGU2M2JlMWZiIiwic3RhdHVzIjoyLCJyb2xlIjp7ImlkIjozLCJuYW1lIjoidGVhY2hlciJ9LCJpYXQiOjE2MzM3OTE5MDQsImV4cCI6MTYzMzc5OTEwNH0.3tTzxPb2Dn2k6IRfvnNL5X8-__3hk9pQ7woQ-cgrABI
 
 {
-  "courseId": "6160522b0be2f6e199cf231e",
-  "number": 5,
-  "title": "Props in React",
+  "courseId": "61602a32268d8024f910a12d",
+  "number": 10,
+  "title": "props and state in react",
   "descripton": "Props in React",
   "videos": [
     {
@@ -60,15 +61,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZ
 ###
 PUT http://localhost:5000/api/v1/chapters
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY5MTMwLCJleHAiOjE2MzM3NzYzMzB9.-C2sK0sY2jErUc_XyN5N3mW11L-Xqvyp8bam28T7258
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE1YzlkY2ZhMDk0NzY1OGU2M2JlMWZiIiwic3RhdHVzIjoyLCJyb2xlIjp7ImlkIjozLCJuYW1lIjoidGVhY2hlciJ9LCJpYXQiOjE2MzM3OTE5MDQsImV4cCI6MTYzMzc5OTEwNH0.3tTzxPb2Dn2k6IRfvnNL5X8-__3hk9pQ7woQ-cgrABI
 
 {
-  "id": "61615cd87e402fe2edbe09df",
-  "number": 5,
-  "title": "Hook - React",
+  "id": "61602a46268d8024f910a146",
+  "number": 2,
   "descripton": "Hook in React",
   "status": 1,
-  "slug": "props-state-in-react",
+  "slug": "props-and-state-in-react",
   "videos": [
     {
       "index": 0,

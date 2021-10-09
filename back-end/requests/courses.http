@@ -25,7 +25,7 @@ GET http://localhost:5000/api/v1/courses/topics/javascript?count=2
 //Function: get course detail
 //Auth: public
 ###
-GET http://localhost:5000/api/v1/courses/react-native-002
+GET http://localhost:5000/api/v1/courses/react-advanced-2022
 
 //*** GET: api/v1/courses/:courseSlugOrId/chapters
 //get main content of course, only learner who registered can access, use case: for learning room.
@@ -33,8 +33,23 @@ GET http://localhost:5000/api/v1/courses/react-native-002
 ###
 GET http://localhost:5000/api/v1/courses/react-advanced-2022/chapters
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzY2MTU5LCJleHAiOjE2MzM3NzMzNTl9._kqWGVshdSelgSUREkmk7t247a139i3U2jxDqZx__30
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzg5OTQ3LCJleHAiOjE2MzM3OTcxNDd9.eVogxgk5X1sN2Al8hlnqDs1LSSfoZpBxbXzDM09DCr8
 
+//*** POST: /api/v1/courses/register
+// authentication required.
+###
+POST http://localhost:5000/api/v1/courses/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNGYzY2ZjMWNiYjgxMDQ2YzVjZWI4ZCIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MiwibmFtZSI6ImxlYXJuZXIifSwiaWF0IjoxNjMzNzg3NjMyLCJleHAiOjE2MzM3OTQ4MzJ9.yZKHDpgqyZHKDFY49d0RHu84xm4mRl2tD6DwFLW38P0
+
+{
+  "courseId": "6160522b0be2f6e199cf231e",
+  "price": 25.99,
+  "brandId": 1,
+  "methodId": 1,
+  "invoiceId": "visa-paymentId-001",
+  "discount": 0
+}
 
 //*** POST: /api/v1/courses
 //post new course
@@ -42,7 +57,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZ
 ###
 POST http://localhost:5000/api/v1/courses
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNjk5MjE4LCJleHAiOjE2MzM3MDY0MTh9.ZwwR-2W_eU0RfB4wmLkGrR0DS6uON_I4STCF5T65rJg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTZlNzJlNGM5Yjc2MDI5NTYwNSIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzgzMzg0LCJleHAiOjE2MzM3OTA1ODR9.6zASi1bwbsvQjtXUHc0IoBTSZhi3-3tSKkus3bfXc7k
 
 {
     "title": "React advanced 2022.",
@@ -50,7 +65,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZ
     "categoryId": "61495f8559f077f9cc0cb75b",
     "topicId": "61495f8559f077f9cc0cb760",
     "tags": ["React", "learning", "online", "js"],
-    "price": 25,
+    "price": 25.99,
     "discount": 5
 }
 

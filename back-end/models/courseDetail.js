@@ -21,26 +21,31 @@ const courseDetailSchema = new Schema(
         required: true,
         default: 1,
       },
+      //total payment
       price: {
         type: Number,
         required: true,
       },
-      //visa, momo, Techcombank,...
-      brand: {
-        type: String,
+      //*** */currently using dummy data here
+      //1 (visa), 2 (momo), 3(Techcombank),...
+      brandId: {
+        type: Number,
         required: true,
-        default: 'visa',
+        default: 1,
       },
-      //card: 1,...
+      //1 (card),...
       methodId: {
         type: Number,
         required: true,
         default: 1,
       },
+      //invoice id receive from succeed payment
       invoiceId: {
         type: String,
         required: true,
       },
+      //* ***/
+      //save discount value from category and topic discountPercent
       discount: {
         type: Number,
         required: true,

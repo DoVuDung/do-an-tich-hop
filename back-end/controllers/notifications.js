@@ -153,7 +153,11 @@ exports.getNotification = async (req, res, next) => {
 };
 
 exports.deleteNotification = async (req, res, next) => {
-  const notificationId = req.params.notificationId;
+  //check validation
+  const error = validationError(req);
+  if (error) return next(error);
+
+  const notificationId = req.body.id;
 
   try {
     //check authentication

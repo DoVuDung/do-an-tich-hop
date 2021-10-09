@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const { body } = require('express-validator');
 
 const chaptersController = require('../controllers/chapters');
@@ -7,7 +8,9 @@ const Chapter = require('../models/chapter');
 
 const Router = express.Router();
 
-//GET: /api/v1/chapters/:courseSlugOrId
+//GET: /api/v1/chapters/:chapterSlugOrId
+//teacher, learners of this course, admin, root
+Router.get('/chapters/:chapterSlugOrId', isAuth, chaptersController.getChapter);
 
 //POST: /api/v1/chapters
 //teacher required
@@ -137,7 +140,19 @@ Router.put(
       .notEmpty()
       .withMessage('Slug is required.')
       .matches('^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$')
-      .withMessage("Invalid slug's type."),
+      .withMessage("Invalid slug's type.")
+      .custom((value, { req }) => {
+        return Chapter.findOne({
+          _id: {
+            $ne: new mongoose.Types.ObjectId(req.body.id),
+          },
+          slug: value,
+        }).then((chapterDoc) => {
+          if (chapterDoc) {
+            return Promise.reject(`Slug "${value}" is exists!`);
+          }
+        });
+      }),
 
     body('status')
       .if((value) => value !== undefined)

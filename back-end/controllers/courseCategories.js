@@ -163,13 +163,12 @@ exports.postCourseCategory = async (req, res, next) => {
 };
 
 exports.updateCourseCategory = async (req, res, next) => {
-  const categorySlugOrId = req.params.categorySlugOrId;
-
   //check validation
   const error = validationError(req);
   if (error) return next(error);
 
   //get request's body
+  const categoryId = req.body.id;
   const updatedTitle = req.body.title;
   const updatedDiscountPercent = req.body.discountPercent;
   const updatedStatus = req.body.status;
@@ -195,15 +194,7 @@ exports.updateCourseCategory = async (req, res, next) => {
     }
 
     //check category exists
-    let updatedCourseCategory;
-
-    if (mongoose.isValidObjectId(categorySlugOrId)) {
-      updatedCourseCategory = await CourseCategory.findById(categorySlugOrId);
-    } else {
-      updatedCourseCategory = await CourseCategory.findOne({
-        slug: categorySlugOrId,
-      });
-    }
+    const updatedCourseCategory = await CourseCategory.findById(categoryId);
 
     if (!updatedCourseCategory) {
       const error = new Error('Course category not found!');
@@ -238,11 +229,11 @@ exports.updateCourseCategory = async (req, res, next) => {
 };
 
 exports.deleteCourseCategory = async (req, res, next) => {
-  const categorySlugOrId = req.params.categorySlugOrId;
-
   //check validation
   const error = validationError(req);
   if (error) return next(error);
+
+  const categoryId = req.body.id;
 
   try {
     //check authentication
@@ -264,17 +255,9 @@ exports.deleteCourseCategory = async (req, res, next) => {
     }
 
     //check category exists
-    let courseCategory;
-
-    if (mongoose.isValidObjectId(categorySlugOrId)) {
-      courseCategory = await CourseCategory.findById(categorySlugOrId).populate(
-        'topics'
-      );
-    } else {
-      courseCategory = await CourseCategory.findOne({
-        slug: categorySlugOrId,
-      }).populate('topics');
-    }
+    const courseCategory = await CourseCategory.findById(categoryId).populate(
+      'topics'
+    );
 
     if (!courseCategory) {
       const error = new Error('Course category not found!');

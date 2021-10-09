@@ -55,44 +55,37 @@ Router.post(
   topicsController.postNewTopic
 );
 
-//PUT: /api/v1/topics/:topicSlugOrId
+//PUT: /api/v1/topics
 //admin required
 Router.put(
-  '/topics/:topicSlugOrId',
+  '/topics',
   isAuth,
   [
+    body('id')
+      .notEmpty()
+      .withMessage('CourseId is required.')
+      .isMongoId()
+      .withMessage('Invalid type. Expected an ObjectId.'),
+
     body('title')
       .notEmpty()
       .withMessage("Topic's title is required.")
       .trim()
       .custom((value, { req }) => {
-        if (mongoose.isValidObjectId(req.params.topicSlugOrId)) {
-          const topicId = new mongoose.Types.ObjectId(req.params.topicSlugOrId);
+        const topicId = new mongoose.Types.ObjectId(req.body.id);
 
-          return Topic.findOne({
-            title: value,
-            _id: {
-              $ne: topicId,
-            },
-          })
-            .collation({ locale: 'en', strength: 2 })
-            .then((topicDoc) => {
-              if (topicDoc) {
-                return Promise.reject(`Topic "${value}" is already exists`);
-              }
-            });
-        } else {
-          return Topic.findOne({
-            title: value,
-            slug: { $ne: req.params.topicSlugOrId },
-          })
-            .collation({ locale: 'en', strength: 2 })
-            .then((topicDoc) => {
-              if (topicDoc) {
-                return Promise.reject(`Topic "${value}" is already exists`);
-              }
-            });
-        }
+        return Topic.findOne({
+          title: value,
+          _id: {
+            $ne: topicId,
+          },
+        })
+          .collation({ locale: 'en', strength: 2 })
+          .then((topicDoc) => {
+            if (topicDoc) {
+              return Promise.reject(`Topic "${value}" is already exists`);
+            }
+          });
       }),
 
     body('discountPercent')
@@ -114,13 +107,36 @@ Router.put(
       .notEmpty()
       .withMessage('Slug is required.')
       .matches('^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$')
-      .withMessage("Invalid slug's type."),
+      .withMessage("Invalid slug's type.")
+      .custom((value, { req }) => {
+        return Topic.findOne({
+          _id: {
+            $ne: new mongoose.Types.ObjectId(req.body.id),
+          },
+          slug: value,
+        }).then((topicDoc) => {
+          if (topicDoc) {
+            return Promise.reject(`Slug "${value}" is exists!`);
+          }
+        });
+      }),
   ],
   topicsController.updateTopic
 );
 
-//DELETE: /api/v1/topics/:topicSlugOrId
+//DELETE: /api/v1/topics
 //admin required
-Router.delete('/topics/:topicSlugOrId', isAuth, topicsController.deleteTopic);
+Router.delete(
+  '/topics',
+  isAuth,
+  [
+    body('id')
+      .notEmpty()
+      .withMessage('CourseId is required.')
+      .isMongoId()
+      .withMessage('Invalid type. Expected an ObjectId.'),
+  ],
+  topicsController.deleteTopic
+);
 
 module.exports = Router;

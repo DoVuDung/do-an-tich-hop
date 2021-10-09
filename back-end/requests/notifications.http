@@ -1,0 +1,6 @@
+//GET: /api/v1/notifications
+//authentication require
+###
+GET http://localhost:5000/api/v1/notifications
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzM3ODI4NzYsImV4cCI6MTYzMzc5MDA3Nn0._LOkEaMticNYTutfzsc8NfZ2KZRuNtiOxHmRNvgvwV0
