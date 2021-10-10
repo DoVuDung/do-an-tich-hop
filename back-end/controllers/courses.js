@@ -434,6 +434,255 @@ exports.getCourseChapters = async (req, res, next) => {
   }
 };
 
+//authorization: teacher, admin, root
+exports.getCourseLearners = async (req, res, next) => {
+  const courseSlugOrId = req.params.courseSlugOrId;
+
+  try {
+    //check authentication
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      const error = new Error('Authentication failed!');
+      error.statusCode = 401;
+
+      throw error;
+    }
+
+    //get course
+    let courseFilterData;
+    if (mongoose.isValidObjectId(courseSlugOrId)) {
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
+    } else {
+      courseFilterData = { slug: courseSlugOrId };
+    }
+
+    const course = await Course.findOne(courseFilterData)
+      .select(['-chapters', '-streams', '-feedbacks'])
+      .populate([
+        {
+          path: 'author',
+          select: [
+            'email',
+            'firstName',
+            'lastName',
+            'description',
+            'socialLinks',
+          ],
+        },
+        {
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
+        },
+        {
+          path: 'learnersDetail',
+          select: ['-courseId'],
+        },
+      ]);
+
+    //check course exists
+    if (!course) {
+      const error = new Error('Course not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    if (
+      user.role.id !== 1 && //admin
+      user.role.id !== 0 && //ROOT
+      user._id.toString() !== course.author._id.toString() //teacher
+    ) {
+      const error = new Error('You do not have permission to do this action!');
+      error.statusCode = 403;
+
+      throw error;
+    }
+
+    //send res
+    res.status(200).json({
+      message: 'Fetch course learners successfully',
+      data: {
+        course,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+//*** */
+//public
+exports.getCourseFeedbacks = async (req, res, next) => {
+  const courseSlugOrId = req.params.courseSlugOrId;
+
+  try {
+    //get course
+    let courseFilterData;
+    if (mongoose.isValidObjectId(courseSlugOrId)) {
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
+    } else {
+      courseFilterData = { slug: courseSlugOrId };
+    }
+
+    const course = await Course.findOne(courseFilterData)
+      .select(['-learnersDetail', '-streams', '-chapters'])
+      .populate([
+        {
+          path: 'author',
+          select: [
+            'email',
+            'firstName',
+            'lastName',
+            'description',
+            'socialLinks',
+          ],
+        },
+        {
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
+        },
+        {
+          path: 'feedbacks',
+          select: ['-courseId'],
+        },
+      ]);
+
+    //check course exists
+    if (!course) {
+      const error = new Error('Course not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    //send res
+    res.status(200).json({
+      message: 'Fetch course feedbacks successfully',
+      data: {
+        course,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
+//*** */
+//authorization: learnerDetails, teacher, admin, root
+exports.getCourseStreams = async (req, res, next) => {
+  const courseSlugOrId = req.params.courseSlugOrId;
+
+  try {
+    //check authentication
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      const error = new Error('Authentication failed!');
+      error.statusCode = 401;
+
+      throw error;
+    }
+
+    //get course
+    let courseFilterData;
+    if (mongoose.isValidObjectId(courseSlugOrId)) {
+      const courseId = new mongoose.Types.ObjectId(courseSlugOrId);
+      courseFilterData = { _id: courseId };
+    } else {
+      courseFilterData = { slug: courseSlugOrId };
+    }
+
+    const course = await Course.findOne(courseFilterData)
+      .select(['-learnersDetail', '-chapters', '-feedbacks'])
+      .populate([
+        {
+          path: 'author',
+          select: [
+            'email',
+            'firstName',
+            'lastName',
+            'description',
+            'socialLinks',
+          ],
+        },
+        {
+          path: 'topic',
+          select: '-courses',
+          populate: {
+            path: 'courseCategoryId',
+            select: '-topics',
+          },
+        },
+        {
+          path: 'streams',
+          select: ['-courseId'],
+        },
+      ]);
+
+    //check course exists
+    if (!course) {
+      const error = new Error('Course not found!');
+      error.statusCode = 404;
+
+      throw error;
+    }
+
+    //check auth who can see this main content course
+    const courseDetail = await CourseDetail.findOne({
+      userId: user.id,
+      courseId: course._id,
+    });
+
+    if (
+      !courseDetail && //learners check
+      user.role.id !== 1 && //admin
+      user.role.id !== 0 && //ROOT
+      user._id.toString() !== course.author._id.toString() //teacher
+    ) {
+      const error = new Error('You do not have permission to do this action!');
+      error.statusCode = 403;
+
+      throw error;
+    }
+
+    //send res
+    res.status(200).json({
+      message: 'Fetch course streams successfully',
+      data: {
+        course,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
 //not finish
 //authentication
 exports.registerCourse = async (req, res, next) => {
@@ -484,6 +733,19 @@ exports.registerCourse = async (req, res, next) => {
       throw error;
     }
 
+    //check if user is already has this course
+    const courseDetailCheckExist = await CourseDetail.findOne({
+      userId: user._id,
+      courseId: course._id,
+    });
+
+    if (courseDetailCheckExist) {
+      const error = new Error('You already have this course!');
+      error.statusCode = 403;
+
+      throw error;
+    }
+
     //get teacher
     const teacher = await User.findById(course.author);
 
@@ -514,10 +776,10 @@ exports.registerCourse = async (req, res, next) => {
     await courseDetail.save();
 
     //push courseDetail to user, course
-    user.learningCourses.push(course._id);
+    user.learningCourses.push(courseDetail._id);
     await user.save();
 
-    course.learnersDetail.push(user._id);
+    course.learnersDetail.push(courseDetail._id);
     await course.save();
 
     //create new notification for learner
@@ -798,8 +1060,8 @@ exports.updateCourse = async (req, res, next) => {
     //update course
     //only update field has data in body
     if (title) course.title = title;
-    if (description) course.description = description;
-    if (tags) course.tags = tags;
+    if (description !== undefined) course.description = description;
+    if (tags !== undefined) course.tags = tags;
     if (price !== undefined) course.price = price;
     if (discount !== undefined) course.discount = discount;
     if (slug) course.slug = slug;

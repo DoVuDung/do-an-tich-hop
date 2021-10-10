@@ -258,13 +258,13 @@ exports.updateChapter = async (req, res, next) => {
     //update chapter
     //only update field has data in body
     if (title) chapter.title = title;
-    if (description) chapter.description = description;
+    if (description !== undefined) chapter.description = description;
     if (number !== undefined) chapter.number = number;
     if (slug) chapter.slug = slug;
     if (status !== undefined) chapter.status = status;
-    if (videos) chapter.videos = videos;
-    if (tests) chapter.tests = tests;
-    if (attachments) chapter.attachments = attachments;
+    if (videos !== undefined) chapter.videos = videos;
+    if (tests !== undefined) chapter.tests = tests;
+    if (attachments !== undefined) chapter.attachments = attachments;
 
     await chapter.save();
 

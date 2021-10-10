@@ -50,7 +50,6 @@ Router.post(
       .normalizeEmail(),
 
     body('password')
-      .trim()
       .notEmpty()
       .withMessage('Password is required')
       .isLength({ min: 5 })

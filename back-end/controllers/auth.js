@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Notification = require('../models/notification');
 
 const User = require('../models/user');
 const { validationError } = require('../util/helper');
@@ -120,13 +121,32 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
-    if (user.status === 0 || user.status === 10) {
+    //check user banned
+    if (user.status === 10) {
       const error = new Error(
         'Your account has been suspended. Please contact with us if it have any mistake!'
       );
       error.statusCode = 403;
 
       throw error;
+    }
+
+    //check user locked
+    if (user.status === 0) {
+      //unlock user
+      user.status === 1;
+      await user.save();
+
+      const unlockNotification = new Notification({
+        userId: user._id,
+        title: 'Your account has been unlocked!',
+        content: 'Welcome back. Your account has been unlocked!',
+      });
+
+      await unlockNotification.save();
+
+      user.notifications.push(unlockNotification._id);
+      await user.save();
     }
 
     //create jwt for new login
@@ -164,10 +184,10 @@ exports.login = async (req, res, next) => {
   }
 };
 //getUser '/'
-exports.getUser = async(req, res, next) => {
-  try{
-    const user = await User.findById(req.userId).select('-password')
-    if(!user){
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
+    if (!user) {
       const error = new Error(`not found current user!!`);
       error.statusCode = 401;
 
@@ -177,16 +197,16 @@ exports.getUser = async(req, res, next) => {
     res.status(200).json({
       message: 'load user successfully!',
       data: {
-        user
+        user,
       },
       success: true,
     });
-  }catch(error){
+  } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
     }
 
     next(error);
   }
-}
+};
 // const user = await User.findOne({ email: email }).select('-password');
