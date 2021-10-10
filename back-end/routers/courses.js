@@ -80,19 +80,33 @@ Router.get(
 //GET: api/v1/courses/:courseSlugOrId/learners
 //get members who registered the course
 //authorization: teacher, admin, root
+Router.get(
+  '/courses/:courseSlugOrId/learners',
+  isAuth,
+  coursesController.getCourseLearners
+);
 
 //GET: api/v1/courses/:courseSlugOrId/feedbacks
 //get courses feedback
 //public
+Router.get(
+  '/courses/:courseSlugOrId/feedbacks',
+  coursesController.getCourseFeedbacks
+);
 
 //GET: api/v1/courses/:courseSlugOrId/streams
 //get streams of course, only learner who registered can access, use case: for learning room.
 //authorization: learnerDetails, teacher, admin, root
+Router.get(
+  '/courses/:courseSlugOrId/streams',
+  isAuth,
+  coursesController.getCourseStreams
+);
 
 // ****
 //Get courses of users
 //Already have in users router
-// GET: /api/v1/users/teaching-courses
+//GET: /api/v1/users/teaching-courses
 //GET: /api/v1/users/learning-courses
 
 // POST: /api/v1/courses/register
@@ -248,10 +262,18 @@ Router.put(
       .if((value) => value !== undefined)
       .notEmpty()
       .withMessage('Status is required.')
-      .isNumeric()
+      .isInt()
       .withMessage('Invalid type. Expected an Number.')
-      .isInt({ max: 1, min: 0 })
-      .withMessage('Status only excepts value: 0 & 1'),
+      .custom((value) => {
+        const acceptableValues = [0, 1, 2, 20];
+        if (!acceptableValues.includes(value)) {
+          throw new Error(
+            `Invalid value. Expected value in ${acceptableValues}`
+          );
+        } else {
+          return true;
+        }
+      }),
   ],
   coursesController.updateCourse
 );
