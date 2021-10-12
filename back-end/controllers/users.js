@@ -1,6 +1,10 @@
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const { validationError } = require('../util/helper');
+
+const { validationError, unlinkPath } = require('../util/helper');
+const User = require('../models/user');
+const { uploadFile, removeFile } = require('../util/s3');
+
+//setup unlinked files
 
 //all authentication
 exports.getUserAllInfo = async (req, res, next) => {
@@ -279,6 +283,11 @@ exports.updateUserProfile = async (req, res, next) => {
   const address = req.body.address;
   //address: {street: String, city: String, country: String}
 
+  //receive image file here
+  const imageFile = req.file;
+
+  //or user can pass in an image url
+  //usage: if user not change avatar, pass this to body for doesn't save new image
   const imageUrl = req.body.imageUrl;
 
   const oldPassword = req.body.oldPassword;
@@ -305,14 +314,27 @@ exports.updateUserProfile = async (req, res, next) => {
       throw error;
     }
 
-    //check user try to change status
-    //only admin or root users can change status
-    // if (status !== undefined && user.role.id !== 1 && user.role.id !== 0) {
-    //   const error = new Error('You can not change the status of your account!');
-    //   error.statusCode = 403;
+    //check validation for imageUrl
+    if (imageUrl !== user.imageUrl) {
+      const error = new Error(
+        'This property "imageUrl" have to match old "imageUrl"! It only use in case user not change avatar!'
+      );
+      error.statusCode = 422;
 
-    //   throw error;
-    // }
+      throw error;
+    }
+
+    //check image file and post it to s3
+    let uploadS3Result;
+    if (imageFile) {
+      //remove old image file
+      await removeFile(user.imageUrl.split('/')[2]);
+
+      //upload new image file
+      uploadS3Result = await uploadFile(imageFile);
+
+      await unlinkPath(imageFile.path);
+    }
 
     //check password change request
     if ((!oldPassword && newPassword) || (oldPassword && !newPassword)) {
@@ -350,6 +372,7 @@ exports.updateUserProfile = async (req, res, next) => {
     if (address !== undefined) user.address = address;
 
     if (imageUrl !== undefined) user.imageUrl = imageUrl;
+    if (imageFile) user.imageUrl = `/images/${uploadS3Result.Key}`;
 
     if (hashedNewPassword) user.password = hashedNewPassword;
 
@@ -360,6 +383,7 @@ exports.updateUserProfile = async (req, res, next) => {
       message: 'User profile updated successfully!',
       data: {
         userId: user._id,
+        imagePath: uploadS3Result ? `/images/${uploadS3Result.Key}` : undefined,
       },
       success: true,
     });

@@ -1,10 +1,34 @@
 const express = require('express');
 const { body } = require('express-validator');
+const multer = require('multer');
 
 const usersController = require('../controllers/users');
 const isAuth = require('../middleware/isAuth');
 
 const Router = express.Router();
+
+//setup multer for receive files
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/webp'
+  ) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error(
+        'Invalid file type: ' +
+          file.mimetype +
+          '. Expected an image file: .png, .jpg, .jpeg, .webp'
+      ),
+      false
+    );
+  }
+};
+
+const upload = multer({ dest: 'upload/', fileFilter });
 
 //POST: /api/v1/users/all-info
 //Authentication
@@ -129,6 +153,7 @@ Router.put(
       .isLength({ min: 5 })
       .withMessage('Minimum password is 5'),
   ],
+  upload.single('image'),
   usersController.updateUserProfile
 );
 
