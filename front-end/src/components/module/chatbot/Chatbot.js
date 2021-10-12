@@ -30,9 +30,9 @@ export default function Chatbot(props) {
     setShowChatWindow((prev) => !prev);
     setShowUnreadIcon(false);
   };
-  const handleShowChatWindow = () => {
-    setShowChatWindow(true);
-  };
+  // const handleShowChatWindow = () => {
+  //   setShowChatWindow(true);
+  // };
   const handleHideChatWindow = () => {
     setShowChatWindow(false);
   };
