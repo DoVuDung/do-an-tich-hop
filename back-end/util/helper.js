@@ -1,4 +1,7 @@
 const { validationResult } = require('express-validator');
+const path = require('path');
+const fs = require('fs');
+const util = require('util');
 
 //Helper functions
 exports.isDate = (string) => {
@@ -15,4 +18,10 @@ exports.validationError = (req) => {
 
     return error;
   }
+};
+
+//delete (unlink) path
+exports.unlinkPath = async (filePath) => {
+  filePath = path.join(__dirname, '..', filePath);
+  await util.promisify(fs.unlink)(filePath);
 };

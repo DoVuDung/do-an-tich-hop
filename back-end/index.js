@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 
 const authRoutes = require('./routers/auth');
 const coursesRoutes = require('./routers/courses');
@@ -10,6 +11,7 @@ const chaptersRoutes = require('./routers/chapters');
 const notificationsRoutes = require('./routers/notifications');
 const topicsRoutes = require('./routers/topics');
 const usersRoutes = require('./routers/users');
+const utilsRoutes = require('./routers/utils');
 
 //setup
 const app = express();
@@ -30,6 +32,7 @@ app.use('/api/v1', chaptersRoutes);
 app.use('/api/v1', notificationsRoutes);
 app.use('/api/v1', topicsRoutes);
 app.use('/api/v1', usersRoutes);
+app.use('', utilsRoutes);
 
 //error response
 app.use((error, req, res, next) => {
