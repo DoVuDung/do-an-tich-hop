@@ -33,7 +33,7 @@ GET http://localhost:5000/api/v1/courses/react-advanced-2022
 ###
 GET http://localhost:5000/api/v1/courses/react-advanced-2022/chapters
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIxQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTRjNzJlNGM5Yjc2MDI5NTVmZiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzg5OTQ3LCJleHAiOjE2MzM3OTcxNDd9.eVogxgk5X1sN2Al8hlnqDs1LSSfoZpBxbXzDM09DCr8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzQ5OTQzMzYsImV4cCI6MTYzNTAwMTUzNn0.C08EVSUK-2XY0L4wuMnkO7ipGMth89EXBwHuXkPUGzs
 
 //GET: api/v1/courses/:courseSlugOrId/learners
 //get members who registered the course
@@ -48,10 +48,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 ###
 POST http://localhost:5000/api/v1/courses/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzM4NTE4MjMsImV4cCI6MTYzMzg1OTAyM30.ZLPfUAlbENOA8pv6NVNyk1p5cxF_frF-qI-OxCxkneI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzQ5OTM1MzgsImV4cCI6MTYzNTAwMDczOH0.f6wFUnLa6rjGK3PYCX3fLwOouGqq_C1pN-t3EpRMSXA
 
 {
-  "courseId": "6160522b0be2f6e199cf231e",
+  "courseId": "61602a2a268d8024f910a122",
   "price": 25.99,
   "brandId": 1,
   "methodId": 1,

@@ -24,6 +24,7 @@ exports.getFileFromStorage = (req, res, next) => {
       res.status(404).json({
         message: 'Fail to get file from storage!',
         error,
+        success: false,
       });
     });
 

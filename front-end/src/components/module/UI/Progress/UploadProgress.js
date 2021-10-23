@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { Progress } from 'reactstrap';
-import { Placeholder } from 'react-bootstrap';
 
 export default function UploadProgress() {
   //progress upload

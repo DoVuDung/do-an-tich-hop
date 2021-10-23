@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { validationError } = require('../util/helper');
+const { validationError, unlinkPath } = require('../util/helper');
 
 const Course = require('../models/course');
 const User = require('../models/user');
@@ -11,6 +11,8 @@ const Chapter = require('../models/chapter');
 const Stream = require('../models/stream');
 const Feedback = require('../models/feedback');
 const CourseDetail = require('../models/courseDetail');
+
+const { uploadFile, removeFile } = require('../util/s3');
 
 //COURSES
 //public
@@ -839,6 +841,8 @@ exports.postNewCourse = async (req, res, next) => {
   const categoryId = req.body.categoryId;
   const topicId = req.body.topicId;
 
+  const imageFile = req.file;
+
   try {
     //check authentication
     const user = await User.findById(req.userId);
@@ -896,10 +900,21 @@ exports.postNewCourse = async (req, res, next) => {
       throw error;
     }
 
+    //post image to s3
+    let uploadS3Result;
+    if (imageFile) {
+      //upload new image file
+      uploadS3Result = await uploadFile(imageFile);
+
+      //unlink image from local path (./upload)
+      await unlinkPath(imageFile.path);
+    }
+
     //save new course
     const course = new Course({
       title,
       description,
+      imageUrl: uploadS3Result ? `/files/${uploadS3Result.Key}` : null,
       author: req.userId,
       topic: topicId,
       tags,
@@ -970,6 +985,8 @@ exports.updateCourse = async (req, res, next) => {
   const price = req.body.price;
   const discount = req.body.discount;
   const status = req.body.status;
+
+  const imageFile = req.file;
 
   try {
     //check authentication
@@ -1057,6 +1074,19 @@ exports.updateCourse = async (req, res, next) => {
       }
     }
 
+    //check image file and post it to s3
+    let uploadS3Result;
+    if (imageFile) {
+      //remove old image file
+      await removeFile(course.imageUrl.split('/')[2]);
+
+      //upload new image file
+      uploadS3Result = await uploadFile(imageFile);
+
+      //unlink image from local path (./upload)
+      await unlinkPath(imageFile.path);
+    }
+
     //update course
     //only update field has data in body
     if (title) course.title = title;
@@ -1066,6 +1096,8 @@ exports.updateCourse = async (req, res, next) => {
     if (discount !== undefined) course.discount = discount;
     if (slug) course.slug = slug;
     if (status !== undefined) course.status = status;
+
+    if (uploadS3Result) user.imageUrl = `/files/${uploadS3Result.Key}`;
 
     //if topicId change
     let lastTopic;
