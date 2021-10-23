@@ -1,16 +1,22 @@
-//POST: /api/v1/users/all-info
+//GET: /api/v1/users/all-info
 //Authentication
 //get all information of user
 ###
 GET http://localhost:5000/api/v1/users/all-info
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE1YzlkY2ZhMDk0NzY1OGU2M2JlMWZiIiwic3RhdHVzIjoyLCJyb2xlIjp7ImlkIjozLCJuYW1lIjoidGVhY2hlciJ9LCJpYXQiOjE2MzM4NTQyMTEsImV4cCI6MTYzMzg2MTQxMX0.irmtpRU_Or6e5a3e7gQhTiOqwv_V0R89h-ck2k50kro
 
-//POST: /api/v1/users/profile
+//GET: /api/v1/users/profile
 //Authentication
 //get profile info only
 ###
 GET http://localhost:5000/api/v1/users/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXIyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNjFhNzUwNDhkY2MxNzk0MWI4ZTZlZiIsInN0YXR1cyI6Miwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzODU2MDAxLCJleHAiOjE2MzM4NjMyMDF9.iGrgBGf6Knq9vUkt-Xl0avWidLPxk4ewvWsqp7k3UaI
+
+//GET: /api/v1/users/:userId/profile
+//public
+//get user profile public
+###
+GET http://localhost:5000/api/v1/users/6146054c72e4c9b7602955ff/profile
 
 //GET: /api/v1/users/teaching-courses
 //authentication require

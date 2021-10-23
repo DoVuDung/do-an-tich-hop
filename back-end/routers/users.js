@@ -38,15 +38,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage, fileFilter });
 
-//POST: /api/v1/users/all-info
+//GET: /api/v1/users/all-info
 //Authentication
 //get all information of user
 Router.get('/users/all-info', isAuth, usersController.getUserAllInfo);
 
-//POST: /api/v1/users/profile
+//GET: /api/v1/users/profile
 //Authentication
 //get profile info only
 Router.get('/users/profile', isAuth, usersController.getUserProfile);
+
+//GET: /api/v1/users/:userId/profile
+//public
+//get user profile public
+Router.get('/users/:userId/profile', usersController.getPublicUserProfile);
 
 //GET: /api/v1/users/teaching-courses
 //authentication require

@@ -105,6 +105,51 @@ exports.getUserProfile = async (req, res, next) => {
   }
 };
 
+exports.getPublicUserProfile = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    //check user
+    const user = await User.findById(userId).select([
+      '-password',
+      '-teachingCourses',
+      '-learningCourses',
+      '-notifications',
+    ]);
+
+    if (!user) {
+      const error = new Error(`Account with email "${email}" not found!`);
+      error.statusCode = 401;
+
+      throw error;
+    }
+
+    if (user.status === 0 || user.status === 10) {
+      const error = new Error(
+        'Your account has been suspended. Please contact with us if it have any mistake!'
+      );
+      error.statusCode = 403;
+
+      throw error;
+    }
+
+    //send response
+    res.status(200).json({
+      message: 'Fetch user profile successfully!',
+      data: {
+        user,
+      },
+      success: true,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+
+    next(error);
+  }
+};
+
 exports.getUserTeachingCourses = async (req, res, next) => {
   try {
     //check user
