@@ -276,6 +276,7 @@ exports.updateUserProfile = async (req, res, next) => {
   const dateOfBirth = req.body.dateOfBirth;
   const description = req.body.description;
   const status = req.body.status;
+  const phoneNumber = req.body.phoneNumber;
 
   const socialLinks = req.body.socialLinks;
   //socialLinks: {facebook: String, instagram: String, linkedIn: String, github: String, twitter: String}
@@ -333,6 +334,7 @@ exports.updateUserProfile = async (req, res, next) => {
       //upload new image file
       uploadS3Result = await uploadFile(imageFile);
 
+      //unlink image from local path (./upload)
       await unlinkPath(imageFile.path);
     }
 
@@ -370,9 +372,10 @@ exports.updateUserProfile = async (req, res, next) => {
     if (status !== undefined) user.status = status;
     if (socialLinks !== undefined) user.socialLinks = socialLinks;
     if (address !== undefined) user.address = address;
+    if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
 
     if (imageUrl !== undefined) user.imageUrl = imageUrl;
-    if (imageFile) user.imageUrl = `/images/${uploadS3Result.Key}`;
+    if (uploadS3Result) user.imageUrl = `/files/${uploadS3Result.Key}`;
 
     if (hashedNewPassword) user.password = hashedNewPassword;
 
@@ -383,7 +386,7 @@ exports.updateUserProfile = async (req, res, next) => {
       message: 'User profile updated successfully!',
       data: {
         userId: user._id,
-        imagePath: uploadS3Result ? `/images/${uploadS3Result.Key}` : undefined,
+        imagePath: uploadS3Result ? `/files/${uploadS3Result.Key}` : undefined,
       },
       success: true,
     });
@@ -482,6 +485,7 @@ exports.adminUpdateUserProfile = async (req, res, next) => {
   const dateOfBirth = req.body.dateOfBirth;
   const description = req.body.description;
   const status = req.body.status;
+  const phoneNumber = req.body.phoneNumber;
 
   const socialLinks = req.body.socialLinks;
   //socialLinks: {facebook: String, instagram: String, linkedIn: String, github: String, twitter: String}
@@ -558,6 +562,7 @@ exports.adminUpdateUserProfile = async (req, res, next) => {
     if (status !== undefined) user.status = status;
     if (socialLinks !== undefined) user.socialLinks = socialLinks;
     if (address !== undefined) user.address = address;
+    if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
 
     if (imageUrl !== undefined) user.imageUrl = imageUrl;
 

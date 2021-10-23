@@ -15,6 +15,10 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+    imageUrl: {
+      type: String,
+      // required: true,
+    },
     slug: {
       type: String,
       slug: 'title',

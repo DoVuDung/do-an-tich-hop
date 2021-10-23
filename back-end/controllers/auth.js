@@ -18,10 +18,11 @@ exports.signup = async (req, res, next) => {
   const lastName = req.body.lastName;
   const dateOfBirth = req.body.dateOfBirth;
   const address = req.body.address;
+  const phoneNumber = req.body.phoneNumber;
   const role = req.body.role;
 
-  // const description = req.body.description;
-  // const socialLinks = req.body.socialLinks;
+  const description = req.body.description;
+  const socialLinks = req.body.socialLinks;
 
   let roleData;
   let status;
@@ -63,8 +64,9 @@ exports.signup = async (req, res, next) => {
       address,
       role: roleData,
       status,
-      // description,
-      // socialLinks,
+      phoneNumber,
+      description,
+      socialLinks,
       learningCourses: [],
       teachingCourses: [],
       notifications: [],

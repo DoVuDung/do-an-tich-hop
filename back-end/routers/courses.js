@@ -1,10 +1,42 @@
 const express = require('express');
 const { body, query } = require('express-validator');
+const multer = require('multer');
 
 const coursesController = require('../controllers/courses');
 const isAuth = require('../middleware/isAuth');
 
 const Router = express.Router();
+
+//setup multer for receive files
+//filter image only
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/webp'
+  ) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error(
+        'Invalid file type: ' +
+          file.mimetype +
+          '. Expected an image file: .png, .jpg, .jpeg, .webp'
+      ),
+      false
+    );
+  }
+};
+
+const storage = multer.diskStorage({
+  destination: './upload/',
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+
+const upload = multer({ storage, fileFilter });
 
 //GET: /api/v1/courses/all (query: count, page)
 //get all courses
@@ -156,6 +188,7 @@ Router.post(
 //teacher required
 Router.post(
   '/courses',
+  upload.single('image'),
   isAuth,
   [
     body('title', 'Title is required').notEmpty().trim(),
@@ -199,6 +232,7 @@ Router.post(
 Router.put(
   '/courses',
   isAuth,
+  upload.single('image'),
   [
     body('id')
       .notEmpty()

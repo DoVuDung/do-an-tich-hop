@@ -39,17 +39,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZ
 ###
 PUT http://localhost:5000/api/v1/users/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXIyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNjFhNzUwNDhkY2MxNzk0MWI4ZTZlZiIsInN0YXR1cyI6Miwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzODYzNTE3LCJleHAiOjE2MzM4NzA3MTd9.c6CfjFxjzulwNJH7dm9rV1e-SqHsMUcZmd0UnphjVUc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzUwMDE3NzQsImV4cCI6MTYzNTAwODk3NH0.INyA2w99xOFiV917nhKe9zjoVpkemWZdTX_LCh7D968
 
 {
-  "firstName": "B",
+  "firstName": "D",
   "lastName": "Nguyen",
   "dateOfBirth": "3/15/1999",
   "socialLinks": {
     "twitter": "http://twitter.com/abc"
   },
-  "oldPassword": "123123",
-  "newPassword": "123456"
+  "phoneNumber": "0779440161"
 }
 
 //PUT: /api/v1/change-password

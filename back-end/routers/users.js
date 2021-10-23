@@ -8,6 +8,7 @@ const isAuth = require('../middleware/isAuth');
 const Router = express.Router();
 
 //setup multer for receive files
+//filter image only
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === 'image/png' ||
@@ -28,7 +29,14 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ dest: 'upload/', fileFilter });
+const storage = multer.diskStorage({
+  destination: './upload/',
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+
+const upload = multer({ storage, fileFilter });
 
 //POST: /api/v1/users/all-info
 //Authentication
@@ -72,6 +80,7 @@ Router.get(
 //update user profile
 Router.put(
   '/users/profile',
+  upload.single('image'),
   isAuth,
   [
     body('firstName')
@@ -153,7 +162,6 @@ Router.put(
       .isLength({ min: 5 })
       .withMessage('Minimum password is 5'),
   ],
-  upload.single('image'),
   usersController.updateUserProfile
 );
 
