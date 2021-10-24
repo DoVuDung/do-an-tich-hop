@@ -1,26 +1,30 @@
 import "./header.scss"
 import React from "react"
 import { Container, Nav } from "react-bootstrap"
+import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { BiSearch } from "react-icons/bi"
 import { BsBell } from "react-icons/bs"
 import { FiMail } from "react-icons/fi";
 import logo from "../../../assets/images/logoGuru.png"
 import avatar from "../../../assets/images/avatar.png"
-import { UserContext } from "../../../context/userContext"
+import { UserOption } from './user_option'
 
-const protectedHeader = () => {
+const ProtectedHeader = () => {
+
+  const [isToggleUserOption, setIsToggleUserOption] = useState(false)
+
   return (
     <div className="header" id="header">
       <Container className="header__container justify-content-between">
         <div className="header__img-wrapper">
-          <Link>
+          <Link to='/'>
             <img src={logo} alt="logo Guru Academy" />
           </Link>
         </div>
         <Nav className="header__menu d-none d-lg-flex" style={{flexGrow: '0', margin: '0'}}>
           <Nav.Item>
-            <Link to="/course" className="nav-link">
+            <Link to="/courses" className="nav-link">
               for you
             </Link>
           </Nav.Item>
@@ -29,19 +33,19 @@ const protectedHeader = () => {
               live stream
             </Link>
           </Nav.Item>
-          <form action="" className="header__menu-form nav-item" >
+          <form action="" className="header__menu-form nav-item py-0">
             <input type="text"/>
             <div className='button header__menu-form-button'>
               <BiSearch />
             </div>
           </form>
           <Nav.Item
+          >
+            <Link to="/" className="nav-link py-1 px-3"
             style={{
               border: '1px solid #ccc',
               borderRadius: '25px',
-            }}
-          >
-            <Link to="/" className="nav-link py-1 px-3">
+            }}>
               share your work
             </Link>
           </Nav.Item>
@@ -57,11 +61,15 @@ const protectedHeader = () => {
           </button>
           <div
             className="d-flex align-items-center px-2"
-            style={{ height: "50px" }}
+            style={{ height: "50px", position: 'relative' }}
+            onClick={() => {
+              setIsToggleUserOption(!isToggleUserOption)
+            }}
           >
-            <div className="header__avatar" style={{ cursor: "pointer" }}>
+            <div className="header__avatar" style={{ cursor: "pointer"}} >
               <img src={avatar} alt="" />
             </div>
+            {isToggleUserOption &&  <UserOption />}
           </div>
         </div>
       </Container>
@@ -69,4 +77,4 @@ const protectedHeader = () => {
   )
 }
 
-export default protectedHeader
+export default ProtectedHeader

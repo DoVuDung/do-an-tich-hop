@@ -29,13 +29,10 @@ const SignIn = () => {
 
     const loginUser = async (form) => {
 		try {
-			const {message, success} = await login(form)
+			const {success} = await login(form)
 
             if(!success){
                 alert('incorrect username or password!')
-            }
-            else {
-                alert(message)
             }
         } catch (error) {
 			console.log(error)

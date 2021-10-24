@@ -15,5 +15,5 @@ export const TeacherRoute = ({ component: Component, ...rest }) => {
             </div>
         )
     if(isAuthenticated && user.role.id === 3) return <Component {...rest}/>
-    return <Redirect to='/home'/>
+    return <Redirect to='/'/>
 }

@@ -466,7 +466,6 @@ exports.changeUserPassword = async (req, res, next) => {
     next(error);
   }
 };
-
 //not finish
 exports.forgotUserPassword = async (req, res, next) => {};
 

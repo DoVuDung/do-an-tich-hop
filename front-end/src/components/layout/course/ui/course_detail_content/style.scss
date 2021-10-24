@@ -1,0 +1,28 @@
+@import '../../../../../assets//css/varibles';
+.courseDetail-chapter {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border-bottom: 0;
+    overflow: hidden;
+    &-lessons {
+        width: 100%;
+        background-color: #ddd;
+        padding: 20px;
+        @include flex();
+    }
+    &-lesson {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        @include flex();
+        color: #f69046;
+        margin: 0 10px;
+        &:hover {
+            color: $secondary-text-color;
+        }
+        &:active {
+            transform: scale(1.3);
+        }
+    }
+}

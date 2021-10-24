@@ -9,8 +9,10 @@ export const Popup = ({ setFn }) => {
     <div className="popup">
       <p
         className="popup__icon"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation()
           setPopup(!popup)
+          window.addEventListener('click', () => {setPopup(false)})
         }}
       >
         <BsThreeDots />

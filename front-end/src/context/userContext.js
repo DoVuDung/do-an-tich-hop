@@ -1,10 +1,8 @@
 import React,{ createContext, useReducer, useEffect } from 'react'
-import axios from 'axios'
 import { AUTH_LOCAL_TOKEN_NAME } from '../constants/index'
 import setAuthToken from '../untils/setAuthToken' 
 import { authReducer } from '../reducer/authReducer'
 import { getUser, signIn } from '../api/auth_api'
-
 
 export const UserContext = createContext()
 
@@ -63,8 +61,12 @@ const UserContextProvider = ({children}) => {
             return error.response.data.message
         }
     }
+    const logout = async () => {
+        localStorage.removeItem(AUTH_LOCAL_TOKEN_NAME)
+        window.location.reload()
+    }
 
-    const data = {login, authState}
+    const data = {login, authState, logout}
 
     return (
         <UserContext.Provider

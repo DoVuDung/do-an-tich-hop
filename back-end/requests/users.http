@@ -64,3 +64,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZ
   "oldPassword": "12345",
   "newPassword": "123456"
 }
+
+###
+GET http://localhost:5000/api/v1/courses/react-advanced-2022/chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjE0YjM2NjZiMTBkYmE0NzNjNzM2NjkyIiwic3RhdHVzIjoxLCJyb2xlIjp7ImlkIjoyLCJuYW1lIjoibGVhcm5lciJ9LCJpYXQiOjE2MzQ5OTQzMzYsImV4cCI6MTYzNTAwMTUzNn0.C08EVSUK-2XY0L4wuMnkO7ipGMth89EXBwHuXkPUGzs

@@ -5,31 +5,56 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import { Link } from "react-router-dom"
 import { BiSearch } from "react-icons/bi"
 import { GiHamburgerMenu } from "react-icons/gi"
-import { BsBell, BsCaretDownFill } from "react-icons/bs"
+import { BsBell } from "react-icons/bs"
 import logo from "../../../assets/images/logoGuru.png"
 import avatar from "../../../assets/images/avatar.png"
 import { UserContext } from "../../../context/userContext"
+import { UserOption } from './user_option'
 
 const headerItems = [
   {
+    title: "Category",
+    path: "/category",
+    subItems: [
+      {
+        title: "Web",
+        path: "/?=webdep",
+      },
+      {
+        title: "android",
+        path: "/?=android",
+      },
+      {
+        title: "Web developer",
+        path: "/?=game",
+      }
+    ]
+  },
+  {
     title: "course",
-    path: "/course",
+    path: "/courses",
   },
   {
     title: "about",
     path: "/about",
   },
   {
-    title: "category",
-    path: "/category",
+    title: "Blogs",
+    path: "/blogs",
+  },
+  {
+    title: "forums",
+    path: "/forums",
   },
 ]
 
 const Header = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const [isToggleUserOption, setIsToggleUserOption] = useState(false)
+
+  window.addEventListener('click', () => setIsToggleUserOption(false))
 
   const { authState: {isAuthenticated} } = useContext(UserContext)
-  console.log(isAuthenticated)
 
   const body = () => {
     if (!isAuthenticated)
@@ -47,11 +72,16 @@ const Header = () => {
         </button>
         <div
           className="d-flex align-items-center px-2"
-          style={{ height: "50px" }}
+          style={{ height: "50px", position: 'relative' }}
+          onClick={(e) => {
+            setIsToggleUserOption(!isToggleUserOption)
+            e.stopPropagation()
+          }}
         >
           <div className="header__avatar" style={{cursor: 'pointer'}}>
             <img src={avatar} alt="" />
           </div>
+          {isToggleUserOption &&  <UserOption />}
         </div>
       </>
     )
@@ -61,17 +91,28 @@ const Header = () => {
     <div className="header" id="header">
       <Container className="header__container justify-content-between">
         <div className="header__img-wrapper">
-          <Link>
+          <Link to='/'>
             <img src={logo} alt="logo Guru Academy" />
           </Link>
         </div>
-        <Nav className="header__menu d-none d-lg-flex ">
+        <Nav className="header__menu d-none d-lg-flex">
           {headerItems.map((item, index) => (
-            <Nav.Item key={index}>
+            <div key={index}>
+              <Nav.Item key={index} className='position-relative'>
               <Link to={`${item.path}`} className="nav-link translate-hover">
                 {item.title}
               </Link>
+              <div className='nav-link-menu' style={{display :  `${item.subItems ?? 'none'}`}}>
+              {
+              item.subItems?.map((item, index) => (
+                <Link to={item.path} className="nav-link-sub" key={index}>
+                  {item.title}
+                </Link>
+              ))
+              }
+              </div>
             </Nav.Item>
+            </div>
           ))}
         </Nav>
         <div className="header__search d-none d-lg-flex">

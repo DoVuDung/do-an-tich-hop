@@ -1,0 +1,56 @@
+@import "../../../assets/css/varibles";
+.user{
+    margin-top: 108px;
+    padding: 30px 0;
+    &Content{
+        &-card {
+            &-img {
+                border-radius: 10px;
+                height: 200px;
+                object-fit: cover;
+                overflow: hidden;
+            }
+            &-title {
+                font-weight: 600;
+                margin-bottom: 10px;
+                display: block;
+                font-size: 15px;
+            }
+            &-text{
+                margin-bottom: 5px;
+            }
+        }
+        .addCourse {
+            border: 1px dashed #000;
+            border-radius: 10px;
+            padding: 20px 0;
+            height: 250px;
+            @include flex(space-between, center);
+            &-button {
+                display: block;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: #c8d7fd;
+                @include flex(center, center);
+                font-size: 25px;
+                &:hover { color: white}
+            }
+            &-tag {
+                display: block;
+                padding: 10px 25px;
+                border: 1px solid $secondary-text-color;
+                font-weight: 500;
+                border-radius: 20px;
+                transition: ease .4s ;
+                &:hover {
+                    color: white;
+                    background-color: $secondary-text-color;
+                }
+            }
+            p {
+                font-size: 13px;
+            }
+        }
+    }
+}
