@@ -12,6 +12,7 @@ export default function ModalChatbot({
 
   items = [],
   message,
+  showTyping,
 
   onCloseClick,
   onMessageInputChange,
@@ -44,6 +45,11 @@ export default function ModalChatbot({
                   </div>
                 </li>
               ))}
+              {showTyping && (
+                <li className={styles['chatbot-message']}>
+                  <div className={styles['content-message']}>...</div>
+                </li>
+              )}
               <AlwaysScrollToBottom />
             </ul>
           </div>

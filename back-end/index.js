@@ -12,6 +12,7 @@ const notificationsRoutes = require('./routers/notifications');
 const topicsRoutes = require('./routers/topics');
 const usersRoutes = require('./routers/users');
 const utilsRoutes = require('./routers/utils');
+const searchRoutes = require('./routers/search');
 
 //setup
 const app = express();
@@ -33,6 +34,7 @@ app.use('/api/v1', notificationsRoutes);
 app.use('/api/v1', topicsRoutes);
 app.use('/api/v1', usersRoutes);
 app.use('', utilsRoutes);
+app.use('/api/v1', searchRoutes);
 
 //error response
 app.use((error, req, res, next) => {

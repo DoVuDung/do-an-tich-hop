@@ -211,4 +211,3 @@ exports.getUser = async (req, res, next) => {
     next(error);
   }
 };
-// const user = await User.findOne({ email: email }).select('-password');
