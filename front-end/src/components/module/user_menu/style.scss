@@ -1,0 +1,12 @@
+@import '../../../assets/css/varibles';
+.userContent-nav {
+    display: block;
+    padding: 10px 35px;
+    border: 1px solid #ccc ;
+    border-radius: 20px;
+    transition: ease .3s ;
+    &:hover {
+        color: $secondary-text-color;
+        border-color: currentColor;
+    }
+}

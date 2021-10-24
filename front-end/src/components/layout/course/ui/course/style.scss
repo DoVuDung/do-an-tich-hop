@@ -1,0 +1,85 @@
+@import '../../../../../assets/css//varibles';
+.courseDetail {
+    margin-top: 138px;
+    margin-bottom: 30px;
+    &-header {
+        background-color: #1e2a55;
+        padding: 20px;
+        padding-bottom: 10px;
+        color: white;
+        border-radius: 20px;
+        &-title {
+            text-align: left;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+        & .author-info {
+            @include flex(flex-start);
+            margin-bottom: 20px;
+            &-img {
+                width: 50px;
+                height: 50px;
+                border-radius:50%;
+                overflow: hidden;
+                margin-right: 20px;
+            }
+            p {
+                margin-right: 10px;
+                margin-bottom: 0;
+                color: rgb(165, 173, 186);
+            }
+        }
+        &-subc {
+            h3{
+                font-size: 25px;
+                color: #24ddff;
+                margin-bottom: 15px;
+            }
+            button {
+                padding: 10px 30px;
+                background-color: #ec5252;
+                font-size: 16px;
+                border-radius: 10px;
+                color: white;
+            }
+        }
+        &-tab{
+            padding: 10px;
+            margin-right: 10px;
+            color: rgb(165, 173, 186);
+            cursor: pointer;
+            &.active {
+                color: white;
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left:  0;
+                    height: 3px;
+                    width: 100%;
+                    background-color: white;
+                }
+            }
+        }
+    }
+}
+.coursePagination {
+    .pagination {
+        max-width: 500px;
+        margin: 30px auto 0;
+        @include flex();
+        &-item {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            margin: 0 10px;
+            cursor: pointer;
+            &:hover {
+                color: white;
+                background-color: #ccc;
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Styles from "./CourseEnrolled.module.scss";
 import avt from "../../../assets/images/chienpro.png";
-import { FaPencilAlt, FaCertificate } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import Footer from "../footer/Footer";
 import Header from "../header/header";
@@ -80,7 +80,7 @@ export default function CourseEnrolled() {
   };
   return (
     <div>
-        <Header/>
+      <Header/>
       <Container fluid className={Styles.learner}>
         <Row>
           <Col sm={4} className={Styles.profile}>

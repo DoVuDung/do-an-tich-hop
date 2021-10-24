@@ -7,15 +7,12 @@ import python from '../../../assets/images/icons8-python.png';
 import trendingTopic from '../../../assets/images/trendingTopic.png';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import Banner from '../../module/banner/Banner';
 import TopTeachers from '../../module/top_teacher/TopTeachers';
 import KeepUpToDate from '../../module/keep_up_to_date/KeepUpToDate';
 import ShareSkill from '../../module/share_skill/ShareSkill';
-import Header from '../../module/header/header';
-// import ProtectedHeader from "../../module/header/protectedHeader"
-import Footer from '../../module/footer/Footer';
 import Chatbot from '../../module/chatbot/Chatbot';
+import PublishMasterPage from '../master_page/PublishMasterPage';
 
 const cartContext = [
   {
@@ -42,8 +39,7 @@ const cartContext = [
 
 const Home = () => {
   return (
-    <>
-      <Header />
+    <PublishMasterPage>
       <Banner />
       <div className="trending">
         <Container>
@@ -107,8 +103,7 @@ const Home = () => {
       <KeepUpToDate />
       <ShareSkill />
       <Chatbot />
-      <Footer />
-    </>
+    </PublishMasterPage>
   );
 };
 
