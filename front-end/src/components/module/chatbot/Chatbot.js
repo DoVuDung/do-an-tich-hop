@@ -7,7 +7,7 @@ import ModalChatbot from '../UI/Modal/ModalChatbot';
 
 import styles from './Chatbot.module.scss';
 
-const CHATBOT_URL = 'http://127.0.0.1:5000/chatbot';
+const CHATBOT_URL = 'http://localhost:8000/chatbot';
 
 const demoChat = [
   {
@@ -68,12 +68,15 @@ export default function Chatbot(props) {
 
       const chatbotMsg = response.data.msg;
 
-      //get tag(link) answer. ex: Ok, here [html] => [html];
+      //get tag(link) answer
+      //Ex the answer is: Ok, here is your link [html] => we only get the part: [html]
       const tag = chatbotMsg.split(' ').reverse()[0];
 
       let type, content, answer;
 
       //check type and content
+      //Ex: [html] => type: topic, content: html
+      //Ex: {web development} => type: category, content: web development
       if (tag[0] === '[') {
         type = 'topic';
         content = tag.split('').slice(1, -1).join(''); //[topic] => topic
@@ -82,7 +85,7 @@ export default function Chatbot(props) {
           <>
             <p>{chatbotMsg.split(' ').slice(0, -1).join(' ')}</p>
             {content && type && (
-              <a href={`/search/${type}/${content}`}>{content}</a>
+              <a href={`/search/${type}/${content}`}>{content}</a> //add link to topic here
             )}
           </>
         );
@@ -94,11 +97,13 @@ export default function Chatbot(props) {
           <>
             <p>{chatbotMsg.split(' ').slice(0, -1).join(' ')}</p>
             {content && type && (
-              <a href={`/search/${type}/${content}`}>{content}</a>
+              <a href={`/search/${type}/${content}`}>{content}</a> //add link to category here
             )}
           </>
         );
-      } else if (tag[0] !== '{' || tag[0] !== '[') {
+      }
+      //if there no tag => just show the pure answer
+      else if (tag[0] !== '{' || tag[0] !== '[') {
         answer = <p>{chatbotMsg}</p>;
       }
 
@@ -143,6 +148,7 @@ export default function Chatbot(props) {
         onMessageInputChange={handleMessageInputChange}
         onSendClick={handleSendMessage}
         message={messageInput}
+        showTyping={isSending}
       />
     </div>
   );

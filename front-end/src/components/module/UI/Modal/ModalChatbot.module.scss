@@ -39,7 +39,7 @@
 
       li {
         margin-bottom: 0.7rem;
-        font-weight: 300;
+        font-weight: 400;
         width: 100%;
         text-align: left;
 
@@ -54,6 +54,9 @@
         }
 
         &.chatbot-message {
+          display: flex;
+          justify-content: flex-start;
+
           .content-message {
             background: rgb(255, 245, 245);
             border-radius: 0 15px 15px 0;
