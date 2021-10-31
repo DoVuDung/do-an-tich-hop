@@ -18,10 +18,7 @@ const UserCourses = () => {
       user
     },
   } = useContext(UserContext)
-
   const { userTeachingCourses, setUserTeachingCourses } = useContext(CourseContext)
-
-  console.log(user)
 
   useEffect(() => {
     getUserTeachingCourse().then(res => {
@@ -29,7 +26,7 @@ const UserCourses = () => {
     })
     // eslint-disable-next-line
   }, [])
-
+  console.log(user)
   return (
     <PrivateMaterPage>
       <div className="user">
@@ -47,10 +44,13 @@ const UserCourses = () => {
                       <Col lg={4} sm={6}>
                         <CourseCard item={item}/>
                       </Col>
-                    ))}     
-                    <Col lg={4} sm={6}>
-                      <CreateNewCourseCard />
-                    </Col>
+                    ))}
+                    {
+                      user.role.id === 3 && 
+                      <Col lg={4} sm={6}>
+                        <CreateNewCourseCard />
+                      </Col>
+                    }  
                   </Row>
                 </div>
               </div>

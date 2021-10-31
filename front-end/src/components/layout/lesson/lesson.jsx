@@ -56,7 +56,7 @@ const Lesson = () => {
               <div className="lesson-header-list">
                 <div className="lesson-header-list-info">
                   <p className="mb-2">Lorem ipsum dolor sit amet.</p>
-                  <p>Andy Do</p>
+                  <h4>Andy Do</h4>
                 </div>
                 <button className="button lesson-header-list-button">
                   <CgChevronUp />

@@ -5,7 +5,6 @@ import { ChapterItem } from "./chapter_item"
 export const ChapterCreate = ({tab, courseId, setTab}) => {
   const [chapters, setChapters] = useState([])
 
-  console.log('chapters', chapters)
   return (
     <div className="chapterCreate" style={{display: `${tab === 2 ? 'block' : 'none'}`}}>
       <h2 className="title-page">Setup your Chapter</h2>

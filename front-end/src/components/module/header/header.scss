@@ -1,10 +1,12 @@
 @import "../../../assets/css/varibles";
 .header {
+    &.fixed{
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
     width: 100%;
     border: 1px solid $light-gray-color;
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 999;
     background: #fff;
     box-shadow: 0px 2px 18px 0px #ccc;
@@ -160,6 +162,7 @@
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
+    z-index: 1000;    
 }
 .userOption{
     width: 100%;
@@ -179,5 +182,19 @@
         &:hover {
             color:  $secondary-text-color;
         }
+    }
+}
+.notification {
+    position: absolute;
+    top: 120%;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 0;
+    p {
+        font-size: 14px;
+        margin-bottom: 0;
+        user-select: none;
     }
 }
