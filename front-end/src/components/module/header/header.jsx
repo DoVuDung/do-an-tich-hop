@@ -1,5 +1,5 @@
 import "./header.scss"
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect, useRef } from "react"
 import { Container, Nav } from "react-bootstrap"
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { Link } from "react-router-dom"
@@ -10,6 +10,7 @@ import logo from "../../../assets/images/logoGuru.png"
 import avatar from "../../../assets/images/avatar.png"
 import { UserContext } from "../../../context/userContext"
 import { UserOption } from './user_option'
+import { Notifications } from './notifications'
 
 const headerItems = [
   {
@@ -51,10 +52,11 @@ const headerItems = [
 const Header = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false)
   const [isToggleUserOption, setIsToggleUserOption] = useState(false)
-
-  window.addEventListener('click', () => setIsToggleUserOption(false))
-
+  const [toggleNotification, setToggleNotification] = useState(false)
   const { authState: {isAuthenticated} } = useContext(UserContext)
+
+
+  const headerRef = useRef()
 
   const body = () => {
     if (!isAuthenticated)
@@ -67,13 +69,21 @@ const Header = () => {
       )
     else return (
       <>
-        <button className="button header__search-button">
+        <button className="button header__search-button position-relative"
+          onClick={e => {
+            setToggleNotification(!toggleNotification)
+            window.addEventListener('click', () => setToggleNotification(false))
+            e.stopPropagation()
+          }}
+        >
           <BsBell />
+          { toggleNotification &&  <Notifications />}
         </button>
         <div
           className="d-flex align-items-center px-2"
           style={{ height: "50px", position: 'relative' }}
           onClick={(e) => {
+            window.addEventListener('click', () => setIsToggleUserOption(false))
             setIsToggleUserOption(!isToggleUserOption)
             e.stopPropagation()
           }}
@@ -87,15 +97,27 @@ const Header = () => {
     )
   }
 
+  useEffect(() => {
+    const windowScroll = window.addEventListener('scroll', () => {
+      if(window.pageYOffset > headerRef.current?.offsetTop + 300) {
+        headerRef.current?.classList.add('fixed')
+      } else headerRef.current?.classList.remove('fixed')
+      })
+      return () => {
+        window.removeEventListener('scroll', windowScroll)
+      }
+      // eslint-disable-next-line
+  }, [])
+
   return (
-    <div className="header" id="header">
+    <div className="header" id="header" ref={headerRef}>
       <Container className="header__container justify-content-between">
         <div className="header__img-wrapper">
           <Link to='/'>
             <img src={logo} alt="logo Guru Academy" />
           </Link>
         </div>
-        <Nav className="header__menu d-none d-lg-flex">
+        <Nav className="header__menu d-none d-lg-flex" style={{zIndex: '9999'}}>
           {headerItems.map((item, index) => (
             <div key={index}>
               <Nav.Item key={index} className='position-relative'>

@@ -54,7 +54,7 @@ export const ChapterItem = ({chapters, setChapters, chapter, courseId, index}) =
               <h4>{`Chapter ${chapter.number + 1}: ${chapter.title}`}</h4>
             </div>
             <div className={`chapter__body ${collapseChapter && 'hidden'}`}>
-              <div className="chapter__body-item lesson mt-0">
+              <div className="chapter__body-item lesson mt-0" style={{minHeight: '0'}}>
                 <div className="item__header">
                   <h5>1. lessons</h5>
                   <Popup setFn={setIsPopupLessonForm} />

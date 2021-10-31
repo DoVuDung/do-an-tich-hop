@@ -48,11 +48,9 @@ export const NewCourse = ({ tab, setCourseId, setTab }) => {
         validateSchema={validateSchema}
         onSubmit={(values) => {
           values.tags = [`${values.tags}`]
-          console.log(values)
           postNewCourse(values).then((res) => {
             if(res.success){
               setCourseId(res.data.course._id)
-              console.log(res)
             }
           })
           

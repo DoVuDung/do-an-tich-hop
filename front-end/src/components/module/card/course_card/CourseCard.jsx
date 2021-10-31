@@ -9,7 +9,7 @@ const CourseCard = ({item}) => {
       <Card className="userContent-card border-0 text-start">
         <div className="userContent-card-img">
           <Link to={`/course/${item?._id}`}>
-            <Card.Img src='https://source.unsplash.com/random/800x800/?img=1' alt="" />
+            <Card.Img src={item.imageUrl} alt="" />
           </Link>
         </div>
         <Card.Body className="px-0">

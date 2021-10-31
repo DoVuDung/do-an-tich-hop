@@ -1,7 +1,7 @@
 @import '../../../../../assets/css//varibles';
 .courseDetail {
-    margin-top: 138px;
-    margin-bottom: 30px;
+    padding: 30px;
+    min-height: calc(100vh - 362px);
     &-header {
         background-color: #1e2a55;
         padding: 20px;
@@ -67,9 +67,10 @@
 .coursePagination {
     .pagination {
         max-width: 500px;
-        margin: 30px auto 0;
+        margin: 0 auto;
         @include flex();
-        &-item {
+        &-item a {
+            display: block;
             width: 30px;
             height: 30px;
             line-height: 30px;
@@ -80,6 +81,18 @@
                 color: white;
                 background-color: #ccc;
             }
+        }
+        .active a {
+            background-color: $secondary-text-color;
+            color: #fff;
+        }
+        &-next-btn{
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        &-prev-btn{
+            margin-right: 10px;
+            font-size: 18px;
         }
     }
 }

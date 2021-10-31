@@ -1,6 +1,7 @@
 @import '../../../assets/css/varibles';
 .lesson {
-    margin-top: 138px;
+    padding: 30px 0;
+    min-height: calc(100vh - 362px);
     &-main {
         height: 400px;
     }
@@ -8,10 +9,14 @@
         @include flex(space-between, center);
         padding: 20px;
         border: 1px solid #ccc;
+        border-bottom: 0;
         &-info{
             text-align: left;
             p {
                 margin-bottom:  0;
+            }
+            h4 {
+                font-size: 20px;
             }
         }
         &-button{
