@@ -32,9 +32,10 @@ export const ReviewCourse = ({ tab, setTab, courseId }) => {
           <span className="price-new">1209vnd</span>
         </div>
       </div>
-      <div className="reviewCourse__chapter">
+      {/* chapter details  */}
+      {/* <div className="reviewCourse__chapter">
         <p className="title">Chapters</p>
-      </div>
+      </div> */}
       <div className="controls">
         <button
           className="button button--next"

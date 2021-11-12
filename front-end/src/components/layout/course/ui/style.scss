@@ -1,6 +1,7 @@
 @import "../../../../assets/css/varibles";
 .course {
-  margin-top: 108px;
+  padding: 30px 0;
+  min-height: calc(100vh - 362px);
   &__top {
     text-align: left;
     padding: 20px 0;

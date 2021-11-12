@@ -1,5 +1,5 @@
 import "./header.scss"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { Container, Nav } from "react-bootstrap"
 import { useState } from 'react'
 import { Link } from "react-router-dom"
@@ -11,11 +11,23 @@ import avatar from "../../../assets/images/avatar.png"
 import { UserOption } from './user_option'
 
 const ProtectedHeader = () => {
-
   const [isToggleUserOption, setIsToggleUserOption] = useState(false)
+  const headerRef = useRef()
+
+  useEffect(() => {
+    const windowScroll = window.addEventListener('scroll', () => {
+      if(window.pageYOffset > headerRef.current?.offsetTop + 300) {
+        headerRef.current?.classList.add('fixed')
+      } else headerRef.current?.classList.remove('fixed')
+      })
+      return () => {
+        window.removeEventListener('scroll', windowScroll)
+      }
+      // eslint-disable-next-line
+  }, [])
 
   return (
-    <div className="header" id="header">
+    <div className="header" id="header" ref={headerRef}>
       <Container className="header__container justify-content-between">
         <div className="header__img-wrapper">
           <Link to='/'>
@@ -62,8 +74,10 @@ const ProtectedHeader = () => {
           <div
             className="d-flex align-items-center px-2"
             style={{ height: "50px", position: 'relative' }}
-            onClick={() => {
+            onClick={(e) => {
+              window.addEventListener('click', () => {setIsToggleUserOption(false)})
               setIsToggleUserOption(!isToggleUserOption)
+              e.stopPropagation()
             }}
           >
             <div className="header__avatar" style={{ cursor: "pointer"}} >

@@ -4,6 +4,8 @@ import CourseCard from "../../../../module/card/course_card/CourseCard"
 import { getCoursePagination } from "../../../../../api/course_api"
 import { CourseContext } from "../../../../../context/courseContext"
 import PublishMasterPage from "../../../master_page/PublishMasterPage"
+import ReactPaginate from 'react-paginate';
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
 const CoursePagination = () => {
   const { courses, setCourses} = useContext(CourseContext)
@@ -20,7 +22,7 @@ const CoursePagination = () => {
 
   return (
     <PublishMasterPage>
-      <div style={{ margin: "138px 0 30px 0" }} className="coursePagination">
+      <div style={{ margin: "30px 0" }} className="coursePagination">
         <Container>
           <Row className="g-4">
             {courses.map((item) => (
@@ -31,13 +33,19 @@ const CoursePagination = () => {
           </Row>
           <Row>
             <div className="pagination">
-              {courses &&
-                Array.from({ length: Math.ceil(totalCourses / 12) }).map((_, index) => (
-                  <div className="pagination-item"
-                    key={index}
-                    onClick={() => setPage(index + 1)}
-                  >{index + 1}</div>
-                ))}
+            <ReactPaginate 
+            previousLabel={<GrLinkPrevious className='pagination-prev-btn'/>}
+            nextLabel={<GrLinkNext className='pagination-next-btn'/>}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={totalCourses / 12}
+            marginPagesDisplayed={3}
+            pageRangeDisplayed={5}
+            onPageChange={(data) => setPage(data.selected + 1)}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+            pageClassName='pagination-item'
+            />
             </div>
           </Row>
         </Container>

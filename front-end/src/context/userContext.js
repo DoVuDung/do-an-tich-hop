@@ -12,6 +12,7 @@ const UserContextProvider = ({children}) => {
         loading: true,
         isAuthenticated: false,
         user: null,
+        name: 11
     })
 
     const loadUser = async () => {
@@ -34,7 +35,7 @@ const UserContextProvider = ({children}) => {
             setAuthToken(null)
             dispatch({
                 type: "SET_AUTH",
-                payload: { isAuthenticated: false, user: null },
+                payload: { isAuthenticated: false, user: null},
             })
         }
     }

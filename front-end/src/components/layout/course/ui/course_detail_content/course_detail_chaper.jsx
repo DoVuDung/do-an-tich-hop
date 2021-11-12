@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 const CourseDetailChapter = ({ chapters }) => {
-
+console.log(chapters)
   return (
     <Row className="g-4">
       {chapters?.map((item) => (
@@ -15,9 +15,9 @@ const CourseDetailChapter = ({ chapters }) => {
               <p>{item.description}</p>
             </div>
             <div className="courseDetail-chapter-lessons">
-              {item.videos.map((_, index) => (
-                <Link to={`/chapter/${item._id}?lesson=${item.videos?.index}`} className="courseDetail-chapter-lesson">
-                  {index}
+              {item.videos.map(itm => (
+                <Link to={`/chapter/${item._id}?lesson=${itm.index}`} className="courseDetail-chapter-lesson">
+                  {itm.index}
                 </Link>
               ))}
             </div>

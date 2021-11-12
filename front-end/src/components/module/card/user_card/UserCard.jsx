@@ -13,9 +13,7 @@ import { UserContext } from '../../../../context/userContext'
 
 
 const UserCard = ({user}) => {
-
   const { authState: { user: { _id } } } = useContext(UserContext)
-
 
   return (
     <div className="userCard">
@@ -24,14 +22,14 @@ const UserCard = ({user}) => {
           <img src={user.avatar || avatar} alt="" />
         </div>
 
-        <p className="userCard-name m-0">Andy Do</p>
+        <p className="userCard-name m-0">{user.firstName} {user.lastName}</p>
       </div>
       <p>{user.address.country}</p>
       <p className="mb-4">Join Mar 20, 2021</p>
 
       <button className="button userCard-button mb-4">
         <BsFillPencilFill style={{ marginRight: "10px", fontSize: "20px" }} />
-        { _id === user._id ? "Edit Your Profile" : "Send a Message " }
+        { _id && _id === user._id ? "Edit Your Profile" : "Send a Message " }
       </button>
       <p className="mb-1">Following</p>
       <div className="d-flex w-50 justify-content-between">

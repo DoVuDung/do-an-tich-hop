@@ -8,6 +8,7 @@ import CourseDetailChapter from '../course_detail_content/course_detail_chaper'
 import { useHistory } from 'react-router'
 import { getCourseIdOrSlug } from '../../../../../api/course_api' 
 import PrivateMasterPage from '../../../master_page/PrivateMaterPage'
+import { Link } from 'react-router-dom'
 
 const tabBar = [
     {
@@ -36,6 +37,8 @@ const CourseDetail = () => {
         // eslint-disable-next-line
     }, [])
 
+    console.log(course?.author)
+
     return (
         <PrivateMasterPage>
             <Container className='courseDetail'>
@@ -46,7 +49,9 @@ const CourseDetail = () => {
                         <div>
                             <div className='author-info'>
                                 <div className='author-info-img' >
+                                    <Link to={`/profile/${course?.author._id}`}>
                                     <img src={avatar} alt="" />
+                                    </Link>
                                 </div>
                                 <p>{`${course?.author.firstName} ${course?.author.lastName}`}</p>
                                 <p><BsPeople className='me-1'/>21233 học viên</p>

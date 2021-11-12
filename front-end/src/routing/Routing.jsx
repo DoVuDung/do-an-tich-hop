@@ -21,9 +21,7 @@ const Routes = () => {
       <Route path="/" component={Home} exact />
       <Route path="/courseenrolled" component={CourseEnrolled} exact />
       <Route path="/videowatching" component={VideoWatching} exact />
-      <Route path="/profile/:id" component={Profile} exact />
       <Route path="/courses" component={CoursePagination} exact />
-      <Route path="/course/:id" component={courseDetail} exact />
       <Route
         exact
         path="/user/course/create"
@@ -40,18 +38,25 @@ const Routes = () => {
       />
       <Route
         exact
+        path="/profile/:id"
+        render={({ url }) => (
+          <ProtectedRoute path={url} component={Profile} exact />
+        )}
+      />
+      <Route
+        exact
         path="/chapter/:id"
         render={({ url }) => (
           <ProtectedRoute path={url} component={Lesson} exact />
         )}
       />
-      {/* <Route
+      <Route
         exact
         path="/course/:id"
         render={({ url }) => (
           <ProtectedRoute path={url} component={courseDetail} exact />
         )}
-      /> */}
+      />
       <Route
         exact
         path="/signin"

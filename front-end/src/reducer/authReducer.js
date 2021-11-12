@@ -12,6 +12,13 @@ export const authReducer = (state, action) => {
                 isAuthenticated,
                 user,
             }
+        case 'UNSET_AUTH':
+                return {
+                    ...state,
+                    loading: true,
+                    isAuthenticated,
+                    user,
+                }
         default:
             return state
     }
