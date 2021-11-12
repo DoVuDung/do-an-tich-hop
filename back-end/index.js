@@ -25,6 +25,7 @@ app.use(cors());
 app.use(express.json()); //parse json from req's body
 
 //v1 routers
+//50 end points in total
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/report', reportRoutes);
 app.use('/api/v1', coursesRoutes);

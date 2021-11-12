@@ -158,9 +158,6 @@ exports.login = async (req, res, next) => {
         userId: user._id.toString(),
         status: user.status,
         role: user.role,
-        // firstName: user.firstName,
-        // lastName: user.lastName,
-        // dateOfBirth: user.dateOfBirth,
       },
       'guruAcademySecretKey',
       {

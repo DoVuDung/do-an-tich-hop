@@ -1,0 +1,11 @@
+//POST: /api/v1/course-categories/:categorySlugOrId/topics
+//admin required
+//Add topics to category
+###
+POST http://localhost:5000/api/v1/course-categories/web-development/topics
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDc1YWY4MzAxZjdiYTNlMWM2N2E2YiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MSwibmFtZSI6ImFkbWluIn0sImlhdCI6MTYzNTEzMjE3MiwiZXhwIjoxNjM1MTM5MzcyfQ.pr-f4jSHcBl5cYFIA9aUw-38kjoBcywUZYgNF6C0MYk
+
+{
+  "title": "Python"
+}

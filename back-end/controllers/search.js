@@ -131,6 +131,16 @@ exports.searchMain = async (req, res, next) => {
     const courses = await Course.find({
       title: new RegExp(searchString, 'i'),
     })
+      .populate([
+        {
+          path: 'author',
+          select: ['firstName', 'lastName', 'description', 'socialLinks'],
+        },
+        {
+          path: 'topic',
+          select: ['title', 'discountPercent', 'slug'],
+        },
+      ])
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * coursePerPage)
       .limit(coursePerPage);

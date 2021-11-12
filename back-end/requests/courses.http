@@ -19,7 +19,7 @@ GET http://localhost:5000/api/v1/courses/categories/web-development
 //public
 //pagination
 ###
-GET http://localhost:5000/api/v1/courses/topics/javascript?count=2
+GET http://localhost:5000/api/v1/courses/topics/python?count=20
 
 //*** GET: /api/v1/courses/:courseSlugOrId
 //Function: get course detail
@@ -65,16 +65,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlYXJuZ
 ###
 POST http://localhost:5000/api/v1/courses
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXIyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTZlNzJlNGM5Yjc2MDI5NTYwNSIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjMzNzgzMzg0LCJleHAiOjE2MzM3OTA1ODR9.6zASi1bwbsvQjtXUHc0IoBTSZhi3-3tSKkus3bfXc7k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlYWNoZXI0QGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxNDYwNTYwNzJlNGM5Yjc2MDI5NTYwMiIsInN0YXR1cyI6MSwicm9sZSI6eyJpZCI6MywibmFtZSI6InRlYWNoZXIifSwiaWF0IjoxNjM1MTMzODI4LCJleHAiOjE2MzUxNDEwMjh9.PiPy3F-FoxKRX_qL29D354I82FGxFxGfPrhT2wHHmgY
 
 {
-    "title": "React advanced 2022.",
-    "description": "Hoc lap trinh React tai GuruAcademy",
+    "title": "Python for data science 2022.",
+    "description": "Hoc lap trinh Python tai GuruAcademy",
     "categoryId": "61495f8559f077f9cc0cb75b",
-    "topicId": "61495f8559f077f9cc0cb760",
-    "tags": ["React", "learning", "online", "js"],
-    "price": 25.99,
-    "discount": 5
+    "topicId": "61762adea710327b33ddb84e",
+    "tags": ["Python", "learning", "online", "python"],
+    "price": 35.99,
+    "discount": 5.99
 }
 
 //*** PUT: /api/v1/courses

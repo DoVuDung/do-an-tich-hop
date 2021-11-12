@@ -182,8 +182,8 @@ exports.postNewTopic = async (req, res, next) => {
     res.status(200).json({
       message: 'Successfully created new topic!',
       data: {
-        courseCategory,
         topic,
+        courseCategory,
       },
       success: true,
     });
