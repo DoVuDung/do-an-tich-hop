@@ -20,7 +20,6 @@ const demoChat = [
 export default function Chatbot(props) {
   const [showChatWindow, setShowChatWindow] = useState(false);
   const [showUnreadIcon, setShowUnreadIcon] = useState(true);
-  // eslint-disable-next-line
   const [isSending, setIsSending] = useState(false);
 
   const [chatMessages, setChatMessages] = useState(demoChat);
