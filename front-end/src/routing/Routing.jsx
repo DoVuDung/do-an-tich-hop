@@ -6,14 +6,13 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { TeacherRoute } from './TeacherRoute';
 import AuthRoute from './AuthRoute';
 import UploadProgress from '../components/module/UI/Progress/UploadProgress';
-import courseDetail from '../components/layout/course/ui/course/CourseDetail'
-import Lesson from '../components/layout/lesson/lesson'
-import CourseEnrolled from '../components/module/learner/CourseEnrolled'
-import VideoWatching from '../components/module/learner/VideoWatching'
-import CoursePagination from '../components/layout/course/ui/course/CoursePagination'
-import Profile  from '../components/layout/profile/Profile'
+import courseDetail from '../components/layout/course/ui/course/CourseDetail';
+import Lesson from '../components/layout/lesson/lesson';
+import CourseEnrolled from '../components/module/learner/CourseEnrolled';
+import VideoWatching from '../components/module/learner/VideoWatching';
+import CoursePagination from '../components/layout/course/ui/course/CoursePagination';
+import Profile from '../components/layout/profile/Profile';
 import UserCourses from '../components/layout/user_course/UserCourses';
-
 
 const Routes = () => {
   return (

@@ -1,9 +1,9 @@
 import './App.css';
-import './assets/css/global.scss'
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import './assets/css/global.scss';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import UserContextProvider from './context/userContext';
 import CourseContextProvider from './context/courseContext';
-import Routes from './routing/Routing'
+import Routes from './routing/Routing';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <CourseContextProvider>
           <Router>
             <Switch>
-              <Routes/>
+              <Routes />
             </Switch>
           </Router>
         </CourseContextProvider>
